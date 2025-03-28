@@ -1,0 +1,67 @@
+{
+  "project_info": {
+    "project_number": "868437106204",
+    "project_id": "pizza-delivery-c050d",
+    "storage_bucket": "pizza-delivery-c050d.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:868437106204:android:72af96ea3e83fb5a3e49d9",
+        "android_client_info": {
+          "package_name": "com.example.e_wallet_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDLhIzRYHwmkpLol0s8FZljZxplkBhUrjI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:868437106204:android:5cf0d9225555f5f53e49d9",
+        "android_client_info": {
+          "package_name": "com.example.pizzaApp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDLhIzRYHwmkpLol0s8FZljZxplkBhUrjI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:868437106204:android:f55e72ba4635470f3e49d9",
+        "android_client_info": {
+          "package_name": "com.example.smart_business_hub"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDLhIzRYHwmkpLol0s8FZljZxplkBhUrjI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
