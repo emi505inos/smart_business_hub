@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_business_hub/mobile/screens/auth/blocs/sign_in_bloc/sign_in_bloc.dart';
+import 'package:smart_business_hub/mobile/screens/homescreen/home_screen.dart';
 import 'package:smart_business_hub/mobile/screens/navigatorbar/custom_navigator_bar.dart';
 import 'package:smart_business_hub/mobile/screens/usermenu/user_menu.dart';
 
@@ -81,7 +82,11 @@ class MyMobileBody extends StatelessWidget {
       ),
       bottomNavigationBar: CustomeNavigationBar(),
       body: SingleChildScrollView(
-        child: Column(),
+        child: Column(
+          children: [
+            HomeScreen()
+          ],
+        ),
       ),
     );
   }

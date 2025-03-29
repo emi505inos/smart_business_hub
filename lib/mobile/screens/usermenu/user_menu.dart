@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -28,11 +29,11 @@ class UserMenuScreen extends StatelessWidget {
         ),
       ),
       body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(20),
-              child: InkWell(
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            children: [
+              InkWell(
                 onTap: () {
                   
                 },
@@ -62,7 +63,7 @@ class UserMenuScreen extends StatelessWidget {
                             size: MediaQuery.of(context).size.width *0.1,
                             ),
                         ),
-                        SizedBox(width: MediaQuery.of(context).size.width*0.04,),
+                        SizedBox(width: MediaQuery.of(context).size.width*0.03,),
                         Expanded(
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -79,17 +80,26 @@ class UserMenuScreen extends StatelessWidget {
                                       color: Colors.grey
                                     ),
                                   ),
-                                  Text(
-                                    '+12345678912 ',
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                      color: Theme.of(context).colorScheme.onSurface
-                                    ),
+                                  Row(
+                                    children: [
+                                      Text(
+                                        '+12345678912 ',
+                                        style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                          color: Theme.of(context).colorScheme.onSurface
+                                        ),
+                                      ),
+                                      Icon(
+                                        Icons.verified_sharp,
+                                        size: 18,
+                                        color: Colors.blue,
+                                      )
+                                    ],
                                   ),
                                 ],
                               ),
-                              SizedBox(width: MediaQuery.of(context).size.width*0.08,),
+                              SizedBox(width: MediaQuery.of(context).size.width*0.02,),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
@@ -112,21 +122,213 @@ class UserMenuScreen extends StatelessWidget {
                   ),
                 ),
               ),
-            ),
-            GestureDetector(
-              onTap: () {
-                context.read<SignInBloc>().add(SignOutRequired());
-              },
-              child: Text(
-                'CERRAR SESIÓN',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.red
-                ),
+              SizedBox(height: MediaQuery.of(context).size.height*0.03,),
+              InkWell(
+                onTap: () {
+                  
+                },
+                borderRadius: BorderRadius.circular(20),
+                child: Ink(
+                  height: MediaQuery.of(context).size.height * 0.08,
+                  width: MediaQuery.of(context).size.width,
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.onPrimary,
+                    borderRadius: BorderRadius.circular(20),
+                    boxShadow: [BoxShadow(
+                      blurRadius: 1,
+                      color: Colors.grey.withValues(alpha: 0.5),
+                      spreadRadius: 1,
+                      )
+                    ]
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                    child: Row(
+                      children: [
+                        Icon(
+                          CupertinoIcons.add_circled,
+                          color: Theme.of(context).colorScheme.onSurface,
+                          size: MediaQuery.of(context).size.width *0.06,
+                        ),
+                        SizedBox(width: MediaQuery.of(context).size.width*0.04,),
+                        Text(
+                          'Agregar otro negocio',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Theme.of(context).colorScheme.onSurface,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                )
               ),
-            )
-          ],
+              SizedBox(height: MediaQuery.of(context).size.height*0.015,),
+              InkWell(
+                onTap: () {
+                  
+                },
+                borderRadius: BorderRadius.circular(20),
+                child: Ink(
+                  height: MediaQuery.of(context).size.height * 0.08,
+                  width: MediaQuery.of(context).size.width,
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.onPrimary,
+                    borderRadius: BorderRadius.circular(20),
+                    boxShadow: [BoxShadow(
+                      blurRadius: 1,
+                      color: Colors.grey.withValues(alpha: 0.5),
+                      spreadRadius: 1,
+                      )
+                    ]
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                    child: Row(
+                      children: [
+                        Icon(
+                          CupertinoIcons.bag,
+                          color: Theme.of(context).colorScheme.onSurface,
+                          size: MediaQuery.of(context).size.width *0.06,
+                        ),
+                        SizedBox(width: MediaQuery.of(context).size.width*0.04,),
+                        Text(
+                          'Configura tu catálogo virtual',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Theme.of(context).colorScheme.onSurface,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                )
+              ),
+              SizedBox(height: MediaQuery.of(context).size.height*0.015,),
+              InkWell(
+                onTap: () {
+                  
+                },
+                borderRadius: BorderRadius.circular(20),
+                child: Ink(
+                  height: MediaQuery.of(context).size.height * 0.08,
+                  width: MediaQuery.of(context).size.width,
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.onPrimary,
+                    borderRadius: BorderRadius.circular(20),
+                    boxShadow: [BoxShadow(
+                      blurRadius: 1,
+                      color: Colors.grey.withValues(alpha: 0.5),
+                      spreadRadius: 1,
+                      )
+                    ]
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                    child: Row(
+                      children: [
+                        Icon(
+                          CupertinoIcons.printer,
+                          color: Theme.of(context).colorScheme.onSurface,
+                          size: MediaQuery.of(context).size.width *0.06,
+                        ),
+                        SizedBox(width: MediaQuery.of(context).size.width*0.04,),
+                        Text(
+                          'Impresora',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Theme.of(context).colorScheme.onSurface,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                )
+              ),
+              SizedBox(height: MediaQuery.of(context).size.height*0.22,),
+              InkWell(
+                onTap: () {
+                  
+                },
+                borderRadius: BorderRadius.circular(20),
+                child: Ink(
+                  height: MediaQuery.of(context).size.height * 0.13,
+                  width: MediaQuery.of(context).size.width,
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.onPrimary,
+                    borderRadius: BorderRadius.circular(20),
+                    boxShadow: [BoxShadow(
+                      blurRadius: 1,
+                      color: Colors.grey.withValues(alpha: 0.5),
+                      spreadRadius: 1,
+                      )
+                    ]
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                    child: Row(
+                      children: [
+                        Image.asset(
+                          'assets/soporte.png',
+                          height: MediaQuery.of(context).size.height*0.15,
+                          width: MediaQuery.of(context).size.width*0.15,
+                          // color: Theme.of(context).colorScheme.onSurface,
+                        ),
+                        SizedBox(width: MediaQuery.of(context).size.width*0.06,),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'Ayuda',
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: Theme.of(context).colorScheme.onSurface,
+                              ),
+                            ),
+                            Text(
+                              'Encuentra nuestros tutoriales y ',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.grey[600]
+                              ),
+                            ),
+                            Text(
+                              'preguntas frecuentes.',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.grey[600]
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                )
+              ),
+              SizedBox(height: MediaQuery.of(context).size.height*0.03,),
+              GestureDetector(
+                onTap: () {
+                  context.read<SignInBloc>().add(SignOutRequired());
+                },
+                child: Text(
+                  'CERRAR SESIÓN',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.red
+                  ),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
