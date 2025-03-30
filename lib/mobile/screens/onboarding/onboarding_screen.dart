@@ -53,7 +53,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       ItemData(
       title: 'Controla tu Inventario', 
       subtitle: 'Organiza, escanea y optimiza cada movimiento para una gestión más inteligente', 
-      image: const AssetImage('assets/inventory.png'), 
+      image: const AssetImage('assets/inventory1.png'), 
       backgroundColor: const Color.fromARGB(115, 92, 226, 163), 
       titleColor: Color.fromRGBO(27, 45, 52, 1), 
       subtitleColor: Color.fromRGBO(27, 45, 52, 1),

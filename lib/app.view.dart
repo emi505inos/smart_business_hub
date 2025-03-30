@@ -15,14 +15,15 @@ class MyAppView extends StatelessWidget {
       title: 'SmartBusiness Hub',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-          colorScheme: ColorScheme.light(
-              surface: Colors.grey.shade200,
-              onSurface: Color.fromRGBO(27, 45, 52, 1),
-              primary: Color.fromRGBO(92, 226, 170, 1),
-              onPrimary: Colors.white,
-              secondary: Colors.deepOrange,
-               
-              )),
+        colorScheme: ColorScheme.light(
+          surface: Colors.grey.shade200,
+          onSurface: Color.fromRGBO(27, 45, 52, 1),
+          primary: Color.fromRGBO(92, 226, 170, 1),
+          onPrimary: Colors.white,
+          secondary: Color.fromRGBO(136, 24, 17, 1),
+          onSecondary: Color.fromRGBO(16, 147, 93, 1),
+        )
+      ),
       home: BlocBuilder<AuthenticationBloc, AuthenticationState>(
           builder: ((context, state) {
         if (state.status == AuthenticationStatus.authenticated) {
@@ -33,7 +34,8 @@ class MyAppView extends StatelessWidget {
                     context.read<AuthenticationBloc>().userRepository),
               ),
             ],
-            child: HomePage(),
+            child:  HomePage()
+            
           );
         } else {
             return OnboardingScreen();
