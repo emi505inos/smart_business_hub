@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:smart_business_hub/mobile/screens/balance/views/expence/new_expence.dart';
+import 'package:smart_business_hub/mobile/screens/balance/views/sales/add_sale.dart';
+import 'package:smart_business_hub/mobile/screens/homescreen/views/new_business.dart';
 import 'package:smart_business_hub/mobile/screens/navigatorbar/custom_navigator_bar.dart';
 import 'package:smart_business_hub/mobile/screens/usermenu/user_menu.dart';
 
@@ -34,6 +37,14 @@ class HomeScreen extends StatelessWidget {
           children: [
             GestureDetector(
               onTap:() {
+                showModalBottomSheet(
+                context: context,
+                isScrollControlled: false,
+                backgroundColor: Theme.of(context).colorScheme.surface,
+                builder: (context) {
+                  return NewBusiness(); 
+                },
+              );
               } ,
               child: Row(
                 children: [
@@ -96,7 +107,14 @@ class HomeScreen extends StatelessWidget {
               children: [
                 InkWell(
                   onTap: () {
-                    
+                    showModalBottomSheet(
+                      context: context,
+                      isScrollControlled: false,
+                      backgroundColor: Theme.of(context).colorScheme.surface,
+                      builder: (context) {
+                        return AddSaleView();
+                      },
+                    );
                   },
                   borderRadius: BorderRadius.circular(20),
                   child: Ink(
@@ -147,7 +165,7 @@ class HomeScreen extends StatelessWidget {
                 SizedBox(width: MediaQuery.of(context).size.width*0.02,),
                 InkWell(
                   onTap: () {
-                    
+                    Navigator.of(context).push(MaterialPageRoute(builder: (_) => NewExpence()));
                   },
                   borderRadius: BorderRadius.circular(20),
                   child: Ink(

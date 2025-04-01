@@ -7,6 +7,8 @@ class DebtsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.surface,
+      appBar: AppBar(),
       bottomNavigationBar: CustomeNavigationBar(),
     );
   }

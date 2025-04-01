@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:smart_business_hub/mobile/screens/balance/views/add_sale.dart';
+import 'package:smart_business_hub/mobile/screens/balance/views/expence/new_expence.dart';
+import 'package:smart_business_hub/mobile/screens/balance/views/sales/add_sale.dart';
 
 class BottomButtons extends StatelessWidget {
   const BottomButtons({super.key});
@@ -60,7 +61,7 @@ class BottomButtons extends StatelessWidget {
           ),
           InkWell(
             onTap: () {
-              
+              Navigator.of(context).push(MaterialPageRoute(builder: (_) => NewExpence()));
             },
             borderRadius: BorderRadius.circular(35),
             child: Ink(

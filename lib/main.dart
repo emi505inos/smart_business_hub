@@ -19,7 +19,7 @@ void main() async {
       ),
       Provider(
         create: (context) => SimpleBlocObserver()
-        )
+      ),
     ],
   ));
 }

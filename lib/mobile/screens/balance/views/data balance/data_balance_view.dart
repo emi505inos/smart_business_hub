@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:smart_business_hub/mobile/screens/balance/views/date_balance.dart';
+import 'package:smart_business_hub/mobile/screens/balance/views/data%20balance/date_balance.dart';
 
 class DataBalanceView extends StatefulWidget {
   const DataBalanceView({super.key});

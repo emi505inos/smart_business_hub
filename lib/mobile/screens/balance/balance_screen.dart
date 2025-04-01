@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:smart_business_hub/mobile/screens/auth/blocs/sign_in_bloc/sign_in_bloc.dart';
 import 'package:smart_business_hub/mobile/screens/balance/views/balance_by_inc_exp.dart';
 import 'package:smart_business_hub/mobile/screens/balance/views/bottom_buttons.dart';
-import 'package:smart_business_hub/mobile/screens/balance/views/data_balance_view.dart';
+import 'package:smart_business_hub/mobile/screens/balance/views/data%20balance/data_balance_view.dart';
+import 'package:smart_business_hub/mobile/screens/homescreen/views/new_business.dart';
 import 'package:smart_business_hub/mobile/screens/navigatorbar/custom_navigator_bar.dart';
 import 'package:smart_business_hub/mobile/screens/usermenu/user_menu.dart';
 
@@ -42,7 +41,14 @@ class _BalanceScreenState extends State<BalanceScreen>{
           children: [
             GestureDetector(
               onTap:() {
-                context.read<SignInBloc>().add(SignOutRequired());
+                showModalBottomSheet(
+                  context: context,
+                  isScrollControlled: false,
+                  backgroundColor: Theme.of(context).colorScheme.surface,
+                  builder: (context) {
+                    return NewBusiness(); 
+                  },
+                );
               } ,
               child: Row(
                 children: [
