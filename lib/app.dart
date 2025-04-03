@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:user_repository/user_repository.dart';
 
 import 'app.view.dart';
-import 'bloc/authentication_bloc.dart';
+import 'bloc/auth bloc/authentication_bloc.dart';
 
 
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:smart_business_hub/mobile/screens/balance/views/transaction/income_transaction.dart';
 
 class BalanceByIncExp extends StatefulWidget {
   const BalanceByIncExp({super.key});
@@ -56,14 +57,16 @@ class _BalanceByIncExpState extends State<BalanceByIncExp> with TickerProviderSt
           ),
           SizedBox(height: 20,),
           SizedBox(
-            height: 300,
+            height: MediaQuery.of(context).size.height*0.3,
             child: TabBarView(
               controller: _tabController,
               children: <Widget>[
-              //  TransaccionList(),
-              //  TransaccionList(),
-              Container(),
-              Container()
+              Card.filled(
+                child: IncomeTransaction()
+              ),
+              Card.filled(
+                child: IncomeTransaction()
+              ),
               ]
             ),
           ),

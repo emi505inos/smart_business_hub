@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:smart_business_hub/mobile/screens/balance/views/balance_by_inc_exp.dart';
 import 'package:smart_business_hub/mobile/screens/balance/views/bottom_buttons.dart';
-import 'package:smart_business_hub/mobile/screens/balance/views/data%20balance/data_balance_view.dart';
+import 'package:smart_business_hub/mobile/screens/balance/views/date%20balance/date_balance_view.dart';
 import 'package:smart_business_hub/mobile/screens/homescreen/views/new_business.dart';
 import 'package:smart_business_hub/mobile/screens/navigatorbar/custom_navigator_bar.dart';
 import 'package:smart_business_hub/mobile/screens/usermenu/user_menu.dart';
@@ -93,125 +93,192 @@ class _BalanceScreenState extends State<BalanceScreen>{
         ],
         bottom: PreferredSize(
           preferredSize: Size.fromHeight(60), 
-          child: DataBalanceView()
+          child: DateBalanceView()
         ),
       ),
       bottomNavigationBar: CustomeNavigationBar(),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(20),
-              child: Container(
-                height: MediaQuery.of(context).size.height*0.2,
-                width: MediaQuery.of(context).size.width*4,
-                decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.onPrimary,
-                    borderRadius: BorderRadius.circular(20),
-                    boxShadow: [BoxShadow(
-                      blurRadius: 1,
-                      color: Colors.grey.withValues(alpha: 0.5),
-                      spreadRadius: 1,
-                      )
-                    ]
-                  ),
-                child: Padding(
-                  padding: const EdgeInsets.all(15),
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text('Balance'),
-                          Text('\$ 0')
-                        ],
-                      ),
-                      SizedBox(height: MediaQuery.of(context).size.height*0.01,),
-                       Divider(
-                        height: 5,
-                        indent: 1,
-                        endIndent: 1,
-                        thickness: 1.7,
-                        color: Colors.grey
-                      ),
-                      SizedBox(height: MediaQuery.of(context).size.height*0.01,),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                children: [
-                                  FaIcon(
-                                    FontAwesomeIcons.arrowTrendUp
-                                  ),
-                                  SizedBox(width: MediaQuery.of(context).size.width*0.03,),
-                                  Text('Ingresos')
-                                ],
-                              ),
-                              SizedBox(height: MediaQuery.of(context).size.height*0.02,),
-                              Text('\$ 0')
-                            ],
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(20),
+            child: Container(
+              height: MediaQuery.of(context).size.height*0.2,
+              width: MediaQuery.of(context).size.width*4,
+              decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.onPrimary,
+                  borderRadius: BorderRadius.circular(20),
+                  boxShadow: [BoxShadow(
+                    blurRadius: 1,
+                    color: Colors.grey.withValues(alpha: 0.5),
+                    spreadRadius: 1,
+                    )
+                  ]
+                ),
+              child: Padding(
+                padding: const EdgeInsets.all(15),
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Balance',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.grey[700]
                           ),
-                          SizedBox(width: MediaQuery.of(context).size.width*0.03,),
-                          Container(
-                            height: MediaQuery.of(context).size.height*0.05,
-                            width: MediaQuery.of(context).size.width*0.004,
-                            decoration: BoxDecoration(
-                              color: Colors.grey
+                        ),
+                        Text(
+                          '\$ 0',
+                          style: TextStyle(
+                            fontSize: 17,
+                            fontWeight: FontWeight.bold,
+                            color: Theme.of(context).colorScheme.onSecondary
+                          ),
+                        )
+                      ],
+                    ),
+                    SizedBox(height: MediaQuery.of(context).size.height*0.01,),
+                     Divider(
+                      height: 5,
+                      indent: 1,
+                      endIndent: 1,
+                      thickness: 1.7,
+                      color: Colors.grey
+                    ),
+                    SizedBox(height: MediaQuery.of(context).size.height*0.01,),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                FaIcon(
+                                  FontAwesomeIcons.arrowTrendUp,
+                                  color: Theme.of(context).colorScheme.onSecondary
+                                ),
+                                SizedBox(width: MediaQuery.of(context).size.width*0.03,),
+                                Text(
+                                  'Ingresos',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.grey[700]
+                                  ),
+                                )
+                              ],
+                            ),
+                            SizedBox(height: MediaQuery.of(context).size.height*0.02,),
+                            Text(
+                              '\$ 0',
+                              style: TextStyle(
+                                fontSize: 17,
+                                fontWeight: FontWeight.bold,
+                                color: Theme.of(context).colorScheme.onSurface
+                              ),
+                            )
+                          ],
+                        ),
+                        SizedBox(width: MediaQuery.of(context).size.width*0.03,),
+                        Container(
+                          height: MediaQuery.of(context).size.height*0.05,
+                          width: MediaQuery.of(context).size.width*0.004,
+                          decoration: BoxDecoration(
+                            color: Colors.grey
+                          ),
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                FaIcon(
+                                  FontAwesomeIcons.arrowTrendUp,
+                                  color: Theme.of(context).colorScheme.secondary,
+                                ),
+                                SizedBox(width: MediaQuery.of(context).size.width*0.03,),
+                                Text(
+                                  'Egresos',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.grey[700]
+                                  ),
+                                )
+                              ],
+                            ),
+                            SizedBox(height: MediaQuery.of(context).size.height*0.02,),
+                            Text(
+                              '\$ 0',
+                              style: TextStyle(
+                                fontSize: 17,
+                                fontWeight: FontWeight.bold,
+                                color: Theme.of(context).colorScheme.onSurface
+                              ),
+                            )
+                          ],
+                        ),
+                        SizedBox(width: MediaQuery.of(context).size.width*0.03,),
+                      ],
+                    ),
+                    SizedBox(height: MediaQuery.of(context).size.height*0.01,),
+                     Divider(
+                      height: 5,
+                      indent: 1,
+                      endIndent: 1,
+                      thickness: 1.7,
+                      color: Colors.grey
+                    ),
+                    SizedBox(height: MediaQuery.of(context).size.height*0.01,),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            
+                          },
+                          child: Text(
+                            'Descargar Reportes',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black
                             ),
                           ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            
+                          },
+                          child: Row(
                             children: [
-                              Row(
-                                children: [
-                                  FaIcon(
-                                    FontAwesomeIcons.arrowTrendUp
-                                  ),
-                                  SizedBox(width: MediaQuery.of(context).size.width*0.03,),
-                                  Text('Egresos')
-                                ],
+                              Text(
+                                'Ver Balance',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.blue[700]
+                                ),
                               ),
-                              SizedBox(height: MediaQuery.of(context).size.height*0.02,),
-                              Text('\$ 0')
+                              Icon(
+                                Icons.keyboard_arrow_right_outlined,
+                                color: Colors.blue[700]
+                              )
                             ],
                           ),
-                          SizedBox(width: MediaQuery.of(context).size.width*0.03,),
-                        ],
-                      ),
-                      SizedBox(height: MediaQuery.of(context).size.height*0.01,),
-                       Divider(
-                        height: 5,
-                        indent: 1,
-                        endIndent: 1,
-                        thickness: 1.7,
-                        color: Colors.grey
-                      ),
-                      SizedBox(height: MediaQuery.of(context).size.height*0.01,),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text('Descargar Reportes'),
-                          Row(
-                            children: [
-                              Text('Ver Balance'),
-                              Icon(Icons.keyboard_arrow_right_outlined)
-                            ],
-                          ),
-                        ],
-                      )
-                    ],
-                  ),
+                        ),
+                      ],
+                    )
+                  ],
                 ),
               ),
             ),
-            BalanceByIncExp(),
-            BottomButtons(),
-            
-          ],
-        ),
+          ),
+          BalanceByIncExp(),
+          BottomButtons(),
+          
+        ],
       ),
     );
   }

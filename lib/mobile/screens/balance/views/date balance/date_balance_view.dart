@@ -1,14 +1,15 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:smart_business_hub/mobile/screens/balance/views/data%20balance/date_balance.dart';
+import 'package:smart_business_hub/mobile/screens/balance/views/date%20balance/date_balance.dart';
 
-class DataBalanceView extends StatefulWidget {
-  const DataBalanceView({super.key});
+class DateBalanceView extends StatefulWidget {
+  const DateBalanceView({super.key});
 
   @override
-  State<DataBalanceView> createState() => _DataBalanceViewState();
+  State<DateBalanceView> createState() => _DateBalanceViewState();
 }
 
-class _DataBalanceViewState extends State<DataBalanceView> {
+class _DateBalanceViewState extends State<DateBalanceView> {
   late DateBalance  dateBlance;
 
    @override

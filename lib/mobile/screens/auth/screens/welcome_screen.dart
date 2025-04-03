@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 
 
-import '../../../../bloc/authentication_bloc.dart';
+import '../../../../bloc/auth bloc/authentication_bloc.dart';
 import '../blocs/sign_in_bloc/sign_in_bloc.dart';
 import '../blocs/sign_up_bloc/sign_up_bloc.dart';
 import 'sign_in_screen.dart';
