@@ -76,7 +76,8 @@ class _FreeSalesFormState extends State<FreeSalesForm> {
                           DateSelector(),
                           PaySelector(),
                         ],
-                      )
+                      ),
+                      
                     ],
                   )
                 // } else {
