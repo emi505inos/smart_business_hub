@@ -151,7 +151,8 @@ class _AddSaleViewState extends State<AddSaleView> {
                         color: Colors.grey.withValues(alpha: 0.5),
                         spreadRadius: 1,
                       )
-                    ]),
+                    ]
+                  ),
                 child: Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 20, vertical: 10),

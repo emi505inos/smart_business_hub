@@ -24,7 +24,7 @@ static final empty = Income(
   income: 0, 
   description: '', 
   clients: '', 
-  payMethod: -1
+  payMethod: 0
 );
 
 IncomeEntity toEntity() {
