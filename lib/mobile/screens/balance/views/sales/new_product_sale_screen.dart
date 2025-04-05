@@ -1,5 +1,8 @@
+import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:smart_business_hub/mobile/screens/balance/views/sales/models/barcode_scaner.dart';
 import 'package:smart_business_hub/mobile/screens/balance/views/sales/models/category.dart';
 
 class NewProductSalesScreen extends StatefulWidget {
@@ -45,7 +48,7 @@ class _NewProductSalesScreenState extends State<NewProductSalesScreen> {
         actions: [
           IconButton(
             onPressed: () {
-              
+              Navigator.of(context).push(MaterialPageRoute(builder: (context) => BarcodeScaner()));
             },
             icon: Icon(
               CupertinoIcons.barcode_viewfinder,
@@ -54,6 +57,68 @@ class _NewProductSalesScreenState extends State<NewProductSalesScreen> {
           )
         ],
       ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed:() {
+          
+        },
+        elevation: 0,
+        backgroundColor: Colors.black,
+        label: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              children: [
+                Container(
+                  height: MediaQuery.of(context).size.height*0.035,
+                  width: MediaQuery.of(context).size.width*0.075,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(7),
+                    color: Color.fromRGBO(27, 45, 52, 0.548),
+                  ),
+                  child: Center(
+                    child: Text(
+                      '1',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Theme.of(context).colorScheme.onPrimary,
+                      ),
+                    )
+                  )
+                ),
+                SizedBox(width: MediaQuery.of(context).size.width*0.02,),
+                Text(
+                  'Canasta',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Theme.of(context).colorScheme.onPrimary,
+                  ),
+                )
+              ],
+            ),
+            SizedBox(width: MediaQuery.of(context).size.width*0.4,),
+            Row(
+              children: [
+                Text(
+                  '\$ 10',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Theme.of(context).colorScheme.onPrimary,
+                  ),
+                ),
+                Icon(
+                  Icons.arrow_forward_ios,
+                  size: 20,
+                  color: Theme.of(context).colorScheme.onPrimary,
+                )
+              ],
+            )
+          ],
+        )
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       body: Padding(
         padding: const EdgeInsets.all(10),
         child: Column(
@@ -206,11 +271,222 @@ class _NewProductSalesScreenState extends State<NewProductSalesScreen> {
                           ],
                         ),
                       ),
-                    )
+                    ),
                   ],
                 ),
               ),
-            )
+            ),
+            SizedBox(
+              height: MediaQuery.of(context).size.height*0.3,
+              width: MediaQuery.of(context).size.width*5,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  InkWell(
+                    onTap: () {
+                      
+                    },
+                    borderRadius: BorderRadius.circular(17),
+                    child: DottedBorder(
+                      radius: Radius.circular(17),
+                      borderType: BorderType.RRect,
+                      color: Colors.grey.shade600,
+                      child: Ink(
+                        height: MediaQuery.of(context).size.height*0.25,
+                        width: MediaQuery.of(context).size.width*0.25,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(17),
+                          color: Theme.of(context).colorScheme.onPrimary,
+                           
+                        ),
+                        
+                        child: Padding(
+                          padding: const EdgeInsets.all(10),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.add_circle_outline,
+                                size: 40,
+                                color: Theme.of(context).colorScheme.onSurface,
+                              ),
+                              Text(
+                                'Nuevo',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: Theme.of(context).colorScheme.onSurface,
+                                ),
+                              ),
+                              Text(
+                                'Producto',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: Theme.of(context).colorScheme.onSurface,
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
+                      ),
+                    ),
+                  ),
+                  InkWell(
+                    onTap: () {
+                      
+                    },
+                    borderRadius: BorderRadius.circular(17),
+                    child: Ink(
+                      height: MediaQuery.of(context).size.height*0.25,
+                      width: MediaQuery.of(context).size.width*0.3,
+                      color: Theme.of(context).colorScheme.surface,
+                      child: Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              height: MediaQuery.of(context).size.height*0.13,
+                              width: MediaQuery.of(context).size.width,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(17),
+                                image: DecorationImage(
+                                  image: AssetImage('assets/shirt.jpg'),
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  Container(
+                                    height: MediaQuery.of(context).size.height*0.035,
+                                    width: MediaQuery.of(context).size.width*0.08,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(5),
+                                      color: Colors.white,
+                                    ),
+                                    child: Icon(Icons.add_circle_outline,
+                                      size: 30,
+                                      color: Theme.of(context).colorScheme.onSurface,
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              height: MediaQuery.of(context).size.height*0.01,
+                            ),
+                            Text(
+                              '\$ 10',
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.grey.shade600,
+                              ),
+                            ),
+                            Text(
+                              'Camisa',
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: Theme.of(context).colorScheme.onSurface,
+                              ),
+                            ),
+                            Text(
+                              '10 disponibles',
+                              style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.grey.shade600,
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                    ),
+                  ),
+                  InkWell(
+                    onTap: () {
+                      
+                    },
+                    borderRadius: BorderRadius.circular(17),
+                    child: Ink(
+                      height: MediaQuery.of(context).size.height*0.25,
+                      width: MediaQuery.of(context).size.width*0.3,
+                      color: Theme.of(context).colorScheme.surface,
+                      child: Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              height: MediaQuery.of(context).size.height*0.13,
+                              width: MediaQuery.of(context).size.width,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(17),
+                                image: DecorationImage(
+                                  image: AssetImage('assets/acesorios.jpg'),
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  Container(
+                                    height: MediaQuery.of(context).size.height*0.035,
+                                    width: MediaQuery.of(context).size.width*0.08,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(5),
+                                      color: Colors.white,
+                                    ),
+                                    child: Icon(Icons.add_circle_outline,
+                                      size: 30,
+                                      color: Theme.of(context).colorScheme.onSurface,
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              height: MediaQuery.of(context).size.height*0.01,
+                            ),
+                            Text(
+                              '\$ 25',
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.grey.shade600,
+                              ),
+                            ),
+                            Text(
+                              'Acesorios',
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: Theme.of(context).colorScheme.onSurface,
+                              ),
+                            ),
+                            Text(
+                              '100 disponibles',
+                              style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.grey.shade600,
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),

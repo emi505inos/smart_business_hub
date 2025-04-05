@@ -21,7 +21,7 @@ class _PaySelectorState extends State<PaySelector> {
   Widget build(BuildContext context) {
     return Ink(
       height: MediaQuery.of(context).size.height*0.05,
-      width: MediaQuery.of(context).size.width*0.45,
+      width: MediaQuery.of(context).size.width*0.445,
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.onPrimary,
         borderRadius: BorderRadius.circular(10),
@@ -33,7 +33,7 @@ class _PaySelectorState extends State<PaySelector> {
         ]
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 4),
+        padding:  EdgeInsets.all(5),
         child: Row(
           children: [
             InkWell(
@@ -79,7 +79,7 @@ class _PaySelectorState extends State<PaySelector> {
               },
               child: Ink(
                width: MediaQuery.of(context).size.width*0.21,
-                height: MediaQuery.of(context).size.height*0.045,
+                height: MediaQuery.of(context).size.height*0.044,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   color: acount.money == 1

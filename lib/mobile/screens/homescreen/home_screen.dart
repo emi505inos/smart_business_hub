@@ -294,7 +294,7 @@ class HomeScreen extends StatelessWidget {
                 padding: const EdgeInsets.all(15),
                 child: Column(
                   children: [
-                    Flexible(
+                    Expanded(
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -361,45 +361,43 @@ class HomeScreen extends StatelessWidget {
                               ),
                             ),
                           ),
-                          Flexible(
-                            child: InkWell(
-                              onTap: () {},
-                              child: Ink(
-                                width: MediaQuery.of(context).size.width * 0.23,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    Image.asset(
-                                      'assets/clients.png',
-                                      fit: BoxFit.contain,
-                                    ),
-                                    SizedBox(
-                                      height:
-                                          MediaQuery.of(context).size.height *
-                                              0.01,
-                                    ),
-                                    Text(
-                                      'Clientes',
-                                      style: TextStyle(
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.bold,
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .onSurface),
-                                    )
-                                  ],
-                                ),
+                          InkWell(
+                            onTap: () {},
+                            child: Ink(
+                              width: MediaQuery.of(context).size.width * 0.23,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Image.asset(
+                                    'assets/clients.png',
+                                    fit: BoxFit.contain,
+                                  ),
+                                  SizedBox(
+                                    height:
+                                        MediaQuery.of(context).size.height *
+                                            0.01,
+                                  ),
+                                  Text(
+                                    'Clientes',
+                                    style: TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onSurface),
+                                  )
+                                ],
                               ),
                             ),
                           ),
                         ],
                       ),
                     ),
-                    Row(
-                      children: [
-                        Flexible(
-                          child: InkWell(
+                    Expanded(
+                      child: Row(
+                        children: [
+                          InkWell(
                             onTap: () {},
                             child: Ink(
                               height: MediaQuery.of(context).size.height * 0.18,
@@ -416,18 +414,17 @@ class HomeScreen extends StatelessWidget {
                                   Text(
                                     'Proveedores',
                                     style: TextStyle(
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.bold,
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .onSurface),
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold,
+                                    color: Theme.of(context).colorScheme.onSurface
+                                    ),
                                   )
                                 ],
                               ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ],
                 ),

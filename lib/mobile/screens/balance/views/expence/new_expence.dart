@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:smart_business_hub/mobile/screens/balance/views/expence/views/expence_form.dart';
+import 'package:smart_business_hub/mobile/screens/balance/views/expence/views/expence_selector.dart';
 
-class NewExpence extends StatelessWidget {
+class NewExpence extends StatefulWidget {
   const NewExpence({super.key});
 
+  @override
+  State<NewExpence> createState() => _NewExpenceState();
+}
+
+class _NewExpenceState extends State<NewExpence> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,6 +39,14 @@ class NewExpence extends StatelessWidget {
             fontWeight: FontWeight.bold,
             color: Theme.of(context).colorScheme.onSurface,
           ),
+        ),
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            ExpenceSelector(),
+            ExpenceForm()
+          ],
         ),
       ),
     );

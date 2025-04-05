@@ -5,6 +5,7 @@ import 'package:smart_business_hub/bloc/auth%20bloc/authentication_bloc.dart';
 import 'package:smart_business_hub/home_page.dart';
 import 'package:smart_business_hub/mobile/screens/auth/blocs/sign_in_bloc/sign_in_bloc.dart';
 import 'package:smart_business_hub/mobile/screens/balance/bloc/get_income/get_income_bloc.dart';
+import 'package:smart_business_hub/mobile/screens/homescreen/home_screen.dart';
 import 'package:smart_business_hub/mobile/screens/onboarding/onboarding_screen.dart';
 
 
@@ -42,7 +43,7 @@ class MyAppView extends StatelessWidget {
               )
             ],
 
-            child:  HomePage()
+            child:  HomeScreen()
             
           );
         } else {
