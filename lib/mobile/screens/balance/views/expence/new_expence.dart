@@ -41,6 +41,38 @@ class _NewExpenceState extends State<NewExpence> {
           ),
         ),
       ),
+      bottomNavigationBar: BottomAppBar(
+        height: MediaQuery.of(context).size.height*0.1,
+        color: Theme.of(context).colorScheme.surface,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: ElevatedButton(
+          onPressed: () {
+            setState(() {
+              
+            });
+          },
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Theme.of(context).colorScheme.onSecondary,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            padding: EdgeInsets.symmetric(
+              vertical: MediaQuery.of(context).size.height*0.015,
+              horizontal: MediaQuery.of(context).size.width*0.2
+            )
+          ),
+          child: Text(
+            'Crear Gasto',
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: Theme.of(context).colorScheme.onPrimary,
+            ),
+          ),
+        )
+        ),
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: [

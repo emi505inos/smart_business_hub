@@ -79,6 +79,43 @@ class _FreeSalesFormState extends State<FreeSalesForm> {
           ),
           
         ),
+        bottomNavigationBar: BottomAppBar(
+        height: MediaQuery.of(context).size.height*0.1,
+        color: Theme.of(context).colorScheme.surface,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: ElevatedButton(
+          onPressed: () {
+            setState(() {
+              income.saleId = const Uuid().v1();
+              income.dateTime = DateTime.parse(dateController.text);
+              income.income = int.parse(incomeController.text);
+              income.description = descriptionController.text;
+              income.clients = descriptionController.text;
+              income.payMethod = income.payMethod;
+            });
+          },
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Theme.of(context).colorScheme.onSecondary,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            padding: EdgeInsets.symmetric(
+              vertical: MediaQuery.of(context).size.height*0.015,
+              horizontal: MediaQuery.of(context).size.width*0.2
+            )
+          ),
+          child: Text(
+            'Crear Venta',
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: Theme.of(context).colorScheme.onPrimary,
+            ),
+          ),
+        )
+        ),
+      ),
         body: Padding(
           padding: const EdgeInsets.all(10),
           child: SingleChildScrollView(
@@ -520,36 +557,6 @@ class _FreeSalesFormState extends State<FreeSalesForm> {
                     )
                   ),
                 ),
-                ElevatedButton(
-                  onPressed: () {
-                    setState(() {
-                      income.saleId = const Uuid().v1();
-                      income.dateTime = DateTime.parse(dateController.text);
-                      income.income = int.parse(incomeController.text);
-                      income.description = descriptionController.text;
-                      income.clients = descriptionController.text;
-                      income.payMethod = income.payMethod;
-                    });
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Theme.of(context).colorScheme.onSecondary,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    padding: EdgeInsets.symmetric(
-                      vertical: MediaQuery.of(context).size.height*0.015,
-                      horizontal: MediaQuery.of(context).size.width*0.2
-                    )
-                  ),
-                  child: Text(
-                    'Crear Venta',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Theme.of(context).colorScheme.onPrimary,
-                    ),
-                  ),
-                )
               ],
             ),
           )  

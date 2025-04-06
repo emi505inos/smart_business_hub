@@ -198,18 +198,17 @@ class HomeScreen extends StatelessWidget {
                             Text(
                               'Registrar',
                               style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  color:
-                                      Theme.of(context).colorScheme.onSurface),
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color:Theme.of(context).colorScheme.onSurface),
                             ),
                             Text(
                               'Gasto',
                               style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  color:
-                                      Theme.of(context).colorScheme.onSurface),
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color:Theme.of(context).colorScheme.onSurface
+                              ),
                             )
                           ],
                         ),

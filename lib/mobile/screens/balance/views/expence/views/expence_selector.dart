@@ -104,6 +104,6 @@ class _ExpenceSelectorState extends State<ExpenceSelector> {
           )
         ],
       ),
-    );;
+    );
   }
 }

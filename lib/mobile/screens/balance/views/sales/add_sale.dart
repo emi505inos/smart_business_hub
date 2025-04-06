@@ -5,7 +5,6 @@ import 'package:income_repository/income_repository.dart';
 import 'package:smart_business_hub/mobile/screens/balance/bloc/create_income/create_income_bloc.dart';
 import 'package:smart_business_hub/mobile/screens/balance/views/sales/free_sales_form.dart';
 import 'package:smart_business_hub/mobile/screens/balance/views/sales/new_product_sale_screen.dart';
-import 'package:user_repository/user_repository.dart';
 
 class AddSaleView extends StatefulWidget {
   const AddSaleView({super.key});
@@ -30,24 +29,29 @@ class _AddSaleViewState extends State<AddSaleView> {
                 Text(
                   'Nueva venta',
                   style: TextStyle(
-                      fontSize: 25,
-                      fontWeight: FontWeight.bold,
-                      color: Theme.of(context).colorScheme.onSurface),
+                    fontSize: 25,
+                    fontWeight: FontWeight.bold,
+                    color: Theme.of(context).colorScheme.onSurface
+                  ),
                 ),
                 IconButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    icon: Icon(FontAwesomeIcons.solidCircleXmark,
-                        color: Theme.of(context).colorScheme.onSurface)),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  icon: Icon(
+                    FontAwesomeIcons.solidCircleXmark,
+                    color: Theme.of(context).colorScheme.onSurface
+                  )
+                ),
               ],
             ),
             Text(
               'Selecciona el tipo de venta que quieras hacer.',
               style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.grey[600]),
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                color: Colors.grey[600]
+              ),
             ),
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.03,
@@ -55,7 +59,7 @@ class _AddSaleViewState extends State<AddSaleView> {
             InkWell(
               onTap: () {
                 Navigator.of(context).push(
-                    MaterialPageRoute(builder: (_) => NewProductSalesScreen()));
+                MaterialPageRoute(builder: (_) => NewProductSalesScreen()));
               },
               child: Ink(
                 height: MediaQuery.of(context).size.height * 0.12,
