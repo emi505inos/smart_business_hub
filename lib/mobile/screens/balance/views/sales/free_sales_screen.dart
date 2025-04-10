@@ -4,19 +4,20 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:income_repository/income_repository.dart';
 import 'package:intl/intl.dart';
+import 'package:smart_business_hub/mobile/screens/balance/balance_screen.dart';
 import 'package:smart_business_hub/mobile/screens/balance/bloc/create_income/create_income_bloc.dart';
-// import 'package:smart_business_hub/mobile/screens/balance/views/sales/models/date_selector.dart';
+import 'package:smart_business_hub/mobile/screens/balance/views/sales/models/date_selector.dart';
 import 'package:smart_business_hub/mobile/screens/balance/views/sales/models/pay_selector.dart';
 import 'package:uuid/uuid.dart';
 
-class FreeSalesForm extends StatefulWidget {
-  const FreeSalesForm({super.key});
+class FreeSalesScreen extends StatefulWidget {
+  const FreeSalesScreen({super.key});
 
   @override
-  State<FreeSalesForm> createState() => _FreeSalesFormState();
+  State<FreeSalesScreen> createState() => _FreeSalesScreenState();
 }
 
-class _FreeSalesFormState extends State<FreeSalesForm> {
+class _FreeSalesScreenState extends State<FreeSalesScreen> {
   TextEditingController incomeController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
   TextEditingController payMethodController = TextEditingController();
@@ -60,7 +61,7 @@ class _FreeSalesFormState extends State<FreeSalesForm> {
               backgroundColor: Theme.of(context).colorScheme.onPrimary,
               child: IconButton(
                 onPressed: () {
-                  Navigator.pop(context);
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => BalanceScreen()));
                 },
                 icon: Icon(
                   Icons.arrow_back_rounded,
@@ -86,13 +87,15 @@ class _FreeSalesFormState extends State<FreeSalesForm> {
           padding: const EdgeInsets.all(8.0),
           child: ElevatedButton(
           onPressed: () {
+            final parsedDate = DateFormat.yMMMMd('es_AR').parse(dateController.text);
             setState(() {
               income.saleId = const Uuid().v1();
-              income.dateTime = DateTime.parse(dateController.text);
+              income.dateTime = parsedDate;
               income.income = int.parse(incomeController.text);
               income.description = descriptionController.text;
-              income.clients = descriptionController.text;
+              income.clients = clientsController.text;
               income.payMethod = income.payMethod;
+              context.read<CreateIncomeBloc>().add(CreateIncome(income));
             });
           },
           style: ElevatedButton.styleFrom(
@@ -124,47 +127,7 @@ class _FreeSalesFormState extends State<FreeSalesForm> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    // DateSelector(),
-                    SizedBox(
-                    height: MediaQuery.of(context).size.height*0.05,
-                    width: MediaQuery.of(context).size.width*0.45,
-                    child: TextFormField(
-                      controller: dateController,
-                      readOnly: true,
-                      onTap: () async {
-                        DateTime? newDate = await showDatePicker(
-                          context: context, 
-                          initialDate: income.dateTime, 
-                          firstDate: DateTime(2000), 
-                          lastDate: DateTime.now()
-                        );
-
-                        if (newDate != null) {
-                          setState(() {
-                            dateController.text = DateFormat.yMMMMd('es_AR').format(newDate);
-                            income.dateTime = newDate;
-                          });
-                        }
-                      },
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: Theme.of(context).colorScheme.onSurface,
-                      ),
-                      decoration: InputDecoration(
-                        filled: true,
-                        fillColor: Colors.white,
-                        prefixIcon: Icon(
-                          Icons.calendar_month,
-                          color: Theme.of(context).colorScheme.onSurface,
-                        ),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12), 
-                          borderSide: BorderSide.none
-                        ),
-                      ),
-                    ),
-                  ),
+                  DateSelector(),
                   PaySelector(),
                   ],  
                 ),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:smart_business_hub/mobile/screens/balance/views/expence/models/expense.dart';
+import 'package:smart_business_hub/mobile/screens/balance/views/expence/models/expense_selector.dart';
 
 class ExpenceSelector extends StatefulWidget {
   const ExpenceSelector({super.key});
@@ -9,7 +9,7 @@ class ExpenceSelector extends StatefulWidget {
 }
 
 class _ExpenceSelectorState extends State<ExpenceSelector> {
-  late Expense acount = Expense.empty;
+  late ExpenseSelector acount = ExpenseSelector.empty;
   @override
   Widget build(BuildContext context) {
     return Padding(

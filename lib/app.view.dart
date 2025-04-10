@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:income_repository/income_repository.dart';
+import 'package:provider/provider.dart';
 import 'package:smart_business_hub/bloc/auth%20bloc/authentication_bloc.dart';
 import 'package:smart_business_hub/mobile/screens/auth/blocs/sign_in_bloc/sign_in_bloc.dart';
+import 'package:smart_business_hub/mobile/screens/balance/bloc/create_income/create_income_bloc.dart';
 import 'package:smart_business_hub/mobile/screens/balance/bloc/get_income/get_income_bloc.dart';
 import 'package:smart_business_hub/mobile/screens/homescreen/home_screen.dart';
 import 'package:smart_business_hub/mobile/screens/onboarding/onboarding_screen.dart';
@@ -34,6 +36,11 @@ class MyAppView extends StatelessWidget {
               BlocProvider(
                 create: (context) => SignInBloc(
                     context.read<AuthenticationBloc>().userRepository),
+              ),
+              BlocProvider(
+                create: (context) => CreateIncomeBloc(
+                  FirebaseIncomeRepo()
+                )..add(CreateIncome(Income.empty)),
               ),
               BlocProvider(
                 create: (context) => GetIncomeBloc(

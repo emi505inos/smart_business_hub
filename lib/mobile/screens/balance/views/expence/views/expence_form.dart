@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:income_repository/income_repository.dart';
 import 'package:intl/intl.dart';
+import 'package:expense_repository/src/models/expence.dart';
 import 'package:smart_business_hub/mobile/screens/balance/views/expence/models/categories_list.dart';
+import 'package:smart_business_hub/mobile/screens/balance/views/expence/models/expense_selector.dart';
 import 'package:smart_business_hub/mobile/screens/balance/views/expence/models/supplies_list.dart';
 import 'package:uuid/uuid.dart';
 
@@ -15,7 +17,7 @@ class ExpenceForm extends StatefulWidget {
 }
 
 class _ExpenceFormState extends State<ExpenceForm> {
-  TextEditingController incomeController = TextEditingController();
+  TextEditingController expenceController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
   TextEditingController payMethodController = TextEditingController();
   TextEditingController dateController = TextEditingController();
@@ -23,7 +25,7 @@ class _ExpenceFormState extends State<ExpenceForm> {
   String selectedOption = 'Selecciona una opción';
   String selectedSupplier = 'Escoge tu proveedor';
   DateTime selectedDate = DateTime.now();
-  late Income income;
+  late Expense expense;
   bool isLoading = false;
   
 
@@ -31,8 +33,8 @@ class _ExpenceFormState extends State<ExpenceForm> {
   void initState() {
     super.initState();
     dateController.text = DateFormat.yMMMMd('es_AR').format(DateTime.now());
-    income = Income.empty;
-    income.saleId = const Uuid().v1();
+    expense = Expense.empty;
+    expense.expenseId = const Uuid().v1();
   }
   @override
   Widget build(BuildContext context) {
@@ -62,14 +64,14 @@ class _ExpenceFormState extends State<ExpenceForm> {
               onTap: () async {
                 DateTime? newDate = await showDatePicker(
                   context: context, 
-                  initialDate: income.dateTime, 
+                  initialDate: expense.dateTime, 
                   firstDate: DateTime(2000), 
                   lastDate: DateTime.now()
                 );
                 if (newDate != null) {
                   setState(() {
                     dateController.text = DateFormat.yMMMMd('es_AR').format(newDate);
-                    income.dateTime = newDate;
+                    expense.dateTime = newDate;
                   });
                 }
               },
@@ -228,7 +230,7 @@ class _ExpenceFormState extends State<ExpenceForm> {
           SizedBox(
             width: MediaQuery.of(context).size.width * 4,
             child: TextFormField(
-              controller: incomeController,
+              controller: expenceController,
               textAlignVertical: TextAlignVertical.center,
               textAlign: TextAlign.right,
               keyboardType: TextInputType.number,
@@ -431,7 +433,7 @@ class _ExpenceFormState extends State<ExpenceForm> {
                     InkWell(
                       onTap: () {
                         setState(() {
-                          income.payMethod = 0;
+                          expense.payMethod = 0;
                         });
                       },
                       borderRadius: BorderRadius.circular(10),
@@ -441,7 +443,7 @@ class _ExpenceFormState extends State<ExpenceForm> {
                         decoration: BoxDecoration(
                           color: Theme.of(context).colorScheme.onPrimary,
                           borderRadius: BorderRadius.circular(10),
-                          border: income.payMethod == 0
+                          border: expense.payMethod == 0
                           ? Border.all(
                             width: 2,
                             color: Theme.of(context).colorScheme.onSecondary 
@@ -479,7 +481,7 @@ class _ExpenceFormState extends State<ExpenceForm> {
                     InkWell(
                       onTap: () {
                         setState(() {
-                          income.payMethod = 1;
+                          expense.payMethod = 1;
                         });
                         
                       },
@@ -490,7 +492,7 @@ class _ExpenceFormState extends State<ExpenceForm> {
                         decoration: BoxDecoration(
                           color: Theme.of(context).colorScheme.onPrimary,
                           borderRadius: BorderRadius.circular(10),
-                          border: income.payMethod == 1
+                          border: expense.payMethod == 1
                           ? Border.all(
                             width: 2,
                             color: Theme.of(context).colorScheme.onSecondary 
@@ -528,7 +530,7 @@ class _ExpenceFormState extends State<ExpenceForm> {
                     InkWell(
                       onTap: () {
                         setState(() {
-                          income.payMethod = 2;
+                          expense.payMethod = 2;
                         });
                         
                       },
@@ -539,7 +541,7 @@ class _ExpenceFormState extends State<ExpenceForm> {
                         decoration: BoxDecoration(
                           color: Theme.of(context).colorScheme.onPrimary,
                           borderRadius: BorderRadius.circular(10),
-                          border: income.payMethod == 2
+                          border: expense.payMethod == 2
                           ? Border.all(
                             width: 2,
                             color: Theme.of(context).colorScheme.onSecondary 

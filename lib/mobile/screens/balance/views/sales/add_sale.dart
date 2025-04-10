@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:income_repository/income_repository.dart';
 import 'package:smart_business_hub/mobile/screens/balance/bloc/create_income/create_income_bloc.dart';
-import 'package:smart_business_hub/mobile/screens/balance/views/sales/free_sales_form.dart';
+import 'package:smart_business_hub/mobile/screens/balance/views/sales/free_sales_screen.dart';
 import 'package:smart_business_hub/mobile/screens/balance/views/sales/new_product_sale_screen.dart';
 
 class AddSaleView extends StatefulWidget {
@@ -136,12 +136,14 @@ class _AddSaleViewState extends State<AddSaleView> {
             InkWell(
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
-                    builder: (_) => BlocProvider(
-                          create: (context) => CreateIncomeBloc(
-                            FirebaseIncomeRepo()
-                          ),
-                          child: FreeSalesForm(),
-                        )));
+                  builder: (_) => BlocProvider(
+                      create: (context) => CreateIncomeBloc(
+                        FirebaseIncomeRepo()
+                      ),
+                      child: FreeSalesScreen(),
+                    )
+                  )
+                );
               },
               child: Ink(
                 height: MediaQuery.of(context).size.height * 0.12,

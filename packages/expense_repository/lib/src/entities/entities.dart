@@ -1,0 +1,1 @@
+export 'package:expense_repository/src/entities/expense_entity.dart';

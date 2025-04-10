@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:income_repository/income_repository.dart';
+import 'package:smart_business_hub/mobile/screens/balance/bloc/create_income/create_income_bloc.dart';
+import 'package:smart_business_hub/mobile/screens/balance/views/pay_credit/pay_credit_screen.dart';
+import 'package:smart_business_hub/mobile/screens/balance/views/sales/free_sales_screen.dart';
 import 'package:smart_business_hub/mobile/screens/balance/views/sales/models/acount.dart';
 
 class PaySelector extends StatefulWidget {
@@ -42,6 +47,14 @@ class _PaySelectorState extends State<PaySelector> {
                 setState(() {
                   acount.money= 0;
                 });
+                Navigator.of(context).push(MaterialPageRoute(
+                      builder: (BuildContext context) => BlocProvider(
+                        create: (context) => CreateIncomeBloc(
+                          FirebaseIncomeRepo()
+                        ),
+                        child: FreeSalesScreen(),
+                      ),
+                    ));
                 
               },
               child: Ink(
@@ -75,7 +88,15 @@ class _PaySelectorState extends State<PaySelector> {
                 setState(() {
                   acount.money= 1 ;
                 });
-                
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (_) => BlocProvider(
+                      create: (context) => CreateIncomeBloc(
+                        FirebaseIncomeRepo()
+                      ),
+                      child: PayCreditScreen(),
+                    )
+                  )
+                );
               },
               child: Ink(
                width: MediaQuery.of(context).size.width*0.21,
