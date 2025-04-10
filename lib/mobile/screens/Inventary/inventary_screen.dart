@@ -23,18 +23,6 @@ class _InventaryScreenState extends State<InventaryScreen> {
   void initState() {
     super.initState();
     category = Category.empty;
-  
-  void showProgress() {
-    setState(() {
-      isloading = true;
-    });
-  }
-
-  void hideProgress() {
-    setState(() {
-      isloading = false;
-    });
-  }
   }
   @override
   Widget build(BuildContext context) {

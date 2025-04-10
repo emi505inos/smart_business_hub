@@ -1,11 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:income_repository/income_repository.dart';
 import 'package:intl/intl.dart';
-import 'package:expense_repository/src/models/expence.dart';
+import 'package:expense_repository/src/models/models.dart';
 import 'package:smart_business_hub/mobile/screens/balance/views/expence/models/categories_list.dart';
-import 'package:smart_business_hub/mobile/screens/balance/views/expence/models/expense_selector.dart';
 import 'package:smart_business_hub/mobile/screens/balance/views/expence/models/supplies_list.dart';
 import 'package:uuid/uuid.dart';
 

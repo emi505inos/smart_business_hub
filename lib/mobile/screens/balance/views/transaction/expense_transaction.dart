@@ -3,8 +3,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:income_repository/income_repository.dart';
 import 'package:intl/intl.dart';
 
-class IncomeTransaction extends StatelessWidget {
-  const IncomeTransaction({super.key});
+class ExpenseTransaction extends StatelessWidget {
+  const ExpenseTransaction({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -67,13 +67,13 @@ class IncomeTransaction extends StatelessWidget {
                         height: MediaQuery.of(context).size.height * 0.085,
                         width:MediaQuery.of(context).size.width * 0.085,
                         decoration: BoxDecoration(
-                          color: Color.fromRGBO(92, 226, 170, 0.5),
+                          color: Color.fromARGB(255, 255, 222, 222),
                           shape: BoxShape.circle),
                         child: Center(
                           child: FaIcon(
                             FontAwesomeIcons.moneyBill1,
                             size: 23,
-                            color: Theme.of(context).colorScheme.onSecondary
+                            color: Color.fromARGB(255, 193, 77, 69),
                           )
                         )
                       ),
@@ -160,7 +160,7 @@ class IncomeTransaction extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Text(
-                        '\$ ${income[i].income}',
+                        '- \$ ${income[i].income}',
                         style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
@@ -174,7 +174,7 @@ class IncomeTransaction extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
-                          color: Theme.of(context).colorScheme.onSecondary
+                          color: Color.fromARGB(255, 193, 77, 69),
                         ),
                       )
                     ],

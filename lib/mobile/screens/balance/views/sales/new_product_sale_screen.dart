@@ -1,7 +1,6 @@
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:smart_business_hub/mobile/screens/balance/views/sales/models/barcode_scaner.dart';
 import 'package:smart_business_hub/mobile/screens/balance/views/sales/models/category.dart';
 

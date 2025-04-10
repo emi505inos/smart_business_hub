@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:smart_business_hub/mobile/screens/balance/views/transaction/expense_transaction.dart';
 import 'package:smart_business_hub/mobile/screens/balance/views/transaction/income_transaction.dart';
 
 class BalanceByIncExp extends StatefulWidget {
@@ -65,7 +66,7 @@ class _BalanceByIncExpState extends State<BalanceByIncExp> with TickerProviderSt
                 child: IncomeTransaction()
               ),
               Card.filled(
-                child: IncomeTransaction()
+                child: ExpenseTransaction()
               ),
               ]
             ),

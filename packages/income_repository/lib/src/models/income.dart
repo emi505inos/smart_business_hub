@@ -3,6 +3,7 @@ import 'package:uuid/uuid.dart';
 
 class Income {
   String saleId;
+  int quantity;
   DateTime dateTime;
   int income;
   String description;
@@ -10,6 +11,7 @@ class Income {
   int payMethod;
 
 Income({
+  required this.quantity,
   required this.saleId,
   required this.dateTime,
   required this.income,
@@ -24,7 +26,8 @@ static final empty = Income(
   income: 0, 
   description: '', 
   clients: '', 
-  payMethod: 0
+  payMethod: 0, 
+  quantity: 1
 );
 
 IncomeEntity toEntity() {
@@ -34,7 +37,8 @@ IncomeEntity toEntity() {
     income: income, 
     description: description, 
     clients: clients, 
-    payMethod: payMethod
+    payMethod: payMethod,
+    quantity: quantity
   );
 }
 
@@ -45,7 +49,8 @@ static Income fromEntity(IncomeEntity entity) {
     income: entity.income, 
     description: entity.description, 
     clients: entity.clients, 
-    payMethod: entity.payMethod
+    payMethod: entity.payMethod,
+    quantity: entity.quantity
   );
 }
 

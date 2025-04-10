@@ -1,7 +1,7 @@
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:expense_repository/src/expence_repo.dart';
+import 'package:expense_repository/src/expense_repo.dart';
 
 import 'entities/entities.dart';
 import 'models/models.dart';

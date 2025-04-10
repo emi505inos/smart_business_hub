@@ -8,6 +8,7 @@ import 'package:smart_business_hub/mobile/screens/balance/balance_screen.dart';
 import 'package:smart_business_hub/mobile/screens/balance/bloc/create_income/create_income_bloc.dart';
 import 'package:smart_business_hub/mobile/screens/balance/views/sales/models/date_selector.dart';
 import 'package:smart_business_hub/mobile/screens/balance/views/sales/models/pay_selector.dart';
+import 'package:smart_business_hub/mobile/screens/balance/views/sales/models/sale_view.dart';
 import 'package:uuid/uuid.dart';
 
 class FreeSalesScreen extends StatefulWidget {
@@ -96,6 +97,8 @@ class _FreeSalesScreenState extends State<FreeSalesScreen> {
               income.clients = clientsController.text;
               income.payMethod = income.payMethod;
               context.read<CreateIncomeBloc>().add(CreateIncome(income));
+              Navigator.of(context).push(MaterialPageRoute(builder: (context) => SaleView())); 
+              
             });
           },
           style: ElevatedButton.styleFrom(
