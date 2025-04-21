@@ -1,7 +1,10 @@
+import 'package:expense_repository/expense_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:income_repository/income_repository.dart';
+import 'package:smart_business_hub/mobile/screens/balance/bloc/get_expense/get_expense_bloc.dart';
 import 'package:smart_business_hub/mobile/screens/balance/bloc/get_income/get_income_bloc.dart';
+
 import 'package:smart_business_hub/mobile/screens/balance/views/transaction/expense_transaction.dart';
 import 'package:smart_business_hub/mobile/screens/balance/views/transaction/income_transaction.dart';
 
@@ -33,48 +36,57 @@ class _BalanceByIncExpState extends State<BalanceByIncExp>
     return DefaultTabController(
         initialIndex: 1,
         length: 2,
-        child: Column(
-          children: <Widget>[
-            TabBar(controller: _tabController, tabs: <Widget>[
-              Tab(
-                child: Text(
-                'Ingresos',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Theme.of(context).colorScheme.onSurface
-                  )
-                ),
-              ),
-              Tab(
-                child: Text(
-                  'Egresos',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Theme.of(context).colorScheme.onSurface
-                  )
-                ),
-              ),
-            ]),
-            SizedBox(height: MediaQuery.of(context).size.height*0.02,),
-            SizedBox(
-              height: MediaQuery.of(context).size.height * 0.3,
-              child: TabBarView(controller: _tabController, children: <Widget>[
-                Card.filled(child: 
-                // BlocProvider<GetIncomeBloc>(
-                //   create: (context) => GetIncomeBloc(
-                //     RepositoryProvider.of<IncomeRepository>(context))
-                //     ..add(GetIncome()),
-                //   child: IncomeTransaction()
-                //   )
-                  IncomeTransaction()
-                ),
-                Card.filled(child: ExpenseTransaction()),
-              ]),
+        child: MultiBlocProvider(
+          providers: [
+            BlocProvider<GetIncomeBloc>(
+              create: (context) {
+                final bloc = GetIncomeBloc(FirebaseIncomeRepo());
+                bloc.add(GetIncome());
+                return bloc;
+              },
             ),
-            SizedBox(height: MediaQuery.of(context).size.height*0.02,),
+            BlocProvider<GetExpenseBloc>(
+              create: (context) {
+                final bloc = GetExpenseBloc(FirebaseExpenseRepo());
+                bloc.add(GetExpense());
+                return bloc;
+              },              
+            ),
           ],
+          child: Column(
+            children: <Widget>[
+              TabBar(controller: _tabController, tabs: <Widget>[
+                Tab(
+                  child: Text('Ingresos',
+                      style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).colorScheme.onSurface)),
+                ),
+                Tab(
+                  child: Text('Egresos',
+                      style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).colorScheme.onSurface)),
+                ),
+              ]),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.02,
+              ),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.3,
+                child:
+                    TabBarView(controller: _tabController, children: <Widget>[
+                  Card.filled(child:IncomeTransaction()),
+                  Card.filled(child: ExpenseTransaction()),
+                ]),
+              ),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.02,
+              ),
+            ],
+          ),
         ));
   }
 }
