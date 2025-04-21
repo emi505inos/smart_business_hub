@@ -5,6 +5,7 @@ class ExpenseEntity {
   String category;
   String description;
   int payMethod;
+  String supplier;
 
   ExpenseEntity({
     required this.expenseId,
@@ -13,6 +14,7 @@ class ExpenseEntity {
     required this.category,
     required this.description,
     required this.payMethod,
+    required this.supplier,
   });
   Map<String, Object?> toDocument() {
     return {
@@ -21,7 +23,8 @@ class ExpenseEntity {
       'expence': totalExpense,
       'category': category,
       'description': description,
-      'payMethod': payMethod
+      'payMethod': payMethod,
+      'supplier': supplier,
     };
   }
   static ExpenseEntity fromDocument(Map<String, dynamic> doc) {
@@ -31,7 +34,8 @@ class ExpenseEntity {
       totalExpense: doc['totalExpence'],
       category: doc['category'],
       description: doc['description'],
-      payMethod: doc['payMethod'],
+      payMethod: doc['payMethod'], 
+      supplier: doc['supplier'],
     );
   }
 }

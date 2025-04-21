@@ -6,11 +6,11 @@ import 'package:expense_repository/src/expense_repo.dart';
 import 'entities/entities.dart';
 import 'models/models.dart';
 
-class FirebaseExpenceRepo implements ExpenseRepository{
+class FirebaseExpenseRepo implements ExpenseRepository{
   final expenceCollection = FirebaseFirestore.instance.collection('expence');
   
   @override
-  Future<void> createExpence(Expense expence) async{
+  Future<void> createExpense(Expense expence) async{
     try {
       await expenceCollection
       .doc(expence.expenseId)
@@ -22,7 +22,7 @@ class FirebaseExpenceRepo implements ExpenseRepository{
   }
   
   @override
-  Future<List<Expense>> getExpences() async{
+  Future<List<Expense>> getExpenses() async{
     try {
       return await expenceCollection
       .get()

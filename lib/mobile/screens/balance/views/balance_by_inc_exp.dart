@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:income_repository/income_repository.dart';
+import 'package:smart_business_hub/mobile/screens/balance/bloc/get_income/get_income_bloc.dart';
 import 'package:smart_business_hub/mobile/screens/balance/views/transaction/expense_transaction.dart';
 import 'package:smart_business_hub/mobile/screens/balance/views/transaction/income_transaction.dart';
 
@@ -9,34 +12,33 @@ class BalanceByIncExp extends StatefulWidget {
   State<BalanceByIncExp> createState() => _BalanceByIncExpState();
 }
 
-class _BalanceByIncExpState extends State<BalanceByIncExp> with TickerProviderStateMixin{
+class _BalanceByIncExpState extends State<BalanceByIncExp>
+    with TickerProviderStateMixin {
   late final TabController _tabController;
-  
-  
+
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
   }
+
   @override
   void dispose() {
     _tabController.dispose();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
-
     return DefaultTabController(
-      initialIndex: 1,
-      length: 2, 
-      child: Column(
-        children: <Widget>[
-          TabBar(
-            controller: _tabController,
-            tabs: <Widget>[
+        initialIndex: 1,
+        length: 2,
+        child: Column(
+          children: <Widget>[
+            TabBar(controller: _tabController, tabs: <Widget>[
               Tab(
                 child: Text(
-                  'Ingresos',
+                'Ingresos',
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -54,26 +56,25 @@ class _BalanceByIncExpState extends State<BalanceByIncExp> with TickerProviderSt
                   )
                 ),
               ),
-            ]
-          ),
-          SizedBox(height: 20,),
-          SizedBox(
-            height: MediaQuery.of(context).size.height*0.3,
-            child: TabBarView(
-              controller: _tabController,
-              children: <Widget>[
-              Card.filled(
-                child: IncomeTransaction()
-              ),
-              Card.filled(
-                child: ExpenseTransaction()
-              ),
-              ]
+            ]),
+            SizedBox(height: MediaQuery.of(context).size.height*0.02,),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.3,
+              child: TabBarView(controller: _tabController, children: <Widget>[
+                Card.filled(child: 
+                // BlocProvider<GetIncomeBloc>(
+                //   create: (context) => GetIncomeBloc(
+                //     RepositoryProvider.of<IncomeRepository>(context))
+                //     ..add(GetIncome()),
+                //   child: IncomeTransaction()
+                //   )
+                  IncomeTransaction()
+                ),
+                Card.filled(child: ExpenseTransaction()),
+              ]),
             ),
-          ),
-          SizedBox(height: 20,),
-        ],
-      )
-    );
+            SizedBox(height: MediaQuery.of(context).size.height*0.02,),
+          ],
+        ));
   }
 }

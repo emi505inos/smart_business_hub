@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:smart_business_hub/mobile/screens/Inventary/views/categories_screen.dart';
+import 'package:smart_business_hub/mobile/screens/Inventary/views/create_product_screen.dart';
 import 'package:smart_business_hub/mobile/screens/auth/blocs/sign_in_bloc/sign_in_bloc.dart';
 import 'package:smart_business_hub/mobile/screens/balance/views/sales/models/category.dart';
 import 'package:smart_business_hub/mobile/screens/homescreen/views/new_business.dart';
@@ -120,6 +122,7 @@ class _InventaryScreenState extends State<InventaryScreen> {
           children: [
             ElevatedButton(
               onPressed: () {
+              Navigator.of(context).push(MaterialPageRoute(builder: (context) => CreateProductScreen()));
               
             }, 
             style: ButtonStyle(
@@ -145,6 +148,7 @@ class _InventaryScreenState extends State<InventaryScreen> {
           SizedBox(height: MediaQuery.of(context).size.height * 0.01,),
           ElevatedButton(
               onPressed: () {
+              Navigator.of(context).push(MaterialPageRoute(builder: (context) => CategoriesScreen()));
               
             }, 
             style: ButtonStyle(

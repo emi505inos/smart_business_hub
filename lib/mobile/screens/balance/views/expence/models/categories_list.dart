@@ -12,3 +12,9 @@ List<Map<String, dynamic>> categories = [
   {'icon': Icons.event_seat, 'name': 'Muebles, equipos o maquinaria'},
   {'icon': Icons.more_horiz, 'name': 'Otros'},
 ];
+
+List<Map<String, dynamic>> categories2 = [
+  {'name': 'Accesorios'},
+  {'name': 'Camiseta'},
+  {'name': 'Perfume'}
+];

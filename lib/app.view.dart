@@ -1,9 +1,12 @@
+import 'package:expense_repository/expense_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:income_repository/income_repository.dart';
 import 'package:smart_business_hub/bloc/auth%20bloc/authentication_bloc.dart';
 import 'package:smart_business_hub/mobile/screens/auth/blocs/sign_in_bloc/sign_in_bloc.dart';
+import 'package:smart_business_hub/mobile/screens/balance/bloc/create_expense/create_expense_bloc.dart';
 import 'package:smart_business_hub/mobile/screens/balance/bloc/create_income/create_income_bloc.dart';
+import 'package:smart_business_hub/mobile/screens/balance/bloc/get_expense/get_expense_bloc.dart';
 import 'package:smart_business_hub/mobile/screens/balance/bloc/get_income/get_income_bloc.dart';
 import 'package:smart_business_hub/mobile/screens/homescreen/home_screen.dart';
 import 'package:smart_business_hub/mobile/screens/onboarding/onboarding_screen.dart';
@@ -45,7 +48,17 @@ class MyAppView extends StatelessWidget {
                 create: (context) => GetIncomeBloc(
                   FirebaseIncomeRepo()
                 )..add(GetIncome()),
-              )
+              ),
+              BlocProvider(
+                create: (context) => CreateExpenseBloc(
+                  FirebaseExpenseRepo()
+                )..add(CreateExpense(Expense.empty)),
+              ),
+              BlocProvider(
+                create: (context) => GetExpenseBloc(
+                  FirebaseExpenseRepo()
+                )..add(GetExpense()),
+              ),
             ],
             child:  HomeScreen()
             

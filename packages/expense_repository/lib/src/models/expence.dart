@@ -7,6 +7,7 @@ class Expense {
   int totalExpence;
   String category;
   String description;
+  String supplier;
   int payMethod;
 
   Expense({
@@ -14,6 +15,7 @@ class Expense {
     required this.dateTime,
     required this.totalExpence,
     required this.category,
+    required this.supplier,
     required this.description,
     required this.payMethod,
   });
@@ -24,7 +26,8 @@ class Expense {
     totalExpence: 0,
     category: '',
     description: '',
-    payMethod: 0,
+    payMethod: 0, 
+    supplier: '',
   );
   
   ExpenseEntity toEntity() {
@@ -35,6 +38,7 @@ class Expense {
       category: category,
       description: description,
       payMethod: payMethod,
+      supplier: supplier,
     );
   }
 
@@ -46,6 +50,7 @@ class Expense {
       category: entity.category,
       description: entity.description,
       payMethod: entity.payMethod,
+      supplier: entity.supplier,
     );
   }
 }

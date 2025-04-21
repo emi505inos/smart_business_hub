@@ -1,5 +1,10 @@
+import 'package:expense_repository/expense_repository.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:smart_business_hub/mobile/screens/balance/bloc/create_expense/create_expense_bloc.dart';
 import 'package:smart_business_hub/mobile/screens/balance/views/expence/models/expense_selector.dart';
+import 'package:smart_business_hub/mobile/screens/balance/views/expence/views/expence_form.dart';
+import 'package:smart_business_hub/mobile/screens/balance/views/expence/views/new_debt_form.dart';
 
 class ExpenceSelector extends StatefulWidget {
   const ExpenceSelector({super.key});
@@ -38,7 +43,14 @@ class _ExpenceSelectorState extends State<ExpenceSelector> {
                             setState(() {
                               acount.selector= 0;
                             });
-                            
+                            // Navigator.of(context).push(MaterialPageRoute(
+                            //   builder: (BuildContext context) => BlocProvider(
+                            //   create: (context) => CreateExpenseBloc(
+                            //   FirebaseExpenseRepo()
+                            //   ),
+                            //   child: ExpenceForm(),
+                            //   ),
+                            // ));
                           },
                           child: Ink(
                             width: MediaQuery.of(context).size.width*0.45,
@@ -70,7 +82,14 @@ class _ExpenceSelectorState extends State<ExpenceSelector> {
                             setState(() {
                               acount.selector= 1 ;
                             });
-                            
+                            // Navigator.of(context).push(MaterialPageRoute(
+                            //   builder: (BuildContext context) => BlocProvider(
+                            //   create: (context) => CreateExpenseBloc(
+                            //   FirebaseExpenseRepo()
+                            //   ),
+                            //   child: NewDebtForm(),
+                            //   ),
+                            // ));
                           },
                           child: Ink(
                             width: MediaQuery.of(context).size.width*0.45,
