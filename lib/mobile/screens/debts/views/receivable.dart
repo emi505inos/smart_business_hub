@@ -1,0 +1,215 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+
+class Receivable extends StatefulWidget {
+  const Receivable({super.key});
+
+  @override
+  State<Receivable> createState() => _ReceivableState();
+}
+
+class _ReceivableState extends State<Receivable> {
+  var dateNow = DateFormat.yMMMMd('es_AR').format(DateTime.now());
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 15),
+      child: Column(
+        children: [
+          InkWell(
+            onTap: () {},
+            borderRadius: BorderRadius.circular(15),
+            child: Ink(
+              height: MediaQuery.of(context).size.height * 0.05,
+              width: MediaQuery.of(context).size.width,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15),
+                color: Theme.of(context).colorScheme.surface,
+                border: Border.all(
+                  color: Theme.of(context).colorScheme.onSurface,
+                  width: 3,
+                ),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    CupertinoIcons.doc_plaintext,
+                    color: Theme.of(context).colorScheme.onSurface
+                  ),
+                  SizedBox(width: MediaQuery.of(context).size.width * 0.02,),
+                  Text(
+                  'Reportes',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Theme.of(context).colorScheme.onSurface
+                    )
+                  ),
+                ],
+              ),
+            ),
+          ),
+          SizedBox(height: MediaQuery.of(context).size.height * 0.02,),
+          Container(
+            height: MediaQuery.of(context).size.height * 0.13,
+            width: MediaQuery.of(context).size.width,
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.onPrimary,
+              borderRadius: BorderRadius.circular(20),
+              boxShadow: [
+                BoxShadow(
+                  blurRadius: 1,
+                  color: Colors.grey.withValues(alpha: 0.5),
+                  spreadRadius: 1,
+                )
+              ]
+            ),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        '\$ 79',
+                        style: TextStyle(
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).colorScheme.onSurface
+                        )
+                      ),
+                      Container(
+                        height: MediaQuery.of(context).size.height * 0.07,
+                        width: MediaQuery.of(context).size.width * 0.07,
+                        decoration: BoxDecoration(
+                          color: Color.fromRGBO(92, 226, 170, 0.35),
+                          shape: BoxShape.circle
+                        ),
+                        child: Center(
+                          child: Text(
+                            '2',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.green[700]
+                            )
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                  Text(
+                    '1 Cliente',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.grey
+                    )
+                  )
+                ],
+              ),
+            ),
+          ),
+          SizedBox(height: MediaQuery.of(context).size.height * 0.02,),
+          SizedBox(
+            height: MediaQuery.of(context).size.height * 0.15,
+            width: MediaQuery.of(context).size.width,
+            child: ListView.builder(
+              itemCount: 1,
+              itemBuilder: (context, index) {
+                return InkWell(
+                  onTap: () {},
+                  borderRadius: BorderRadius.circular(20),
+                  child: Ink(
+                    height: MediaQuery.of(context).size.height * 0.15,
+                    width: MediaQuery.of(context).size.width*0.4,
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.onPrimary,
+                      borderRadius: BorderRadius.circular(20),
+                      boxShadow: [
+                        BoxShadow(
+                          blurRadius: 1,
+                          color: Colors.grey.withValues(alpha: 0.5),
+                          spreadRadius: 1,
+                        )
+                      ]
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(15),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Pedro',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Theme.of(context).colorScheme.onSurface
+                            )
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                '\$ 79',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.grey
+                                )
+                              ),
+                              Row(
+                                children: [
+                                  Container(
+                                    height: MediaQuery.of(context).size.height * 0.05,
+                                    width: MediaQuery.of(context).size.width * 0.05,
+                                    decoration: BoxDecoration(
+                                      color: Color.fromRGBO(92, 226, 170, 0.35),
+                                      shape: BoxShape.circle
+                                    ),
+                                    child: Center(
+                                      child: Text(
+                                        '2',
+                                        style: TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.green[700]
+                                        )
+                                      ),
+                                    ),
+                                  ),
+                                  Icon(
+                                    CupertinoIcons.chevron_forward,
+                                    size: 25,
+                                    color: Theme.of(context).colorScheme.onSurface
+                                  ),
+                                ],
+                              )
+                            ],
+                          ),
+                          SizedBox(height: MediaQuery.of(context).size.height * 0.01,),
+                          Text(
+                            dateNow,
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.grey[700]
+                            )
+                          ), 
+                        ],
+                      ),
+                    ),
+                  ),
+                );
+              },
+            ),
+          )
+        ],
+      ),
+    );
+  }
+}

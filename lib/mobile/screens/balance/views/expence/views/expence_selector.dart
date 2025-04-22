@@ -43,14 +43,14 @@ class _ExpenceSelectorState extends State<ExpenceSelector> {
                             setState(() {
                               acount.selector= 0;
                             });
-                            // Navigator.of(context).push(MaterialPageRoute(
-                            //   builder: (BuildContext context) => BlocProvider(
-                            //   create: (context) => CreateExpenseBloc(
-                            //   FirebaseExpenseRepo()
-                            //   ),
-                            //   child: ExpenceForm(),
-                            //   ),
-                            // ));
+                            Navigator.of(context).push(MaterialPageRoute(
+                              builder: (BuildContext context) => BlocProvider(
+                              create: (context) => CreateExpenseBloc(
+                              FirebaseExpenseRepo()
+                              ),
+                              child: ExpenceForm(),
+                              ),
+                            ));
                           },
                           child: Ink(
                             width: MediaQuery.of(context).size.width*0.45,
@@ -82,14 +82,14 @@ class _ExpenceSelectorState extends State<ExpenceSelector> {
                             setState(() {
                               acount.selector= 1 ;
                             });
-                            // Navigator.of(context).push(MaterialPageRoute(
-                            //   builder: (BuildContext context) => BlocProvider(
-                            //   create: (context) => CreateExpenseBloc(
-                            //   FirebaseExpenseRepo()
-                            //   ),
-                            //   child: NewDebtForm(),
-                            //   ),
-                            // ));
+                            Navigator.of(context).push(MaterialPageRoute(
+                              builder: (BuildContext context) => BlocProvider(
+                              create: (context) => CreateExpenseBloc(
+                              FirebaseExpenseRepo()
+                              ),
+                              child: NewDebtForm(),
+                              ),
+                            ));
                           },
                           child: Ink(
                             width: MediaQuery.of(context).size.width*0.45,
