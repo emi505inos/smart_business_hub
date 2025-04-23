@@ -1,8 +1,13 @@
+import 'package:expense_repository/expense_repository.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:smart_business_hub/mobile/screens/auth/blocs/sign_in_bloc/sign_in_bloc.dart';
+import 'package:smart_business_hub/mobile/screens/balance/bloc/create_expense/create_expense_bloc.dart';
+import 'package:smart_business_hub/mobile/screens/explorer/screens/clients/clients_screen.dart';
+import 'package:smart_business_hub/mobile/screens/explorer/screens/statistics/statistics_screen.dart';
+import 'package:smart_business_hub/mobile/screens/explorer/screens/supliers/supliers_screen.dart';
 import 'package:smart_business_hub/mobile/screens/screens.dart';
 import 'package:user_repository/user_repository.dart';
 
@@ -166,8 +171,13 @@ class HomeScreen extends StatelessWidget {
                 ),
                 InkWell(
                   onTap: () {
-                    Navigator.of(context)
-                        .push(MaterialPageRoute(builder: (_) => NewExpence()));
+                    Navigator.of(context).push(MaterialPageRoute(
+                builder: (_) => BlocProvider(
+                  create: (context) => CreateExpenseBloc(
+                    FirebaseExpenseRepo()
+                  ),
+                  child: NewExpence(),
+                )));
                   },
                   borderRadius: BorderRadius.circular(20),
                   child: Ink(
@@ -331,7 +341,9 @@ class HomeScreen extends StatelessWidget {
                             ),
                           ),
                           InkWell(
-                            onTap: () {},
+                            onTap: () {
+                              Navigator.of(context).push(MaterialPageRoute(builder: (context) => StatisticsScreen(),));
+                            },
                             child: Ink(
                               height: MediaQuery.of(context).size.height * 0.23,
                               width: MediaQuery.of(context).size.width * 0.23,
@@ -361,7 +373,9 @@ class HomeScreen extends StatelessWidget {
                             ),
                           ),
                           InkWell(
-                            onTap: () {},
+                            onTap: () {
+                              Navigator.of(context).push(MaterialPageRoute(builder: (context) => ClientsScreen(),));
+                            },
                             child: Ink(
                               width: MediaQuery.of(context).size.width * 0.23,
                               child: Column(
@@ -397,7 +411,9 @@ class HomeScreen extends StatelessWidget {
                       child: Row(
                         children: [
                           InkWell(
-                            onTap: () {},
+                            onTap: () {
+                              Navigator.of(context).push(MaterialPageRoute(builder: (context) => SupliersScreen(),));
+                            },
                             child: Ink(
                               height: MediaQuery.of(context).size.height * 0.18,
                               width: MediaQuery.of(context).size.width * 0.2,
