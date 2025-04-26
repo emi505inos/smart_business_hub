@@ -1,6 +1,6 @@
+import 'package:business_repository/repositories.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:income_repository/income_repository.dart';
 import 'package:smart_business_hub/mobile/screens/balance/bloc/create_income/create_income_bloc.dart';
 import 'package:smart_business_hub/mobile/screens/balance/views/pay_credit/pay_credit_screen.dart';
 import 'package:smart_business_hub/mobile/screens/balance/views/sales/free_sales_screen.dart';

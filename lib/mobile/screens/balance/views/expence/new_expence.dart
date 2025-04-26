@@ -1,4 +1,4 @@
-import 'package:expense_repository/expense_repository.dart';
+import 'package:business_repository/repositories.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,7 +7,6 @@ import 'package:intl/intl.dart';
 import 'package:smart_business_hub/mobile/screens/balance/bloc/create_expense/create_expense_bloc.dart';
 import 'package:smart_business_hub/mobile/screens/balance/views/expence/models/categories_list.dart';
 import 'package:smart_business_hub/mobile/screens/balance/views/expence/models/supplies_list.dart';
-import 'package:smart_business_hub/mobile/screens/balance/views/expence/views/expence_form.dart';
 import 'package:smart_business_hub/mobile/screens/balance/views/expence/views/expence_selector.dart';
 import 'package:uuid/uuid.dart';
 
@@ -103,7 +102,7 @@ class _NewExpenceState extends State<NewExpence> {
                     expense.totalExpence = int.parse(expenceController.text);
                     expense.category = selectedOption;
                     expense.payMethod = expense.payMethod;
-                    expense.supplier = selectedSupplier;
+                    // expense.supplier = selectedSupplier;
                     context
                         .read<CreateExpenseBloc>()
                         .add(CreateExpense(expense));

@@ -1,8 +1,8 @@
+import 'package:business_repository/repositories.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:income_repository/income_repository.dart';
 import 'package:intl/intl.dart';
 import 'package:smart_business_hub/mobile/screens/balance/balance_screen.dart';
 import 'package:smart_business_hub/mobile/screens/balance/bloc/create_income/create_income_bloc.dart';
@@ -94,7 +94,7 @@ class _FreeSalesScreenState extends State<FreeSalesScreen> {
               income.dateTime = parsedDate;
               income.income = int.parse(incomeController.text);
               income.description = descriptionController.text;
-              income.clients = clientsController.text;
+              // income.clients = clientsController.text;
               income.payMethod = income.payMethod;
               context.read<CreateIncomeBloc>().add(CreateIncome(income));
               Navigator.of(context).push(MaterialPageRoute(builder: (context) => SaleView())); 

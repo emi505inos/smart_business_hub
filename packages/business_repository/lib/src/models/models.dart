@@ -1,0 +1,8 @@
+export 'package:business_repository/src/models/category.dart';
+export 'package:business_repository/src/models/income.dart';
+export 'package:business_repository/src/models/product.dart';
+export 'package:business_repository/src/models/expense.dart';
+export 'package:business_repository/src/models/clients.dart';
+export 'package:business_repository/src/models/suplier.dart';
+export 'package:business_repository/src/models/business.dart';
+export 'package:business_repository/src/models/employee.dart';

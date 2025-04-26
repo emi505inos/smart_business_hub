@@ -51,11 +51,16 @@ dependencies:
   user_repository:
     path: packages/user_repository
 
-  income_repository:
-    path: packages/income_repository
+  # income_repository:
+  #   path: packages/income_repository
 
-  expense_repository:
-    path: packages/expense_repository
+  # expense_repository:
+  #   path: packages/expense_repository
+  
+  business_repository:
+    path: packages/business_repository
+
+  
   
   firebase_core: ^3.12.0
 

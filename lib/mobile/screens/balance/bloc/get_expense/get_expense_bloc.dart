@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
+import 'package:business_repository/repositories.dart';
 import 'package:equatable/equatable.dart';
-import 'package:expense_repository/expense_repository.dart';
 
 part 'get_expense_event.dart';
 part 'get_expense_state.dart';
