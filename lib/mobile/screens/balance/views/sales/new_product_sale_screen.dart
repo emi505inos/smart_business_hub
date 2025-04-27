@@ -13,12 +13,12 @@ class NewProductSalesScreen extends StatefulWidget {
 }
 
 class _NewProductSalesScreenState extends State<NewProductSalesScreen> {
-  late Category category;
+  late CategorySelector category;
 
    @override
   void initState() {
     super.initState();
-    category = Category.empty;
+    category = CategorySelector.empty;
   }
 
 

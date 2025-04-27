@@ -7,7 +7,7 @@ class ProductEntity {
   int price;
   int quantity;
   int cost;
-  Category category;
+  // Category category;
   String imageUrl;
 
   ProductEntity({
@@ -17,7 +17,7 @@ class ProductEntity {
     required this.price,
     required this.quantity,
     required this.cost,
-    required this.category,
+    // required this.category,
     required this.imageUrl,
   });
   Map<String, Object?> toDocument() {
@@ -28,7 +28,7 @@ class ProductEntity {
       'price': price,
       'quantity': quantity,
       'cost': cost,
-      'category': category,
+      // 'category': category,
       'imageUrl': imageUrl,
     };
   }
@@ -41,7 +41,7 @@ class ProductEntity {
       price: doc['price'],
       quantity: doc['quantity'],
       cost: doc['cost'],
-      category: doc['category'],
+      // category: doc['category'],
       imageUrl: doc['imageUrl'],
     );
   }

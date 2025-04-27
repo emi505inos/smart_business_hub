@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:smart_business_hub/mobile/screens/explorer/explorer_screen.dart';
 import 'package:smart_business_hub/mobile/screens/explorer/screens/supliers/screens/create_suplier.dart';
 import 'package:smart_business_hub/mobile/screens/explorer/screens/supliers/screens/suplier_list.dart';
 import 'package:smart_business_hub/mobile/screens/navigatorbar/custom_navigator_bar.dart';

@@ -3,8 +3,8 @@ import 'package:business_repository/src/entities/category_entity.dart';
 import 'package:uuid/uuid.dart';
 
 class Category {
-  final String categoryId;
-  final String name;
+  String categoryId;
+  String name;
 
   Category({
     required this.categoryId, 

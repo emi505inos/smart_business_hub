@@ -11,7 +11,7 @@ class Product {
   int price;
   int quantity;
   int cost;
-  Category category;
+  // Category category;
   String imageUrl;
 
   Product({
@@ -21,7 +21,7 @@ class Product {
     required this.price,
     required this.quantity,
     required this.cost,
-    required this.category,
+    // required this.category,
     required this.imageUrl,
   });
 
@@ -32,7 +32,7 @@ class Product {
     price: 0,
     quantity: 1,
     cost: 0,
-    category: Category.empty,
+    // category: Category.empty,
     imageUrl: '',
   ); 
 
@@ -44,7 +44,7 @@ class Product {
       price: price,
       quantity: quantity,
       cost: cost,
-      category: category,
+      // category: category,
       imageUrl: imageUrl,
     );
   }
@@ -56,7 +56,7 @@ class Product {
         price: entity.price,
         quantity: entity.quantity,
         cost: entity.cost,
-        category: entity.category,
+        // category: entity.category,
         imageUrl: entity.imageUrl,
       );
     }

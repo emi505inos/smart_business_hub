@@ -1,10 +1,10 @@
-class Category {
+class CategorySelector {
   int select;
 
-Category ({
+CategorySelector ({
 required this.select
 });
-static final empty = Category(
+static final empty = CategorySelector(
   select: 0
   );
   

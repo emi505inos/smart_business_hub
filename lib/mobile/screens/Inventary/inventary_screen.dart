@@ -1,6 +1,10 @@
+import 'package:business_repository/product_repository.dart';
+import 'package:business_repository/repositories.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:smart_business_hub/mobile/screens/Inventary/bloc/create_category/create_category_bloc.dart';
+import 'package:smart_business_hub/mobile/screens/Inventary/bloc/create_product/create_product_bloc.dart';
 import 'package:smart_business_hub/mobile/screens/Inventary/views/categories_screen.dart';
 import 'package:smart_business_hub/mobile/screens/Inventary/views/create_product_screen.dart';
 import 'package:smart_business_hub/mobile/screens/auth/blocs/sign_in_bloc/sign_in_bloc.dart';
@@ -18,14 +22,15 @@ class InventaryScreen extends StatefulWidget {
 }
 
 class _InventaryScreenState extends State<InventaryScreen> {
-  late Category category;
+  late CategorySelector category;
   bool isloading = false;
 
-   @override
+  @override
   void initState() {
     super.initState();
-    category = Category.empty;
+    category = CategorySelector.empty;
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,25 +40,22 @@ class _InventaryScreenState extends State<InventaryScreen> {
         leading: Padding(
           padding: const EdgeInsets.all(8),
           child: CircleAvatar(
-            radius: 30,
-            backgroundColor: Theme.of(context).colorScheme.onPrimary,
-            child: IconButton(
-              onPressed: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                  builder: (BuildContext context) => BlocProvider(
-                    create: (context) => SignInBloc(
-                      FirebaseUserRepo(UserRepository)
-                    ),
-                    child: UserMenuScreen(),
-                  ),
-                ));
-              },
-              icon: Icon(
-                Icons.person_outline_outlined,
-                color: Theme.of(context).colorScheme.onSurface,
-              )
-            )
-          ),
+              radius: 30,
+              backgroundColor: Theme.of(context).colorScheme.onPrimary,
+              child: IconButton(
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (BuildContext context) => BlocProvider(
+                        create: (context) =>
+                            SignInBloc(FirebaseUserRepo(UserRepository)),
+                        child: UserMenuScreen(),
+                      ),
+                    ));
+                  },
+                  icon: Icon(
+                    Icons.person_outline_outlined,
+                    color: Theme.of(context).colorScheme.onSurface,
+                  ))),
         ),
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -105,103 +107,114 @@ class _InventaryScreenState extends State<InventaryScreen> {
           )
         ],
       ),
-    floatingActionButtonLocation: FloatingActionButtonLocation.miniCenterFloat,
-    floatingActionButton: Container(
-      height: MediaQuery.of(context).size.height*0.17,
-      width: MediaQuery.of(context).size.width*4 ,
-      decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.onPrimary,
-        borderRadius: BorderRadius.only(
-          topRight: Radius.circular(25),
-          topLeft: Radius.circular(25),
-        ),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(10),
-        child: Column(
-          children: [
-            ElevatedButton(
-              onPressed: () {
-              Navigator.of(context).push(MaterialPageRoute(builder: (context) => CreateProductScreen()));
-              
-            }, 
-            style: ButtonStyle(
-              backgroundColor: WidgetStateProperty.all(Theme.of(context).colorScheme.onSurface),
-              shape: WidgetStateProperty.all<RoundedRectangleBorder>(
-                RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15),
-                ),
-              ),
-              fixedSize: WidgetStatePropertyAll(Size(
-                MediaQuery.of(context).size.width*0.8,
-                MediaQuery.of(context).size.height*0.06
-              )),
-            ),
-            child: Text('Crear nuevo producto',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: Theme.of(context).colorScheme.onPrimary,
-              ),
-            ),
+      floatingActionButtonLocation:
+          FloatingActionButtonLocation.miniCenterFloat,
+      floatingActionButton: Container(
+        height: MediaQuery.of(context).size.height * 0.17,
+        width: MediaQuery.of(context).size.width * 4,
+        decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.onPrimary,
+          borderRadius: BorderRadius.only(
+            topRight: Radius.circular(25),
+            topLeft: Radius.circular(25),
           ),
-          SizedBox(height: MediaQuery.of(context).size.height * 0.01,),
-          ElevatedButton(
-              onPressed: () {
-              Navigator.of(context).push(MaterialPageRoute(builder: (context) => CategoriesScreen()));
-              
-            }, 
-            style: ButtonStyle(
-              backgroundColor: WidgetStateProperty.all(Theme.of(context).colorScheme.onPrimary),
-              shape: WidgetStateProperty.all<RoundedRectangleBorder>(
-                RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(10),
+          child: Column(
+            children: [
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => BlocProvider(
+                            create: (context) =>
+                                CreateProductBloc(FirebaseProductRepo()),
+                            child: CreateProductScreen(),
+                          )));
+                },
+                style: ButtonStyle(
+                  backgroundColor: WidgetStateProperty.all(
+                      Theme.of(context).colorScheme.onSurface),
+                  shape: WidgetStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                  ),
+                  fixedSize: WidgetStatePropertyAll(Size(
+                      MediaQuery.of(context).size.width * 0.8,
+                      MediaQuery.of(context).size.height * 0.06)),
                 ),
-              ),
-              side: WidgetStateProperty.all<BorderSide>(
-                BorderSide(
-                  color: Theme.of(context).colorScheme.onSurface,
-                  width: 2,
-                ),
-              ),
-              fixedSize: WidgetStatePropertyAll(Size(
-                MediaQuery.of(context).size.width*0.8,
-                MediaQuery.of(context).size.height*0.07
-              )),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  Icons.category_outlined,
-                  color: Theme.of(context).colorScheme.onSurface,
-                ),
-                SizedBox(width: MediaQuery.of(context).size.width * 0.03,),
-                Text(
-                  'Categorías',
+                child: Text(
+                  'Crear nuevo producto',
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
-                    color: Theme.of(context).colorScheme.onSurface,
+                    color: Theme.of(context).colorScheme.onPrimary,
                   ),
                 ),
-              ],
-            ),
-          )
-          ],
+              ),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.01,
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => BlocProvider(
+                            create: (context) => CreateCategoryBloc(FirebaseCategoryRepo()),
+                            child: CategoriesScreen(),
+                          )));
+                },
+                style: ButtonStyle(
+                  backgroundColor: WidgetStateProperty.all(
+                      Theme.of(context).colorScheme.onPrimary),
+                  shape: WidgetStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                  ),
+                  side: WidgetStateProperty.all<BorderSide>(
+                    BorderSide(
+                      color: Theme.of(context).colorScheme.onSurface,
+                      width: 2,
+                    ),
+                  ),
+                  fixedSize: WidgetStatePropertyAll(Size(
+                      MediaQuery.of(context).size.width * 0.8,
+                      MediaQuery.of(context).size.height * 0.07)),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.category_outlined,
+                      color: Theme.of(context).colorScheme.onSurface,
+                    ),
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.03,
+                    ),
+                    Text(
+                      'Categorías',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Theme.of(context).colorScheme.onSurface,
+                      ),
+                    ),
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
       ),
-    ),
-    bottomNavigationBar: CustomeNavigationBar(),
+      bottomNavigationBar: CustomeNavigationBar(),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(15),
           child: Column(
             children: [
               InkWell(
-                onTap: () {
-                  
-                },
+                onTap: () {},
                 borderRadius: BorderRadius.circular(20),
                 child: Ink(
                   height: MediaQuery.of(context).size.height * 0.06,
@@ -217,24 +230,23 @@ class _InventaryScreenState extends State<InventaryScreen> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(
-                        CupertinoIcons.doc_plaintext,
-                        color: Theme.of(context).colorScheme.onSurface
+                      Icon(CupertinoIcons.doc_plaintext,
+                          color: Theme.of(context).colorScheme.onSurface),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.02,
                       ),
-                      SizedBox(width: MediaQuery.of(context).size.width * 0.02,),
-                      Text(
-                      'Reportes',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Theme.of(context).colorScheme.onSurface
-                        )
-                      ),
+                      Text('Reportes',
+                          style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Theme.of(context).colorScheme.onSurface)),
                     ],
                   ),
                 ),
               ),
-              SizedBox(height: MediaQuery.of(context).size.height * 0.02,),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.02,
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -254,10 +266,9 @@ class _InventaryScreenState extends State<InventaryScreen> {
                           Text(
                             'Total de referencias',
                             style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              color: Theme.of(context).colorScheme.onSurface
-                            ),
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: Theme.of(context).colorScheme.onSurface),
                           ),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
@@ -266,10 +277,11 @@ class _InventaryScreenState extends State<InventaryScreen> {
                                 Text(
                                   '2',
                                   style: TextStyle(
-                                    fontSize: 35,
-                                    fontWeight: FontWeight.bold,
-                                    color: Theme.of(context).colorScheme.onSurface
-                                  ),
+                                      fontSize: 35,
+                                      fontWeight: FontWeight.bold,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onSurface),
                                 )
                               ],
                             ),
@@ -294,10 +306,9 @@ class _InventaryScreenState extends State<InventaryScreen> {
                           Text(
                             'Costo total',
                             style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              color: Theme.of(context).colorScheme.onSurface
-                            ),
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: Theme.of(context).colorScheme.onSurface),
                           ),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
@@ -306,10 +317,11 @@ class _InventaryScreenState extends State<InventaryScreen> {
                                 Text(
                                   '\$ 70',
                                   style: TextStyle(
-                                    fontSize: 35,
-                                    fontWeight: FontWeight.bold,
-                                    color: Theme.of(context).colorScheme.onSurface
-                                  ),
+                                      fontSize: 35,
+                                      fontWeight: FontWeight.bold,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onSurface),
                                 )
                               ],
                             ),
@@ -320,11 +332,10 @@ class _InventaryScreenState extends State<InventaryScreen> {
                   ),
                 ],
               ),
-                SingleChildScrollView(
+              SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: SizedBox(
-                  height: MediaQuery.of(context).size.height*0.1,
-                  width: MediaQuery.of(context).size.width*1.1,
+                  height: MediaQuery.of(context).size.height * 0.1,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -333,26 +344,22 @@ class _InventaryScreenState extends State<InventaryScreen> {
                           setState(() {
                             category.select = 0;
                           });
-                          
                         },
                         borderRadius: BorderRadius.circular(17),
                         child: Ink(
                           height: MediaQuery.of(context).size.height * 0.05,
                           width: MediaQuery.of(context).size.width * 0.45,
                           decoration: category.select == 0
-                          ? BoxDecoration(
-                            borderRadius: BorderRadius.circular(17),
-                            color: Theme.of(context).colorScheme.primary,
-                            )
-                          : BoxDecoration(
-                            borderRadius: BorderRadius.circular(17),
-                            color: Theme.of(context).colorScheme.onPrimary,
-                            border: Border.all(
-                              color: Colors.grey.shade400,
-                              width: 2
-                            )
-                          ),
-                          
+                              ? BoxDecoration(
+                                  borderRadius: BorderRadius.circular(17),
+                                  color: Theme.of(context).colorScheme.primary,
+                                )
+                              : BoxDecoration(
+                                  borderRadius: BorderRadius.circular(17),
+                                  color:
+                                      Theme.of(context).colorScheme.onPrimary,
+                                  border: Border.all(
+                                      color: Colors.grey.shade400, width: 2)),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -361,90 +368,82 @@ class _InventaryScreenState extends State<InventaryScreen> {
                                 style: TextStyle(
                                   fontSize: 17,
                                   fontWeight: FontWeight.bold,
-                                  color: Theme.of(context).colorScheme.onSurface,
+                                  color:
+                                      Theme.of(context).colorScheme.onSurface,
                                 ),
                               ),
                             ],
                           ),
                         ),
                       ),
-                      InkWell(
-                        onTap: () {
-                          setState(() {
-                            category.select = 1;
-                          });
-                        },
-                        borderRadius: BorderRadius.circular(17),
-                        child: Ink(
-                          height: MediaQuery.of(context).size.height * 0.05,
-                          width: MediaQuery.of(context).size.width * 0.30,
-                          decoration: category.select == 1
-                          ? BoxDecoration(
-                            borderRadius: BorderRadius.circular(17),
-                            color: Theme.of(context).colorScheme.primary,
-                            )
-                          : BoxDecoration(
-                            borderRadius: BorderRadius.circular(17),
-                            color: Theme.of(context).colorScheme.onPrimary,
-                            border: Border.all(
-                              color: Colors.grey.shade400,
-                              width: 2
-                            )
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                'Accesorios',
-                                style: TextStyle(
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.bold,
-                                  color: Theme.of(context).colorScheme.onSurface,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.02,
                       ),
-                      InkWell(
-                        onTap: () {
-                          setState(() {
-                            category.select = 2;
-                          });
-                        },
-                        borderRadius: BorderRadius.circular(17),
-                        child: Ink(
-                          height: MediaQuery.of(context).size.height * 0.05,
-                          width: MediaQuery.of(context).size.width * 0.25,
-                          decoration: category.select == 2
-                          ? BoxDecoration(
-                            borderRadius: BorderRadius.circular(17),
-                            color: Theme.of(context).colorScheme.primary,
-                            )
-                          : BoxDecoration(
-                            borderRadius: BorderRadius.circular(17),
-                            color: Theme.of(context).colorScheme.onPrimary,
-                            border: Border.all(
-                              color: Colors.grey.shade400,
-                              width: 2
-                            )
-                          ),
-                          
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                'Camisas',
-                                style: TextStyle(
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.bold,
-                                  color: Theme.of(context).colorScheme.onSurface,
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.05,
+                        width: MediaQuery.of(context).size.width,
+                        child: ListView.builder(
+                          itemCount: 2,
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (context, index) {
+                            return Row(
+                              children: [
+                                InkWell(
+                                  onTap: () {
+                                    setState(() {
+                                      category.select = 1;
+                                    });
+                                  },
+                                  borderRadius: BorderRadius.circular(17),
+                                  child: Ink(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.05,
+                                    width: MediaQuery.of(context).size.width *
+                                        0.30,
+                                    decoration: category.select == 1
+                                        ? BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(17),
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .primary,
+                                          )
+                                        : BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(17),
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .onPrimary,
+                                            border: Border.all(
+                                                color: Colors.grey.shade400,
+                                                width: 2)),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          'Accesorios',
+                                          style: TextStyle(
+                                            fontSize: 17,
+                                            fontWeight: FontWeight.bold,
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .onSurface,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            ],
-                          ),
+                                SizedBox(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.02,
+                                ),
+                              ],
+                            );
+                          },
                         ),
-                      ),
+                      )
                     ],
                   ),
                 ),
@@ -463,51 +462,63 @@ class _InventaryScreenState extends State<InventaryScreen> {
                           return Column(
                             children: [
                               InkWell(
-                                onTap: () {
-                                  
-                                },
+                                onTap: () {},
                                 borderRadius: BorderRadius.circular(20),
                                 child: Ink(
-                                  height: MediaQuery.of(context).size.height * 0.15,
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.15,
                                   width: MediaQuery.of(context).size.width * 1,
                                   decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(20),
-                                    color: Theme.of(context).colorScheme.onPrimary,
-                                    border: Border.all(
-                                      color: Colors.grey.shade400,
-                                      width: 2
-                                    )
-                                  ),
+                                      borderRadius: BorderRadius.circular(20),
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onPrimary,
+                                      border: Border.all(
+                                          color: Colors.grey.shade400,
+                                          width: 2)),
                                   child: Padding(
                                     padding: const EdgeInsets.all(10),
                                     child: Row(
                                       children: [
                                         Container(
-                                        height: MediaQuery.of(context).size.height,
-                                        width: MediaQuery.of(context).size.width * 0.3,
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(20),
-                                          image: DecorationImage(
-                                            image: AssetImage('assets/shirt.jpg'),
-                                            fit: BoxFit.cover,
-                                          ),
+                                          height: MediaQuery.of(context)
+                                              .size
+                                              .height,
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.3,
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            image: DecorationImage(
+                                              image: AssetImage(
+                                                  'assets/shirt.jpg'),
+                                              fit: BoxFit.cover,
+                                            ),
                                           ),
                                         ),
-                                        SizedBox(width: MediaQuery.of(context).size.width*0.02,),
+                                        SizedBox(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.02,
+                                        ),
                                         Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                            children: [
-                                              Text(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Text(
                                               'Camisa',
                                               style: TextStyle(
                                                 fontSize: 20,
                                                 fontWeight: FontWeight.w500,
                                                 color: Colors.grey.shade600,
-                                                
                                               ),
                                             ),
-                                              Text(
+                                            Text(
                                               '\$ 10',
                                               style: TextStyle(
                                                 fontSize: 18,
@@ -515,14 +526,20 @@ class _InventaryScreenState extends State<InventaryScreen> {
                                                 color: Colors.grey.shade600,
                                               ),
                                             ),
-                                            SizedBox(height: MediaQuery.of(context).size.height*0.01,),
+                                            SizedBox(
+                                              height: MediaQuery.of(context)
+                                                      .size
+                                                      .height *
+                                                  0.01,
+                                            ),
                                             Text(
                                               '10 disponibles',
                                               style: TextStyle(
-                                                fontSize: 17,
-                                                fontWeight: FontWeight.bold,
-                                                color: Theme.of(context).colorScheme.onSurface
-                                              ),
+                                                  fontSize: 17,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Theme.of(context)
+                                                      .colorScheme
+                                                      .onSurface),
                                             ),
                                           ],
                                         )
@@ -531,7 +548,10 @@ class _InventaryScreenState extends State<InventaryScreen> {
                                   ),
                                 ),
                               ),
-                              SizedBox(height: MediaQuery.of(context).size.height*0.02,),
+                              SizedBox(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.02,
+                              ),
                             ],
                           );
                         },

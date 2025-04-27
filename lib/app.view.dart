@@ -2,6 +2,10 @@ import 'package:business_repository/repositories.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_business_hub/bloc/auth%20bloc/authentication_bloc.dart';
+import 'package:smart_business_hub/mobile/screens/Inventary/bloc/create_category/create_category_bloc.dart';
+import 'package:smart_business_hub/mobile/screens/Inventary/bloc/create_product/create_product_bloc.dart';
+import 'package:smart_business_hub/mobile/screens/Inventary/bloc/get_categories/get_categories_bloc.dart';
+import 'package:smart_business_hub/mobile/screens/Inventary/bloc/get_product/get_product_bloc.dart';
 import 'package:smart_business_hub/mobile/screens/auth/blocs/sign_in_bloc/sign_in_bloc.dart';
 import 'package:smart_business_hub/mobile/screens/balance/bloc/create_expense/create_expense_bloc.dart';
 import 'package:smart_business_hub/mobile/screens/balance/bloc/create_income/create_income_bloc.dart';
@@ -58,6 +62,26 @@ class MyAppView extends StatelessWidget {
                   FirebaseExpenseRepo()
                 )..add(GetExpense()),
               ),
+              BlocProvider(
+                create: (context) => CreateCategoryBloc(
+                  FirebaseCategoryRepo()
+                )..add(CreateCategory(Category.empty)),
+              ),
+              BlocProvider(
+                create: (context) => GetCategoriesBloc(
+                  FirebaseCategoryRepo()
+                )..add(GetCategories()),
+              ),
+              BlocProvider(
+                create: (context) => CreateProductBloc(
+                  FirebaseProductRepo()
+                )..add(CreateProduct(Product.empty)),
+              ),
+              BlocProvider(
+                create: (context) => GetProductBloc(
+                  FirebaseProductRepo()
+                )..add(GetProduct()),
+              )
             ],
             child:  HomeScreen()
             
