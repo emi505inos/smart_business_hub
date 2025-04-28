@@ -24,7 +24,7 @@ class EmployeeEntity {
       employeeId: doc['employeeId'],
       name: doc['name'],
       phoneNumber: doc['phoneNumber'],
-      dateOfAdmission: DateTime.parse(doc['dateOfAdmission']),
+      dateOfAdmission: (doc['dateOfAdmission']).toDate(),
     );
   }
 }

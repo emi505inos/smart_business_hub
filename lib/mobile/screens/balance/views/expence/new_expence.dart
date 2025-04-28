@@ -99,7 +99,7 @@ class _NewExpenceState extends State<NewExpence> {
                     expense.expenseId = const Uuid().v1();
                     expense.dateTime = parsedDate;
                     expense.description = descriptionController.text;
-                    expense.totalExpence = int.parse(expenceController.text);
+                    // expense.totalExpence = expenceController.text;
                     expense.category = selectedOption;
                     expense.payMethod = expense.payMethod;
                     // expense.supplier = selectedSupplier;

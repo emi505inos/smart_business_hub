@@ -116,14 +116,14 @@ class ExpenseTransaction extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
-                              Text(
-                                '- \$ ${expense[i].totalExpence}',
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black
-                                ),
-                              ),
+                              // Text(
+                              //   '- \$ ${expense[i].totalExpence}',
+                              //   style: TextStyle(
+                              //     fontSize: 18,
+                              //     fontWeight: FontWeight.bold,
+                              //     color: Colors.black
+                              //   ),
+                              // ),
                               SizedBox( width: MediaQuery.of(context).size.width * 0.02,
                               ),
                               Text(

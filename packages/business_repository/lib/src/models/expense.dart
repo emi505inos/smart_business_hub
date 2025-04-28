@@ -5,18 +5,18 @@ import 'package:uuid/uuid.dart';
 class Expense {
   String expenseId;
   DateTime dateTime;
-  int totalExpence;
+  // int totalExpence;
   String category;
   String description;
-  Suplier supplier;
+  // Suplier supplier;
   int payMethod;
 
   Expense({
     required this.expenseId,
     required this.dateTime,
-    required this.totalExpence,
+    // required this.totalExpence,
     required this.category,
-    required this.supplier,
+    // required this.supplier,
     required this.description,
     required this.payMethod,
   });
@@ -24,22 +24,22 @@ class Expense {
   static final empty = Expense(
     expenseId: Uuid().v1(),
     dateTime: DateTime.now(),
-    totalExpence: 0,
+    // totalExpence: 0,
     category: '',
     description: '',
     payMethod: 0, 
-    supplier: Suplier.empty,
+    // supplier: Suplier.empty,
   );
   
   ExpenseEntity toEntity() {
     return ExpenseEntity(
       expenseId: expenseId,
       dateTime: dateTime,
-      totalExpense: totalExpence,
+      // totalExpense: totalExpence,
       category: category,
       description: description,
       payMethod: payMethod,
-      supplier: supplier,
+      // supplier: supplier,
     );
   }
 
@@ -47,11 +47,11 @@ class Expense {
     return Expense(
       expenseId: entity.expenseId,
       dateTime: entity.dateTime,
-      totalExpence: entity.totalExpense,
+      // totalExpence: entity.totalExpense,
       category: entity.category,
       description: entity.description,
       payMethod: entity.payMethod,
-      supplier: entity.supplier,
+      // supplier: entity.supplier,
     );
   }
 }

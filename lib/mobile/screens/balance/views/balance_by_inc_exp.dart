@@ -1,6 +1,7 @@
 import 'package:business_repository/repositories.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:smart_business_hub/mobile/screens/balance/bloc/balance_blocs.dart';
 import 'package:smart_business_hub/mobile/screens/balance/bloc/get_expense/get_expense_bloc.dart';
 import 'package:smart_business_hub/mobile/screens/balance/bloc/get_income/get_income_bloc.dart';
 
@@ -38,29 +39,26 @@ class _BalanceByIncExpState extends State<BalanceByIncExp>
         child: MultiBlocProvider(
           providers: [
             BlocProvider<GetIncomeBloc>(
-              create: (context) {
-                final bloc = GetIncomeBloc(FirebaseIncomeRepo());
-                bloc.add(GetIncome());
-                return bloc;
-              },
+              create: (context) => GetIncomeBloc(FirebaseIncomeRepo()
+              )..add(GetIncome()),
             ),
             BlocProvider<GetExpenseBloc>(
-              create: (context) {
-                final bloc = GetExpenseBloc(FirebaseExpenseRepo());
-                bloc.add(GetExpense());
-                return bloc;
-              },              
+              create: (context) => GetExpenseBloc(FirebaseExpenseRepo()
+              )..add(GetExpense()),          
             ),
           ],
           child: Column(
             children: <Widget>[
               TabBar(controller: _tabController, tabs: <Widget>[
                 Tab(
-                  child: Text('Ingresos',
-                      style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Theme.of(context).colorScheme.onSurface)),
+                  child: Text(
+                    'Ingresos',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Theme.of(context).colorScheme.onSurface
+                    )
+                  ),
                 ),
                 Tab(
                   child: Text('Egresos',

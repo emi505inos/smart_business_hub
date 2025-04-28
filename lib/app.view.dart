@@ -2,15 +2,10 @@ import 'package:business_repository/repositories.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_business_hub/bloc/auth%20bloc/authentication_bloc.dart';
-import 'package:smart_business_hub/mobile/screens/Inventary/bloc/create_category/create_category_bloc.dart';
-import 'package:smart_business_hub/mobile/screens/Inventary/bloc/create_product/create_product_bloc.dart';
-import 'package:smart_business_hub/mobile/screens/Inventary/bloc/get_categories/get_categories_bloc.dart';
-import 'package:smart_business_hub/mobile/screens/Inventary/bloc/get_product/get_product_bloc.dart';
+import 'package:smart_business_hub/mobile/screens/Inventary/bloc/inventory_blocs.dart';
 import 'package:smart_business_hub/mobile/screens/auth/blocs/sign_in_bloc/sign_in_bloc.dart';
-import 'package:smart_business_hub/mobile/screens/balance/bloc/create_expense/create_expense_bloc.dart';
-import 'package:smart_business_hub/mobile/screens/balance/bloc/create_income/create_income_bloc.dart';
-import 'package:smart_business_hub/mobile/screens/balance/bloc/get_expense/get_expense_bloc.dart';
-import 'package:smart_business_hub/mobile/screens/balance/bloc/get_income/get_income_bloc.dart';
+import 'package:smart_business_hub/mobile/screens/balance/bloc/balance_blocs.dart';
+import 'package:smart_business_hub/mobile/screens/explorer/explorer_blocs.dart';
 import 'package:smart_business_hub/mobile/screens/homescreen/home_screen.dart';
 import 'package:smart_business_hub/mobile/screens/onboarding/onboarding_screen.dart';
 
@@ -81,6 +76,31 @@ class MyAppView extends StatelessWidget {
                 create: (context) => GetProductBloc(
                   FirebaseProductRepo()
                 )..add(GetProduct()),
+              ),
+              BlocProvider(
+                create: (context) => CreateClientsBloc(
+                  FirebaseClientsRepo()
+                  )..add(CreateClient(Clients.empty)),
+              ),
+              BlocProvider(create: (context) => GetClientsBloc(
+                FirebaseClientsRepo()
+                )..add(GetClients()),
+              ),
+              BlocProvider(create: (context) => CreateEmployeeBloc(
+                FirebaseEmployeeRepo()
+                )..add(CreateEmployee(Employee.empty)),
+              ),
+              BlocProvider(create: (context) => GetEmployeeBloc(
+                FirebaseEmployeeRepo()
+                )..add(GetEmployee()),
+              ),
+              BlocProvider(create: (context) => CreateSuplierBloc(
+                FirebaseSupliersRepo()
+                )..add(CreateSuplier(Suplier.empty)),
+              ),
+              BlocProvider(create: (context) => GetSuplierBloc(
+                FirebaseSupliersRepo()
+                )..add(GetSuplier()),
               )
             ],
             child:  HomeScreen()

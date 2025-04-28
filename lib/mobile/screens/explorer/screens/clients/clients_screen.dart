@@ -1,4 +1,8 @@
+import 'package:business_repository/repositories.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:smart_business_hub/mobile/screens/explorer/screens/clients/bloc/clients_blocs.dart';
 import 'package:smart_business_hub/mobile/screens/explorer/screens/clients/screens/clients_list_screen.dart';
 import 'package:smart_business_hub/mobile/screens/explorer/screens/clients/screens/create_clients_screen.dart';
 import 'package:smart_business_hub/mobile/screens/navigatorbar/custom_navigator_bar.dart';
@@ -54,19 +58,24 @@ class _ClientsScreenState extends State<ClientsScreen> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: ElevatedButton(
         onPressed: () {
-        Navigator.of(context).push(MaterialPageRoute(builder: (context) => CreateClientsScreen()));   
-        }, 
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => BlocProvider(
+                    create: (context) =>
+                        CreateClientsBloc(FirebaseClientsRepo()),
+                    child: CreateClientsScreen(),
+                  )));
+        },
         style: ButtonStyle(
-          backgroundColor: WidgetStateProperty.all(Theme.of(context).colorScheme.onSecondary),
+          backgroundColor: WidgetStateProperty.all(
+              Theme.of(context).colorScheme.onSecondary),
           shape: WidgetStateProperty.all<RoundedRectangleBorder>(
             RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15),
             ),
           ),
           fixedSize: WidgetStatePropertyAll(Size(
-            MediaQuery.of(context).size.width*0.8,
-            MediaQuery.of(context).size.height*0.06
-          )),
+              MediaQuery.of(context).size.width * 0.8,
+              MediaQuery.of(context).size.height * 0.06)),
         ),
         child: Text(
           'Agregar cliente',
@@ -84,22 +93,26 @@ class _ClientsScreenState extends State<ClientsScreen> {
           children: [
             InkWell(
               onTap: () {
-              Navigator.of(context).push(MaterialPageRoute(builder: (context) => ClientsListScreen()));   
-                
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => BlocProvider(
+                          create: (context) => GetClientsBloc(
+                            FirebaseClientsRepo())..add(GetClients()),
+                          child: ClientsListScreen(),
+                        )));
               },
               child: Ink(
                 height: MediaQuery.of(context).size.height * 0.1,
                 width: MediaQuery.of(context).size.width,
                 decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.onPrimary,
-                  borderRadius: BorderRadius.circular(10),
-                  boxShadow: [ BoxShadow(
-                    blurRadius: 1,
-                    color: Colors.grey.withValues(alpha: 0.5),
-                    spreadRadius: 1,
-                    )
-                  ]
-                ),
+                    color: Theme.of(context).colorScheme.onPrimary,
+                    borderRadius: BorderRadius.circular(10),
+                    boxShadow: [
+                      BoxShadow(
+                        blurRadius: 1,
+                        color: Colors.grey.withValues(alpha: 0.5),
+                        spreadRadius: 1,
+                      )
+                    ]),
                 child: Padding(
                   padding: const EdgeInsets.all(20),
                   child: Row(
@@ -111,9 +124,11 @@ class _ClientsScreenState extends State<ClientsScreen> {
                             'assets/clients.png',
                             fit: BoxFit.contain,
                           ),
-                          SizedBox(width: MediaQuery.of(context).size.width*0.02,),
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.02,
+                          ),
                           Text(
-                          'Total de clientes',
+                            'Total de clientes',
                             style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
@@ -122,14 +137,23 @@ class _ClientsScreenState extends State<ClientsScreen> {
                           ),
                         ],
                       ),
-                      Text(
-                      '2',
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Theme.of(context).colorScheme.onSurface,
-                        ),
-                      ),
+                      StreamBuilder<QuerySnapshot>(
+                        stream: FirebaseFirestore.instance.collection('clients').snapshots(), 
+                        builder: (context, snapshot) {
+                          if (!snapshot.hasData) {
+                            return CircularProgressIndicator();
+                          }
+                          int totalClients = snapshot.data!.docs.length;
+                          return Text(
+                            '$totalClients',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Theme.of(context).colorScheme.onSurface,
+                            ),
+                          );
+                        },
+                      )
                     ],
                   ),
                 ),
