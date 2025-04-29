@@ -29,7 +29,20 @@ class _CreateClientsScreenState extends State<CreateClientsScreen> {
     return BlocListener<CreateClientsBloc, CreateClientsState>(
       listener: (context, state) {
          if(state is CreateClientsSuccess) {
-
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Cliente creado con éxito'),
+              backgroundColor: Colors.green,
+            ),
+          );
+          Navigator.pop(context);
+        }else if (state is CreateClientsFailure) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Error al crear el cliente'),
+              backgroundColor: Colors.red,
+            ),
+          );
         }else if (state is CreateClientsLoading) {
           setState(() {
             clients = Clients.empty;

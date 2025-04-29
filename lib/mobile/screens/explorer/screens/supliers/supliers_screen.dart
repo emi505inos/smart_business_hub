@@ -81,11 +81,7 @@ class _SupliersScreenState extends State<SupliersScreen> {
             InkWell(
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => BlocProvider(
-                          create: (context) => GetSuplierBloc(
-                            FirebaseSupliersRepo())..add(GetSuplier()),
-                          child: SuplierList(),
-                        )));
+                    builder: (context) => SuplierList()));
               },
               child: Ink(
                 height: MediaQuery.of(context).size.height * 0.1,

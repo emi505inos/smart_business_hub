@@ -27,7 +27,21 @@ class _CreateCategoriesScreenState extends State<CreateCategoriesScreen> {
     return BlocListener<CreateCategoryBloc, CreateCategoryState>(
       listener: (context, state) {
         if(state is CreateCategorySuccess) {
-
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Categoria creada con éxito'),
+              backgroundColor: Colors.green,
+            ),
+          );
+          Navigator.pop(context);
+        } else if (state is CreateCategoryFailure) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Error al crear la categoria'),
+              backgroundColor: Colors.red,
+            ),
+          );
+        
         }else if (state is CreateCategoryLoading) {
           setState(() {
             category = Category.empty;

@@ -28,7 +28,20 @@ class _CreateSuplierScreenState extends State<CreateSuplierScreen> {
     return BlocListener<CreateSuplierBloc, CreateSuplierState>(
       listener: (context, state) {
         if (state is CreateSuplierSuccess) {
-          
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Proveedor creado con éxito'),
+              backgroundColor: Colors.green,
+            ),
+          );
+          Navigator.pop(context);
+        } else if (state is CreateSuplierFailure) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Error al crear el proveedor'),
+              backgroundColor: Colors.red,
+            ),
+          );
         }else if (state is CreateSuplierLoading) {
           setState(() {
             suplier = Suplier.empty;

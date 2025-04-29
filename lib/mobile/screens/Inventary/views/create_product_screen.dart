@@ -4,8 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:smart_business_hub/mobile/screens/Inventary/bloc/create_product/create_product_bloc.dart';
-import 'package:smart_business_hub/mobile/screens/balance/views/expence/models/categories_list.dart';
+import 'package:smart_business_hub/mobile/screens/Inventary/bloc/inventory_blocs.dart';
+import 'package:smart_business_hub/mobile/screens/Inventary/views/create_categories_screen.dart';
 import 'package:smart_business_hub/mobile/screens/balance/views/sales/models/barcode_scaner.dart';
 import 'package:uuid/uuid.dart';
 
@@ -38,9 +38,22 @@ class _CreateProductScreenState extends State<CreateProductScreen> {
   Widget build(BuildContext context) {
     return BlocListener<CreateProductBloc, CreateProductState>(
       listener: (context, state) {
-        if(state is CreateProductSuccess) {
-
-        }else if (state is CreateProductLoading) {
+        if (state is CreateProductSuccess) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Producto creado con éxito'),
+              backgroundColor: Colors.green,
+            ),
+          );
+          Navigator.pop(context);
+        } else if (state is CreateProductFailure) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Error al crear el producto'),
+              backgroundColor: Colors.red,
+            ),
+          );
+        } else if (state is CreateProductLoading) {
           setState(() {
             product = Product.empty;
           });
@@ -79,6 +92,7 @@ class _CreateProductScreenState extends State<CreateProductScreen> {
                     product.price = int.parse(priceController.text);
                     product.cost = int.parse(costController.text);
                     product.description = descriptionController.text;
+                    product.category = selectedOption;
                     context
                         .read<CreateProductBloc>()
                         .add(CreateProduct(product));
@@ -384,177 +398,225 @@ class _CreateProductScreenState extends State<CreateProductScreen> {
                     showModalBottomSheet(
                       context: context,
                       builder: (BuildContext context) {
-                        return Container(
-                          padding: EdgeInsets.all(16.0),
-                          child: SingleChildScrollView(
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      'Escoge una categoría',
-                                      style: TextStyle(
-                                          fontSize: 18.0,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    IconButton(
-                                        onPressed: () {
-                                          Navigator.pop(context);
-                                        },
-                                        icon: Icon(
-                                            FontAwesomeIcons.solidCircleXmark,
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .onSurface)),
-                                  ],
-                                ),
-                                ...categories2.map(
-                                  (category) => ListTile(
-                                    leading: Icon(
-                                      selectedOption == category['name']
-                                          ? Icons.radio_button_checked
-                                          : Icons.radio_button_unchecked,
-                                    ),
-                                    title: Text(
-                                      category['name'],
-                                      style: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold,
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .onSurface,
-                                      ),
-                                    ),
-                                    onTap: () {
-                                      setState(() {
-                                        selectedOption = category['name'];
-                                      });
-                                      Navigator.pop(context);
-                                    },
+                        return BlocProvider(
+                          create: (context) =>
+                              GetCategoriesBloc(FirebaseCategoryRepo())
+                                ..add(GetCategories()),
+                          child: BlocBuilder<GetCategoriesBloc,
+                              GetCategoriesState>(builder: (context, state) {
+                            if (state is GetCategoriesSuccess) {
+                              final categories = state.category;
+                              if (categories.isEmpty) {
+                                return const Center(
+                                  child: Text(
+                                    'No hay categorias registradas',
+                                    style: TextStyle(fontSize: 20),
                                   ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Column(
-                                    children: [
-                                      ElevatedButton(
-                                        onPressed: () {
-                                          // Navigator.of(context).push(MaterialPageRoute(builder: (context) => CreateProductScreen()));
-                                        },
-                                        style: ButtonStyle(
-                                          backgroundColor:
-                                              WidgetStateProperty.all(
-                                                  Theme.of(context)
-                                                      .colorScheme
-                                                      .onSurface),
-                                          shape: WidgetStateProperty.all<
-                                              RoundedRectangleBorder>(
-                                            RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(15),
-                                            ),
-                                          ),
-                                          fixedSize: WidgetStatePropertyAll(
-                                              Size(
-                                                  MediaQuery.of(context)
-                                                      .size
-                                                      .width,
-                                                  MediaQuery.of(context)
-                                                          .size
-                                                          .height *
-                                                      0.06)),
-                                        ),
-                                        child: Text(
-                                          'Crear nueva categoría',
+                                );
+                              }
+                              return Container(
+                                padding: EdgeInsets.all(16),
+                                child: Column(
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          'Escoge una categoría',
                                           style: TextStyle(
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.bold,
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .onPrimary,
-                                          ),
+                                              fontSize: 18.0,
+                                              fontWeight: FontWeight.bold),
                                         ),
-                                      ),
-                                      SizedBox(
-                                        height:
-                                            MediaQuery.of(context).size.height *
-                                                0.01,
-                                      ),
-                                      ElevatedButton(
-                                        onPressed: () {
-                                          Navigator.pop(context);
-                                        },
-                                        style: ButtonStyle(
-                                          backgroundColor:
-                                              WidgetStateProperty.all(
-                                                  Theme.of(context)
-                                                      .colorScheme
-                                                      .onPrimary),
-                                          shape: WidgetStateProperty.all<
-                                              RoundedRectangleBorder>(
-                                            RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(15),
+                                        IconButton(
+                                            onPressed: () {
+                                              Navigator.pop(context);
+                                            },
+                                            icon: Icon(
+                                                FontAwesomeIcons
+                                                    .solidCircleXmark,
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .onSurface)),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.3,
+                                      width: MediaQuery.of(context).size.width,
+                                      child: ListView.builder(
+                                        itemCount: categories.length,
+                                        itemBuilder: (context, int i) {
+                                          return ListTile(
+                                            leading: Icon(
+                                              selectedOption ==
+                                                      categories[i].name
+                                                  ? Icons.radio_button_checked
+                                                  : Icons
+                                                      .radio_button_unchecked,
                                             ),
-                                          ),
-                                          side: WidgetStateProperty.all<
-                                              BorderSide>(
-                                            BorderSide(
-                                              color: Theme.of(context)
-                                                  .colorScheme
-                                                  .onSurface,
-                                              width: 2,
-                                            ),
-                                          ),
-                                          fixedSize: WidgetStatePropertyAll(
-                                              Size(
-                                                  MediaQuery.of(context)
-                                                      .size
-                                                      .width,
-                                                  MediaQuery.of(context)
-                                                          .size
-                                                          .height *
-                                                      0.06)),
-                                        ),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Icon(
-                                              Icons.category_outlined,
-                                              color: Theme.of(context)
-                                                  .colorScheme
-                                                  .onSurface,
-                                            ),
-                                            SizedBox(
-                                              width: MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                  0.03,
-                                            ),
-                                            Text(
-                                              'Cancelar',
+                                            title: Text(
+                                              categories[i].name,
                                               style: TextStyle(
-                                                fontSize: 20,
+                                                fontSize: 18,
                                                 fontWeight: FontWeight.bold,
                                                 color: Theme.of(context)
                                                     .colorScheme
                                                     .onSurface,
                                               ),
                                             ),
-                                          ],
-                                        ),
-                                      )
-                                    ],
-                                  ),
+                                            onTap: () {
+                                              setState(() {
+                                                selectedOption =
+                                                    categories[i].name;
+                                              });
+                                              Navigator.pop(context);
+                                            },
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Column(
+                                        children: [
+                                          ElevatedButton(
+                                            onPressed: () {
+                                              Navigator.of(context).push(
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          BlocProvider(
+                                                            create: (context) =>
+                                                                CreateCategoryBloc(FirebaseCategoryRepo()),
+                                                            child:
+                                                                CreateCategoriesScreen(),
+                                                          )));
+                                            },
+                                            style: ButtonStyle(
+                                              backgroundColor:
+                                                  WidgetStateProperty.all(
+                                                      Theme.of(context)
+                                                          .colorScheme
+                                                          .onSurface),
+                                              shape: WidgetStateProperty.all<
+                                                  RoundedRectangleBorder>(
+                                                RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(15),
+                                                ),
+                                              ),
+                                              fixedSize: WidgetStatePropertyAll(
+                                                  Size(
+                                                      MediaQuery.of(context)
+                                                          .size
+                                                          .width,
+                                                      MediaQuery.of(context)
+                                                              .size
+                                                              .height *
+                                                          0.06)),
+                                            ),
+                                            child: Text(
+                                              'Crear nueva categoría',
+                                              style: TextStyle(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.bold,
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .onPrimary,
+                                              ),
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            height: MediaQuery.of(context)
+                                                    .size
+                                                    .height *
+                                                0.01,
+                                          ),
+                                          ElevatedButton(
+                                            onPressed: () {
+                                              Navigator.pop(context);
+                                            },
+                                            style: ButtonStyle(
+                                              backgroundColor:
+                                                  WidgetStateProperty.all(
+                                                      Theme.of(context)
+                                                          .colorScheme
+                                                          .onPrimary),
+                                              shape: WidgetStateProperty.all<
+                                                  RoundedRectangleBorder>(
+                                                RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(15),
+                                                ),
+                                              ),
+                                              side: WidgetStateProperty.all<
+                                                  BorderSide>(
+                                                BorderSide(
+                                                  color: Theme.of(context)
+                                                      .colorScheme
+                                                      .onSurface,
+                                                  width: 2,
+                                                ),
+                                              ),
+                                              fixedSize: WidgetStatePropertyAll(
+                                                  Size(
+                                                      MediaQuery.of(context)
+                                                          .size
+                                                          .width,
+                                                      MediaQuery.of(context)
+                                                              .size
+                                                              .height *
+                                                          0.06)),
+                                            ),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Icon(
+                                                  Icons.category_outlined,
+                                                  color: Theme.of(context)
+                                                      .colorScheme
+                                                      .onSurface,
+                                                ),
+                                                SizedBox(
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.03,
+                                                ),
+                                                Text(
+                                                  'Cancelar',
+                                                  style: TextStyle(
+                                                    fontSize: 20,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Theme.of(context)
+                                                        .colorScheme
+                                                        .onSurface,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ],
-                            ),
-                          ),
+                              );
+                            } else if (state is GetCategoriesFailure) {
+                              return const Center(
+                                child: Text(
+                                  'Error al cargar los clientes',
+                                  style: TextStyle(fontSize: 20),
+                                ),
+                              );
+                            } else {
+                              return const Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            }
+                          }),
                         );
                       },
                     );

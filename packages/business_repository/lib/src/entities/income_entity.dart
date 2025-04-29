@@ -1,4 +1,3 @@
-import 'package:business_repository/src/models/models.dart';
 
 class IncomeEntity {
   String saleId;
@@ -6,7 +5,7 @@ class IncomeEntity {
   int quantity;
   int income;
   String description;
-  // Clients clients;
+  String clients;
   int payMethod;
 
   IncomeEntity({
@@ -14,7 +13,7 @@ class IncomeEntity {
   required this.dateTime,
   required this.income,
   required this.description,
-  // required this.clients,
+  required this.clients,
   required this.payMethod, 
   required this.quantity
 });
@@ -24,7 +23,7 @@ Map<String, Object?> toDocument() {
     'dateTime': dateTime,
     'income': income,
     'description': description,
-    // 'clients': clients,
+    'clients': clients,
     'payMethod': payMethod,
     'quantity': quantity
   };
@@ -35,7 +34,7 @@ static IncomeEntity fromDocument(Map<String, dynamic> doc) {
     dateTime: (doc['dateTime']).toDate(), 
     income: doc['income'], 
     description: doc['description'], 
-    // clients: doc['clients'], 
+    clients: doc['clients'], 
     payMethod: doc['payMethod'],
     quantity: doc['quantity']
   );

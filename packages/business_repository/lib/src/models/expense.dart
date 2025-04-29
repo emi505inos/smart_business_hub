@@ -1,22 +1,21 @@
 import 'package:business_repository/src/entities/entities.dart';
-import 'package:business_repository/src/models/models.dart';
 import 'package:uuid/uuid.dart';
 
 class Expense {
   String expenseId;
   DateTime dateTime;
-  // int totalExpence;
+  int totalExpense;
   String category;
   String description;
-  // Suplier supplier;
+  String supplier;
   int payMethod;
 
   Expense({
     required this.expenseId,
     required this.dateTime,
-    // required this.totalExpence,
+    required this.totalExpense,
     required this.category,
-    // required this.supplier,
+    required this.supplier,
     required this.description,
     required this.payMethod,
   });
@@ -24,22 +23,22 @@ class Expense {
   static final empty = Expense(
     expenseId: Uuid().v1(),
     dateTime: DateTime.now(),
-    // totalExpence: 0,
+    totalExpense: 0,
     category: '',
     description: '',
     payMethod: 0, 
-    // supplier: Suplier.empty,
+    supplier: '',
   );
   
   ExpenseEntity toEntity() {
     return ExpenseEntity(
       expenseId: expenseId,
       dateTime: dateTime,
-      // totalExpense: totalExpence,
+      totalExpense: totalExpense,
       category: category,
       description: description,
       payMethod: payMethod,
-      // supplier: supplier,
+      supplier: supplier,
     );
   }
 
@@ -47,11 +46,11 @@ class Expense {
     return Expense(
       expenseId: entity.expenseId,
       dateTime: entity.dateTime,
-      // totalExpence: entity.totalExpense,
+      totalExpense: entity.totalExpense,
       category: entity.category,
       description: entity.description,
       payMethod: entity.payMethod,
-      // supplier: entity.supplier,
+      supplier: entity.supplier,
     );
   }
 }

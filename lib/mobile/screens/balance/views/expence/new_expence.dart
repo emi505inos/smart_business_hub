@@ -6,8 +6,9 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:smart_business_hub/mobile/screens/balance/bloc/create_expense/create_expense_bloc.dart';
 import 'package:smart_business_hub/mobile/screens/balance/views/expence/models/categories_list.dart';
-import 'package:smart_business_hub/mobile/screens/balance/views/expence/models/supplies_list.dart';
 import 'package:smart_business_hub/mobile/screens/balance/views/expence/views/expence_selector.dart';
+import 'package:smart_business_hub/mobile/screens/explorer/screens/supliers/bloc/supliers_blocs.dart';
+import 'package:smart_business_hub/mobile/screens/explorer/screens/supliers/screens/create_suplier.dart';
 import 'package:uuid/uuid.dart';
 
 class NewExpence extends StatefulWidget {
@@ -18,7 +19,7 @@ class NewExpence extends StatefulWidget {
 }
 
 class _NewExpenceState extends State<NewExpence> {
-  TextEditingController expenceController = TextEditingController();
+  TextEditingController expenseController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
   TextEditingController payMethodController = TextEditingController();
   TextEditingController dateController = TextEditingController();
@@ -99,10 +100,10 @@ class _NewExpenceState extends State<NewExpence> {
                     expense.expenseId = const Uuid().v1();
                     expense.dateTime = parsedDate;
                     expense.description = descriptionController.text;
-                    // expense.totalExpence = expenceController.text;
+                    expense.totalExpense = int.tryParse(expenseController.text)!;
                     expense.category = selectedOption;
                     expense.payMethod = expense.payMethod;
-                    // expense.supplier = selectedSupplier;
+                    expense.supplier = selectedSupplier;
                     context
                         .read<CreateExpenseBloc>()
                         .add(CreateExpense(expense));
@@ -336,42 +337,42 @@ class _NewExpenceState extends State<NewExpence> {
                     SizedBox(
                       width: MediaQuery.of(context).size.width * 4,
                       child: TextFormField(
-                          controller: expenceController,
-                          textAlignVertical: TextAlignVertical.center,
-                          textAlign: TextAlign.right,
-                          keyboardType: TextInputType.number,
-                          style: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.bold),
-                          decoration: InputDecoration(
-                            hintText: '0',
-                            hintStyle: TextStyle(
-                              fontSize: 17,
+                        controller: expenseController,
+                        textAlignVertical: TextAlignVertical.center,
+                        textAlign: TextAlign.right,
+                        keyboardType: TextInputType.number,
+                        style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.bold),
+                        decoration: InputDecoration(
+                          hintText: '0',
+                          hintStyle: TextStyle(
+                            fontSize: 17,
+                            color: Colors.grey,
+                          ),
+                          filled: true,
+                          fillColor: Colors.white,
+                          prefixIcon: const Icon(
+                            FontAwesomeIcons.dollarSign,
+                            size: 16,
+                            color: Colors.black,
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            borderSide: BorderSide(
                               color: Colors.grey,
-                            ),
-                            filled: true,
-                            fillColor: Colors.white,
-                            prefixIcon: const Icon(
-                              FontAwesomeIcons.dollarSign,
-                              size: 16,
-                              color: Colors.black,
-                            ),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(12),
-                              borderSide: BorderSide(
-                                color: Colors.grey,
-                                width: 1,
-                              ),
+                              width: 1,
                             ),
                           ),
-                          validator: (val) {
-                            if (val!.isEmpty) {
-                              return 'Please fill in this field';
-                            }
-                            return null;
-                          }),
+                        ),
+                        validator: (val) {
+                          if (val!.isEmpty) {
+                            return 'Please fill in this field';
+                          }
+                          return null;
+                        }),
                     ),
                     SizedBox(
                       height: MediaQuery.of(context).size.height * 0.01,
@@ -396,95 +397,275 @@ class _NewExpenceState extends State<NewExpence> {
                         showModalBottomSheet(
                           context: context,
                           builder: (BuildContext context) {
-                            return Container(
-                              padding: EdgeInsets.all(16.0),
-                              child: SingleChildScrollView(
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          'Escoge tu proveedor',
+                            return BlocProvider(
+                              create: (context) =>
+                                  GetSuplierBloc(FirebaseSupliersRepo())
+                                    ..add(GetSuplier()),
+                              child: BlocBuilder<GetSuplierBloc, GetSuplierState>(
+                                builder: (context, state) {
+                                  if (state is GetSuplierSuccess) {
+                                    final supliers = state.suplier;
+                                    if (supliers.isEmpty) {
+                                      return Center(
+                                        child: Text(
+                                          'No hay proveedores registrados',
                                           style: TextStyle(
-                                              fontSize: 18.0,
-                                              fontWeight: FontWeight.bold),
+                                            fontSize: 30,
+                                            fontWeight: FontWeight.bold,
+                                            color: Theme.of(context).colorScheme.onSurface
+                                          ),
                                         ),
-                                        IconButton(
+                                      );
+                                    }
+                                    return Container(
+                                    padding: EdgeInsets.all(16.0),
+                                    child: SingleChildScrollView(
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text(
+                                                'Escoge tu proveedor',
+                                                style: TextStyle(
+                                                    fontSize: 18.0,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              IconButton(
+                                                  onPressed: () {
+                                                    Navigator.pop(context);
+                                                  },
+                                                  icon: Icon(
+                                                      FontAwesomeIcons
+                                                          .solidCircleXmark,
+                                                      color: Theme.of(context)
+                                                          .colorScheme
+                                                          .onSurface)),
+                                            ],
+                                          ),
+                                          SizedBox(
+                                            height: MediaQuery.of(context)
+                                                    .size
+                                                    .height *
+                                                0.01,
+                                          ),
+                                          SearchBar(
+                                              elevation:
+                                                  WidgetStateProperty.all(0),
+                                              backgroundColor:
+                                                  WidgetStateProperty.all(
+                                                      Colors.white),
+                                              shape: WidgetStateProperty.all(
+                                                RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                ),
+                                              ),
+                                              leading: Icon(
+                                                Icons.search,
+                                                color: Colors.grey,
+                                                size: 26,
+                                              ),
+                                              hintText: 'Busca',
+                                              hintStyle: WidgetStatePropertyAll(
+                                                TextStyle(
+                                                    color: Colors.grey,
+                                                    fontSize: 18,
+                                                    fontWeight:
+                                                        FontWeight.w500),
+                                              )),
+                                          SizedBox(height: 16.0),
+                                          SizedBox(
+                                            height:MediaQuery.of(context).size.height *0.2,
+                                            width:MediaQuery.of(context).size.width,
+                                            child: ListView.builder(
+                                              itemCount: supliers.length,
+                                              itemBuilder: (context, int i) {
+                                                return ListTile(
+                                                  leading: Icon(
+                                                  Icons.business,
+                                                ),
+                                                title: Text(
+                                                  supliers[i].name,
+                                                  style: TextStyle(
+                                                    fontSize: 18,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Theme.of(context)
+                                                        .colorScheme
+                                                        .onSurface,
+                                                  ),
+                                                ),
+                                                trailing: Icon(
+                                                  selectedSupplier ==
+                                                          supliers[i].name
+                                                      ? Icons.radio_button_checked
+                                                      : Icons
+                                                          .radio_button_unchecked,
+                                                ),
+                                                onTap: () {
+                                                  setState(() {
+                                                    selectedSupplier =
+                                                        supliers[i].name;
+                                                  });
+                                                  Navigator.pop(context);
+                                                },
+                                                );
+                                              },
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            height: MediaQuery.of(context)
+                                                    .size
+                                                    .height *
+                                                0.01,
+                                          ),
+                                          Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Column(
+                                        children: [
+                                          ElevatedButton(
+                                            onPressed: () {
+                                              Navigator.of(context).push(
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          BlocProvider(
+                                                            create: (context) =>
+                                                                CreateSuplierBloc(FirebaseSupliersRepo()),
+                                                            child:
+                                                                CreateSuplierScreen(),
+                                                          )));
+                                            },
+                                            style: ButtonStyle(
+                                              backgroundColor:
+                                                  WidgetStateProperty.all(
+                                                      Theme.of(context)
+                                                          .colorScheme
+                                                          .onSurface),
+                                              shape: WidgetStateProperty.all<
+                                                  RoundedRectangleBorder>(
+                                                RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(15),
+                                                ),
+                                              ),
+                                              fixedSize: WidgetStatePropertyAll(
+                                                  Size(
+                                                      MediaQuery.of(context)
+                                                          .size
+                                                          .width,
+                                                      MediaQuery.of(context)
+                                                              .size
+                                                              .height *
+                                                          0.06)),
+                                            ),
+                                            child: Text(
+                                              'Crear nuevo proveedor',
+                                              style: TextStyle(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.bold,
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .onPrimary,
+                                              ),
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            height: MediaQuery.of(context)
+                                                    .size
+                                                    .height *
+                                                0.01,
+                                          ),
+                                          ElevatedButton(
                                             onPressed: () {
                                               Navigator.pop(context);
                                             },
-                                            icon: Icon(
-                                                FontAwesomeIcons
-                                                    .solidCircleXmark,
-                                                color: Theme.of(context)
-                                                    .colorScheme
-                                                    .onSurface)),
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      height:
-                                          MediaQuery.of(context).size.height *
-                                              0.01,
-                                    ),
-                                    SearchBar(
-                                        elevation: WidgetStateProperty.all(0),
-                                        backgroundColor:
-                                            WidgetStateProperty.all(
-                                                Colors.white),
-                                        shape: WidgetStateProperty.all(
-                                          RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                          ),
-                                        ),
-                                        leading: Icon(
-                                          Icons.search,
-                                          color: Colors.grey,
-                                          size: 26,
-                                        ),
-                                        hintText: 'Busca',
-                                        hintStyle: WidgetStatePropertyAll(
-                                          TextStyle(
-                                              color: Colors.grey,
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.w500),
-                                        )),
-                                    SizedBox(height: 16.0),
-                                    ...supplies.map(
-                                      (supply) => ListTile(
-                                        leading: Icon(
-                                          supply['icon'],
-                                          size: 30,
-                                        ),
-                                        title: Text(
-                                          supply['name'],
-                                          style: TextStyle(
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.bold,
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .onSurface,
-                                          ),
-                                        ),
-                                        trailing: Icon(
-                                          selectedSupplier == supply['name']
-                                              ? Icons.radio_button_checked
-                                              : Icons.radio_button_unchecked,
-                                        ),
-                                        onTap: () {
-                                          setState(() {
-                                            selectedSupplier = supply['name'];
-                                          });
-                                          Navigator.pop(context);
-                                        },
+                                            style: ButtonStyle(
+                                              backgroundColor:
+                                                  WidgetStateProperty.all(
+                                                      Theme.of(context)
+                                                          .colorScheme
+                                                          .onPrimary),
+                                              shape: WidgetStateProperty.all<
+                                                  RoundedRectangleBorder>(
+                                                RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(15),
+                                                ),
+                                              ),
+                                              side: WidgetStateProperty.all<
+                                                  BorderSide>(
+                                                BorderSide(
+                                                  color: Theme.of(context)
+                                                      .colorScheme
+                                                      .onSurface,
+                                                  width: 2,
+                                                ),
+                                              ),
+                                              fixedSize: WidgetStatePropertyAll(
+                                                  Size(
+                                                      MediaQuery.of(context)
+                                                          .size
+                                                          .width,
+                                                      MediaQuery.of(context)
+                                                              .size
+                                                              .height *
+                                                          0.06)),
+                                            ),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Icon(
+                                                  Icons.category_outlined,
+                                                  color: Theme.of(context)
+                                                      .colorScheme
+                                                      .onSurface,
+                                                ),
+                                                SizedBox(
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.03,
+                                                ),
+                                                Text(
+                                                  'Cancelar',
+                                                  style: TextStyle(
+                                                    fontSize: 20,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Theme.of(context)
+                                                        .colorScheme
+                                                        .onSurface,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          )
+                                        ],
                                       ),
                                     ),
-                                  ],
-                                ),
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                  } else if (state is GetSuplierFailure) {
+                                    return const Center(
+                                      child: Text(
+                                        'Error al cargar los clientes',
+                                        style: TextStyle(fontSize: 20),
+                                      ),
+                                    );
+                                  } else {
+                                    return const Center(
+                                      child: CircularProgressIndicator(),
+                                    );
+                                  }
+                                  
+                                },
                               ),
                             );
                           },

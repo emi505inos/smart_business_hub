@@ -32,7 +32,21 @@ class _CreateEmployeeScreenState extends State<CreateEmployeeScreen> {
     return BlocListener<CreateEmployeeBloc, CreateEmployeeState>(
       listener: (context, state) {
         if(state is CreateEmployeeSuccess) {
-
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Empleado creado con éxito'),
+              backgroundColor: Colors.green,
+            ),
+          );
+          Navigator.pop(context);
+        } else if (state is CreateEmployeeFailure) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Error al crear al empleado'),
+              backgroundColor: Colors.red,
+            ),
+          );
+        
         }else if (state is CreateEmployeeLoading) {
           setState(() {
             employee = Employee.empty;

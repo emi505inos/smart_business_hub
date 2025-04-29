@@ -1,5 +1,4 @@
 import 'package:business_repository/src/entities/entities.dart';
-import 'package:business_repository/src/models/models.dart';
 import 'package:uuid/uuid.dart';
 
 class Income {
@@ -8,7 +7,7 @@ class Income {
   DateTime dateTime;
   int income;
   String description;
-  // Clients clients;
+  String clients;
   int payMethod;
 
 Income({
@@ -17,7 +16,7 @@ Income({
   required this.dateTime,
   required this.income,
   required this.description,
-  // required this.clients,
+  required this.clients,
   required this.payMethod
 });
 
@@ -26,7 +25,7 @@ static final empty = Income(
   dateTime: DateTime.now(), 
   income: 0, 
   description: '', 
-  // clients: Clients.empty, 
+  clients: '', 
   payMethod: 0, 
   quantity: 1
 );
@@ -37,7 +36,7 @@ IncomeEntity toEntity() {
     dateTime: dateTime, 
     income: income, 
     description: description, 
-    // clients: clients, 
+    clients: clients, 
     payMethod: payMethod,
     quantity: quantity
   );
@@ -49,7 +48,7 @@ static Income fromEntity(IncomeEntity entity) {
     dateTime: entity.dateTime, 
     income: entity.income, 
     description: entity.description, 
-    // clients: entity.clients, 
+    clients: entity.clients, 
     payMethod: entity.payMethod,
     quantity: entity.quantity
   );

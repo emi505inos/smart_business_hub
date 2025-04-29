@@ -94,11 +94,7 @@ class _ClientsScreenState extends State<ClientsScreen> {
             InkWell(
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => BlocProvider(
-                          create: (context) => GetClientsBloc(
-                            FirebaseClientsRepo())..add(GetClients()),
-                          child: ClientsListScreen(),
-                        )));
+                    builder: (context) => ClientsListScreen()));
               },
               child: Ink(
                 height: MediaQuery.of(context).size.height * 0.1,

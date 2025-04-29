@@ -83,11 +83,7 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
             InkWell(
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => BlocProvider(
-                          create: (context) => GetEmployeeBloc(
-                            FirebaseEmployeeRepo())..add(GetEmployee()),
-                          child: EmployeeListScreen(),
-                        )));
+                    builder: (context) => EmployeeListScreen()));
               },
               child: Ink(
                 height: MediaQuery.of(context).size.height * 0.1,
