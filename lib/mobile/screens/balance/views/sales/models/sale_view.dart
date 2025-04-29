@@ -1,4 +1,5 @@
 import 'package:business_repository/repositories.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -106,43 +107,70 @@ class _SaleViewState extends State<SaleView> {
           ],
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(25),
-        child: Column(
-          children: [
-            Center(
-              child: Icon(
-                Icons.check_circle_outline_outlined,
-                size: 100,
-                color: Theme.of(context).colorScheme.onPrimary,
+      body: StreamBuilder<QuerySnapshot>(
+        stream: FirebaseFirestore.instance
+        .collection('income')
+        .orderBy('dateTime')
+        .limit(1)
+        .snapshots(), 
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+            return Center(
+              child: Text(
+                'No se encontraron ingresos',
+                style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Theme.of(context).colorScheme.onPrimary,
+                  ),
               ),
+            );
+          }
+          final income = snapshot.data!.docs.first['income'] ?? 0;
+          return Padding(
+            padding: const EdgeInsets.all(25),
+            child: Column(
+              children: [
+                Center(
+                  child: Icon(
+                    Icons.check_circle_outline_outlined,
+                    size: 100,
+                    color: Theme.of(context).colorScheme.onPrimary,
+                  ),
+                ),
+                SizedBox(height: MediaQuery.of(context).size.height*0.01,),
+                Text(
+                    '¡Creaste una Venta!',
+                    style: TextStyle(
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
+                      color: Theme.of(context).colorScheme.onPrimary,
+                    ),
+                  ),
+                  Text(
+                    'Se registró una venta por un valor de ',
+                    style: TextStyle(
+                      fontSize: 24,
+                      color: Theme.of(context).colorScheme.onPrimary,
+                    ),
+                  ),
+                  Text(
+                    '\$ $income',
+                    style: TextStyle(
+                      fontSize: 24,
+                      color: Theme.of(context).colorScheme.onPrimary,
+                    ),
+                  ),
+              ],
             ),
-            SizedBox(height: MediaQuery.of(context).size.height*0.01,),
-            Text(
-                '¡Creaste una Venta!',
-                style: TextStyle(
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold,
-                  color: Theme.of(context).colorScheme.onPrimary,
-                ),
-              ),
-              Text(
-                'Se registró una venta por un valor de ',
-                style: TextStyle(
-                  fontSize: 24,
-                  color: Theme.of(context).colorScheme.onPrimary,
-                ),
-              ),
-              Text(
-                '\$ ',
-                style: TextStyle(
-                  fontSize: 24,
-                  color: Theme.of(context).colorScheme.onPrimary,
-                ),
-              ),
-          ],
-        ),
+          );
+        },
       ),
+      
     );
   }
 }

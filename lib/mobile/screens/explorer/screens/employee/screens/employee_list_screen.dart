@@ -159,10 +159,8 @@ class EmployeeListScreen extends StatelessWidget {
             );
 
           },).toList();
-          return Expanded(
-            child: ListView(
-              children: employeesWidgets,
-            ),
+          return ListView(
+            children: employeesWidgets,
           );
         },
       )

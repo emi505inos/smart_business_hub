@@ -145,10 +145,8 @@ class _SuplierListState extends State<SuplierList> {
               ),
             );
           }).toList();
-          return Expanded(
-            child: ListView(
-              children: supliersWidget,
-            ),
+          return ListView(
+            children: supliersWidget,
           );
         },
       ) 

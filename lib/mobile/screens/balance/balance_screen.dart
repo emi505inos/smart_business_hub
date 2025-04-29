@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:smart_business_hub/mobile/screens/balance/views/balance_by_inc_exp.dart';
@@ -122,13 +123,65 @@ class _BalanceScreenState extends State<BalanceScreen> {
                               fontWeight: FontWeight.w500,
                               color: Colors.grey[700]),
                         ),
-                        Text(
-                          '\$ 0',
-                          style: TextStyle(
-                              fontSize: 17,
-                              fontWeight: FontWeight.bold,
-                              color: Theme.of(context).colorScheme.onSecondary),
-                        )
+                        StreamBuilder<QuerySnapshot>(
+                          stream: FirebaseFirestore.instance.collection('income').snapshots(), 
+                          builder: (context, incomeSnapshot) {
+                            if (!incomeSnapshot.hasData) {
+                                return CircularProgressIndicator();
+                              }
+                              if (!incomeSnapshot.hasData || incomeSnapshot.data!.docs.isEmpty ) {
+                                return Text(
+                                  '\$ 0',
+                                  style: TextStyle(
+                                    fontSize: 17,
+                                    fontWeight: FontWeight.bold,
+                                    color: Theme.of(context).colorScheme.onSecondary,
+                                  ),
+                                );
+                              }
+                              final totalIncome = incomeSnapshot.data!.docs.fold<int>(
+                                0, 
+                                (previousValue, document) => previousValue + (document['income'] as int? ?? 0)
+                              );
+                              return StreamBuilder<QuerySnapshot>(
+                                stream: FirebaseFirestore.instance.collection('expence').snapshots(), 
+                                builder: (context, expenseSnapshot) {
+                                  if (!expenseSnapshot.hasData) {
+                                return CircularProgressIndicator();
+                              }
+                              if (!expenseSnapshot.hasData || expenseSnapshot.data!.docs.isEmpty ) {
+                                return Text(
+                                  '\$ 0',
+                                  style: TextStyle(
+                                    fontSize: 17,
+                                    fontWeight: FontWeight.bold,
+                                    color: Theme.of(context).colorScheme.onSecondary,
+                                  ),
+                                );
+                              }
+                              final totalExpense = expenseSnapshot.data!.docs.fold<int>(
+                                0, 
+                                (previousValue, document) => previousValue + (document['totalExpense'] as int? ?? 0)
+                              );
+                              int balance = totalIncome - totalExpense;
+                              return Text(
+                                balance >= 0
+                                ? '\$ $balance'
+                                : '-\$ ${balance.abs()}',
+                                style: TextStyle(
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.bold,
+                                  color: 
+                                  balance >= 0
+                                  ? Theme.of(context).colorScheme.onSecondary
+                                  : Theme.of(context).colorScheme.secondary
+                                   
+                                  ),
+                                ); 
+                              },
+                            );
+                          },
+                        ),
                       ],
                     ),
                     SizedBox(
@@ -170,14 +223,36 @@ class _BalanceScreenState extends State<BalanceScreen> {
                             SizedBox(
                               height: MediaQuery.of(context).size.height * 0.02,
                             ),
-                            Text(
-                              '\$ 0',
-                              style: TextStyle(
+                            StreamBuilder<QuerySnapshot>(
+                              stream: FirebaseFirestore.instance.collection('income').snapshots(), 
+                              builder: (context, snapshot) {
+                              if (!snapshot.hasData) {
+                                return CircularProgressIndicator();
+                              }
+                              if (!snapshot.hasData || snapshot.data!.docs.isEmpty ) {
+                                return Text(
+                                  '\$ 0',
+                                  style: TextStyle(
+                                    fontSize: 17,
+                                    fontWeight: FontWeight.bold,
+                                    color: Theme.of(context).colorScheme.onSurface,
+                                  ),
+                                );
+                              }
+                              final totalIncome = snapshot.data!.docs.fold<int>(
+                                0, 
+                                (previousValue, document) => previousValue + (document['income'] as int? ?? 0)
+                              );
+                              return Text(
+                                '\$ $totalIncome',
+                                style: TextStyle(
                                   fontSize: 17,
                                   fontWeight: FontWeight.bold,
-                                  color:
-                                      Theme.of(context).colorScheme.onSurface),
-                            )
+                                  color: Theme.of(context).colorScheme.onSurface,
+                                  ),
+                                );
+                              },
+                            ),
                           ],
                         ),
                         SizedBox(
@@ -213,14 +288,36 @@ class _BalanceScreenState extends State<BalanceScreen> {
                             SizedBox(
                               height: MediaQuery.of(context).size.height * 0.02,
                             ),
-                            Text(
-                              '\$ 0',
-                              style: TextStyle(
+                            StreamBuilder<QuerySnapshot>(
+                              stream: FirebaseFirestore.instance.collection('expence').snapshots(), 
+                              builder: (context, snapshot) {
+                              if (!snapshot.hasData) {
+                                return CircularProgressIndicator();
+                              }
+                              if (!snapshot.hasData || snapshot.data!.docs.isEmpty ) {
+                                return Text(
+                                  '\$ 0',
+                                  style: TextStyle(
+                                    fontSize: 17,
+                                    fontWeight: FontWeight.bold,
+                                    color: Theme.of(context).colorScheme.onSurface,
+                                  ),
+                                );
+                              }
+                              final totalExpense = snapshot.data!.docs.fold<int>(
+                                0, 
+                                (previousValue, document) => previousValue + (document['totalExpense'] as int? ?? 0)
+                              );
+                              return Text(
+                                '\$ $totalExpense',
+                                style: TextStyle(
                                   fontSize: 17,
                                   fontWeight: FontWeight.bold,
-                                  color:
-                                      Theme.of(context).colorScheme.onSurface),
-                            )
+                                  color: Theme.of(context).colorScheme.onSurface,
+                                  ),
+                                );
+                              },
+                            ),
                           ],
                         ),
                         SizedBox(

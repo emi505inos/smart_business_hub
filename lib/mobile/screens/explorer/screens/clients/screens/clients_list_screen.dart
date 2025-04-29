@@ -152,10 +152,8 @@ class _ClientsListScreenState extends State<ClientsListScreen> {
             }
 
             ).toList();
-            return Expanded(
-              child: ListView(
-                children: clientsWidgets,
-              ),
+            return ListView(
+              children: clientsWidgets,
             );   
         }
       ),

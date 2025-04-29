@@ -21,13 +21,14 @@ class InventaryScreen extends StatefulWidget {
 }
 
 class _InventaryScreenState extends State<InventaryScreen> {
-  late CategorySelector category;
-  bool isloading = false;
+  // late CategorySelector categorySelector;
+  // int categorySelector = 0;
+  String? categorySelector;
 
   @override
   void initState() {
     super.initState();
-    category = CategorySelector.empty;
+    // categorySelector = CategorySelector.empty;
   }
 
   @override
@@ -351,304 +352,261 @@ class _InventaryScreenState extends State<InventaryScreen> {
                   ),
                 ],
               ),
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.1,
-                  child: BlocProvider(
-                    create: (context) =>
-                        GetCategoriesBloc(FirebaseCategoryRepo())
-                          ..add(GetCategories()),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        InkWell(
-                          onTap: () {
-                            setState(() {
-                              category.select = 0;
-                            });
-                          },
-                          borderRadius:
-                              BorderRadius.circular(17),
-                          child: Ink(
-                            height: MediaQuery.of(context)
-                                    .size
-                                    .height *
-                                0.05,
-                            width: MediaQuery.of(context)
-                                    .size
-                                    .width *
-                                0.45,
-                            decoration: category.select == 0
-                                ? BoxDecoration(
-                                    borderRadius:
-                                        BorderRadius.circular(
-                                            17),
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .primary,
-                                  )
-                                : BoxDecoration(
-                                    borderRadius:
-                                        BorderRadius.circular(
-                                            17),
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .onPrimary,
-                                    border: Border.all(
-                                        color: Colors
-                                            .grey.shade400,
-                                        width: 2)),
-                            child: Row(
-                              mainAxisAlignment:
-                                  MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  'Todas las categorias',
-                                  style: TextStyle(
-                                    fontSize: 17,
-                                    fontWeight: FontWeight.bold,
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .onSurface,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          width: MediaQuery.of(context)
-                                  .size
-                                  .width *
-                              0.02,
-                        ),
-                        SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.05,
-                          width: MediaQuery.of(context).size.width,
-                          child: BlocBuilder<GetCategoriesBloc,
-                              GetCategoriesState>(
-                            builder: (context, state) {
-                              if (state is GetCategoriesSuccess) {
-                                final categories = state.category;
-                                return ListView.builder(
-                                  itemCount: categories.length,
-                                  scrollDirection: Axis.horizontal,
-                                  itemBuilder: (context, int i) {
-                                    return Row(
-                                      children: [
-                                        InkWell(
-                                          onTap: () {
-                                            setState(() {
-                                              category.select = i + 1;
-                                            });
-                                          },
+              StreamBuilder(
+                stream: FirebaseFirestore.instance.collection('categories').snapshots(), 
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    
+                  }
+                  if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+                    
+                  }
+                  final categories = snapshot.data!.docs;
+                  return SizedBox(
+                    height: MediaQuery.of(context).size.height*0.085,
+                    width: MediaQuery.of(context).size.width,
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: categories.length + 1,
+                      itemBuilder: (context, i) {
+                        if (i == 0) {
+                          return Row(
+                            children: [
+                              InkWell(
+                                onTap: () {
+                                  setState(() {
+                                    categorySelector = null;
+                                  });
+                                },
+                                borderRadius:BorderRadius.circular(17),
+                                child: Ink(
+                                  height: MediaQuery.of(context).size.height*0.05,
+                                  width: MediaQuery.of(context).size.width*0.45,
+                                  decoration: categorySelector == null
+                                      ? BoxDecoration(
                                           borderRadius:
                                               BorderRadius.circular(17),
-                                          child: Ink(
-                                            height: MediaQuery.of(context)
-                                                    .size
-                                                    .height *
-                                                0.05,
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.30,
-                                            decoration: category.select == i + 1
-                                                ? BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            17),
-                                                    color: Theme.of(context)
-                                                        .colorScheme
-                                                        .primary,
-                                                  )
-                                                : BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            17),
-                                                    color: Theme.of(context)
-                                                        .colorScheme
-                                                        .onPrimary,
-                                                    border: Border.all(
-                                                        color: Colors
-                                                            .grey.shade400,
-                                                        width: 2)),
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: [
-                                                Text(
-                                                  categories[i].name,
-                                                  style: TextStyle(
-                                                    fontSize: 17,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Theme.of(context)
-                                                        .colorScheme
-                                                        .onSurface,
-                                                  ),
-                                                ),
-                                              ],
+                                          color: Theme.of(context).colorScheme.primary,)
+                                      : BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(
+                                                  17),
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .onPrimary,
+                                          border: Border.all(
+                                              color: Colors
+                                                  .grey.shade400,
+                                              width: 2)),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        'Todas las categorias',
+                                        style: TextStyle(
+                                          fontSize: 17,
+                                          fontWeight: FontWeight.bold,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .onSurface,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              SizedBox(width: MediaQuery.of(context).size.width*0.02,),
+                            ],
+                          );
+                        }
+                        final category = categories[i - 1];
+                        return Row(
+                          children: [
+                            InkWell(
+                              onTap: () {
+                                setState(() {
+                                  categorySelector = category['name'];
+                                });
+                              },
+                              borderRadius:
+                                  BorderRadius.circular(17),
+                              child: Ink(
+                                height: MediaQuery.of(context)
+                                        .size
+                                        .height *
+                                    0.05,
+                                width: MediaQuery.of(context)
+                                        .size
+                                        .width *
+                                    0.30,
+                                decoration: categorySelector == category['name']
+                                    ? BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(
+                                                17),
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .primary,
+                                      )
+                                    : BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(
+                                                17),
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onPrimary,
+                                        border: Border.all(
+                                            color: Colors
+                                                .grey.shade400,
+                                            width: 2)),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      category['name'],
+                                      style: TextStyle(
+                                        fontSize: 17,
+                                        fontWeight: FontWeight.bold,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onSurface,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              width: MediaQuery.of(context)
+                                      .size
+                                      .width *
+                                  0.02,
+                            ),
+                          ],
+                        );
+                                        
+                      },
+                    ),
+                  );
+                }
+              ),
+              StreamBuilder(
+                stream: categorySelector == null
+                ?FirebaseFirestore.instance.collection('products').snapshots()
+                :FirebaseFirestore.instance
+                .collection('products')
+                .where('category', isEqualTo: categorySelector)
+                .snapshots(), 
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Center(child: CircularProgressIndicator());
+                  } if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+                    Text(
+                      'No hay productos disponibles',
+                      style: TextStyle(
+                        fontSize: 20,
+                        color: Theme.of(context).colorScheme.onSurface
+                      ),
+                    );
+                  }
+                  final products = snapshot.data!.docs;
+                  return Column(
+                    children: [
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.5,
+                        width: MediaQuery.of(context).size.width * 1,
+                        child: ListView.builder(
+                          itemCount: products.length,
+                          itemBuilder: (context, i) {
+                            final product = products[i];
+                            return Column(
+                              children: [
+                                InkWell(
+                                onTap: () {},
+                                borderRadius: BorderRadius.circular(20),
+                                child: Ink(
+                                  height:MediaQuery.of(context).size.height*0.15,
+                                  width:MediaQuery.of(context).size.width *1,
+                                  decoration: BoxDecoration(
+                                    borderRadius:BorderRadius.circular(20),
+                                    color: Theme.of(context).colorScheme.onPrimary,
+                                    border: Border.all(
+                                      color: Colors.grey.shade400,
+                                      width: 2
+                                    )
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(10),
+                                    child: Row(
+                                      children: [
+                                        Container(
+                                          height: MediaQuery.of(context).size.height,
+                                          width: MediaQuery.of(context).size.width*0.3,
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(20),
+                                            image: DecorationImage(
+                                              image: AssetImage(
+                                                'assets/shirt.jpg'
+                                              ),
+                                              fit: BoxFit.cover,
                                             ),
                                           ),
                                         ),
                                         SizedBox(
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.02,
-                                        ),
+                                          width: MediaQuery.of(context).size.width*0.02,),
+                                        Column(
+                                          crossAxisAlignment:CrossAxisAlignment.start,
+                                          mainAxisAlignment:MainAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              product['name'],
+                                              style: TextStyle(
+                                                fontSize: 20,
+                                                fontWeight:
+                                                    FontWeight.w500,
+                                                color:
+                                                    Colors.grey.shade600,
+                                              ),
+                                            ),
+                                            Text(
+                                              '\$ ${product['price']}',
+                                              style: TextStyle(
+                                                fontSize: 18,
+                                                fontWeight:
+                                                    FontWeight.w500,
+                                                color:
+                                                    Colors.grey.shade600,
+                                              ),
+                                            ),
+                                            SizedBox(height:MediaQuery.of(context).size.height *0.01,),
+                                            Text(
+                                              '${product['quantity']} disponibles',
+                                              style: TextStyle(
+                                                  fontSize: 17,
+                                                  fontWeight:
+                                                      FontWeight.bold,
+                                                  color: Theme.of(context)
+                                                      .colorScheme
+                                                      .onSurface),
+                                            ),
+                                            
+                                          ],
+                                        )
                                       ],
-                                    );
-                                  },
-                                );
-                              } else {
-                                return Container();
-                              }
-                            },
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.5,
-                width: MediaQuery.of(context).size.width * 1,
-                child: BlocProvider(
-                  create: (context) =>
-                      GetProductBloc(FirebaseProductRepo())..add(GetProduct()),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        child: BlocBuilder<GetProductBloc, GetProductState>(
-                          builder: (context, state) {
-                            if (state is GetProductSuccess) {
-                              final product = state.product;
-                              return ListView.builder(
-                              itemCount: product.length,
-                              itemBuilder: (context, int i) {
-                                return Column(
-                                  children: [
-                                    InkWell(
-                                      onTap: () {},
-                                      borderRadius: BorderRadius.circular(20),
-                                      child: Ink(
-                                        height:
-                                            MediaQuery.of(context).size.height *
-                                                0.15,
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                1,
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(20),
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .onPrimary,
-                                            border: Border.all(
-                                                color: Colors.grey.shade400,
-                                                width: 2)),
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(10),
-                                          child: Row(
-                                            children: [
-                                              Container(
-                                                height: MediaQuery.of(context)
-                                                    .size
-                                                    .height,
-                                                width: MediaQuery.of(context)
-                                                        .size
-                                                        .width *
-                                                    0.3,
-                                                decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(20),
-                                                  image: DecorationImage(
-                                                    image: AssetImage(
-                                                        'assets/shirt.jpg'),
-                                                    fit: BoxFit.cover,
-                                                  ),
-                                                ),
-                                              ),
-                                              SizedBox(
-                                                width: MediaQuery.of(context)
-                                                        .size
-                                                        .width *
-                                                    0.02,
-                                              ),
-                                              Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  Text(
-                                                    product[i].name,
-                                                    style: TextStyle(
-                                                      fontSize: 20,
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      color:
-                                                          Colors.grey.shade600,
-                                                    ),
-                                                  ),
-                                                  Text(
-                                                    '\$ ${product[i].price}',
-                                                    style: TextStyle(
-                                                      fontSize: 18,
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      color:
-                                                          Colors.grey.shade600,
-                                                    ),
-                                                  ),
-                                                  SizedBox(
-                                                    height:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .height *
-                                                            0.01,
-                                                  ),
-                                                  Text(
-                                                    '${product[i].quantity} disponibles',
-                                                    style: TextStyle(
-                                                        fontSize: 17,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        color: Theme.of(context)
-                                                            .colorScheme
-                                                            .onSurface),
-                                                  ),
-                                                ],
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                      ),
                                     ),
-                                    SizedBox(
-                                      height:
-                                          MediaQuery.of(context).size.height *
-                                              0.02,
-                                    ),
-                                  ],
-                                );
-                              },
+                                  ),
+                                ),
+                              ),SizedBox( height:MediaQuery.of(context).size.height*0.02,),
+                              ],
                             );
-                            } else {
-                              return Container();
-                            }
-                            
                           },
                         ),
-                      )
+                      ),
                     ],
-                  ),
-                ),
+                  );
+                },
               ),
             ],
           ),
