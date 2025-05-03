@@ -2,6 +2,7 @@ import 'package:business_repository/repositories.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_business_hub/mobile/screens/balance/bloc/create_income/create_income_bloc.dart';
+import 'package:smart_business_hub/mobile/screens/balance/views/pay_credit/bloc/create_credit_debt/create_credit_debt_bloc.dart';
 import 'package:smart_business_hub/mobile/screens/balance/views/pay_credit/pay_credit_screen.dart';
 import 'package:smart_business_hub/mobile/screens/balance/views/sales/free_sales_screen.dart';
 import 'package:smart_business_hub/mobile/screens/balance/views/sales/models/acount.dart';
@@ -90,8 +91,8 @@ class _PaySelectorState extends State<PaySelector> {
                 });
                 Navigator.of(context).push(MaterialPageRoute(
                   builder: (_) => BlocProvider(
-                      create: (context) => CreateIncomeBloc(
-                        FirebaseIncomeRepo()
+                      create: (context) => CreateCreditDebtBloc(
+                        FirebaseCreditDebt()
                       ),
                       child: PayCreditScreen(),
                     )

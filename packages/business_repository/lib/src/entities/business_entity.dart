@@ -1,22 +1,18 @@
-import 'package:business_repository/src/entities/entities.dart';
-
 class BusinessEntity {
   String businessID;
+  String owner;
   String picture;
-  String  typeOf;
+  String?  typeOf;
   String name;
   String address;
   String city;
   String state;
   String email;
   String phoneNumber;
-  List<IncomeEntity> income;
-  List<ExpenseEntity> expense;
-
-
 
   BusinessEntity({
     required this.businessID,
+    required this.owner,
     required this.picture,
     required this.typeOf,
     required this.name,
@@ -25,11 +21,10 @@ class BusinessEntity {
     required this.state,
     required this.email,
     required this.phoneNumber,
-    required this.income,
-    required this.expense,
   });
   static final empty = BusinessEntity(
     businessID: '',
+    owner: '',
     picture: '',
     typeOf: '',
     name: '',
@@ -38,12 +33,11 @@ class BusinessEntity {
     state: '',
     email: '',
     phoneNumber: '',
-    income: [],
-    expense: [],
   );
   Map<String, Object?> toDocument() {
     return {
       'businessID': businessID,
+      'owner': owner,
       'picture': picture,
       'typeOf': typeOf,
       'name': name,
@@ -52,13 +46,12 @@ class BusinessEntity {
       'state': state,
       'email': email,
       'phoneNumber': phoneNumber,
-      'income': income.map((e) => e.toDocument()).toList(),
-      'expense': expense.map((e) => e.toDocument()).toList(),
     };
   }
   static BusinessEntity fromDocument(Map<String, dynamic> doc) {
     return BusinessEntity(
       businessID: doc['businessID'],
+      owner: doc['owner'],
       picture: doc['picture'],
       typeOf: doc['typeOf'],
       name: doc['name'],
@@ -67,8 +60,6 @@ class BusinessEntity {
       state: doc['state'],
       email: doc['email'],
       phoneNumber: doc['phoneNumber'],
-      income: (doc['income'] as List).map((e) => IncomeEntity.fromDocument(e)).toList(),
-      expense: (doc['expense'] as List).map((e) => ExpenseEntity.fromDocument(e)).toList(),
     );
   }
 }

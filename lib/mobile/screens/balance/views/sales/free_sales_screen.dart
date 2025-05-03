@@ -88,7 +88,7 @@ class _FreeSalesScreenState extends State<FreeSalesScreen> {
               child: ElevatedButton(
                 onPressed: () {
                   final parsedDate =
-                      DateFormat.yMMMMd('es_AR').parse(dateController.text);
+                  DateFormat.yMMMMd('es_AR').parse(dateController.text);
                   setState(() {
                     income.saleId = const Uuid().v1();
                     income.dateTime = parsedDate;

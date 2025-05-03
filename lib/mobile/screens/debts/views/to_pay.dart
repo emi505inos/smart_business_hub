@@ -75,14 +75,26 @@ class _ToPayState extends State<ToPay> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        '\$ 79',
-                        style: TextStyle(
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold,
-                          color: Theme.of(context).colorScheme.onSurface
-                        )
-                      ),
+                      // StreamBuilder<QuerySnapshot>(
+                      //   stream: FirebaseFirestore.instance.collection('creditDebt').snapshots(), 
+                      //   builder: (context, snapshot) {
+                      //     if (!snapshot.hasData) {
+                      //       return CircularProgressIndicator();
+                      //     }
+                      //     final totalCreditDebt = snapshot.data!.docs.fold<int>(
+                      //       0, 
+                      //       (previousValue, document) => previousValue + (document['amount'] as int? ?? 0)
+                      //     );
+                      //     return Text(
+                      //       '\$ $totalCreditDebt',
+                      //       style: TextStyle(
+                      //         fontSize: 35,
+                      //         fontWeight: FontWeight.bold,
+                      //         color: Theme.of(context).colorScheme.onSurface,
+                      //       ),
+                      //     );
+                      //   },
+                      // ),
                       Container(
                         height: MediaQuery.of(context).size.height * 0.07,
                         width: MediaQuery.of(context).size.width * 0.07,

@@ -3,13 +3,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:intl/intl.dart';
 import 'package:smart_business_hub/mobile/screens/balance/balance_screen.dart';
+import 'package:smart_business_hub/mobile/screens/balance/views/pay_credit/bloc/create_credit_debt/create_credit_debt_bloc.dart';
 import 'package:smart_business_hub/mobile/screens/balance/views/sales/models/date_selector.dart';
 import 'package:smart_business_hub/mobile/screens/balance/views/sales/models/pay_selector.dart';
+import 'package:smart_business_hub/mobile/screens/balance/views/sales/models/sale_view.dart';
 import 'package:smart_business_hub/mobile/screens/explorer/explorer_blocs.dart';
 import 'package:smart_business_hub/mobile/screens/explorer/screens/clients/screens/create_clients_screen.dart';
+import 'package:uuid/uuid.dart';
 
-import '../../bloc/create_income/create_income_bloc.dart';
 
 class PayCreditScreen extends StatefulWidget {
   const PayCreditScreen({super.key});
@@ -19,24 +22,35 @@ class PayCreditScreen extends StatefulWidget {
 }
 
 class _PayCreditScreenState extends State<PayCreditScreen> {
-  TextEditingController incomeController = TextEditingController();
+  TextEditingController amountController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
   TextEditingController payMethodController = TextEditingController();
   TextEditingController dateController = TextEditingController();
   String selectedClient = 'Selecciona un cliente';
-
+  late CreditDebt creditDebt;
   bool isLoading = false;
-
+  
+  @override
+  void initState() {
+    super.initState();
+    dateController.text = DateFormat.yMMMMd('es_AR').format(DateTime.now());
+    creditDebt = CreditDebt.empty;
+    creditDebt.creditDebtId = const Uuid().v1();
+  }
   @override
   Widget build(BuildContext context) {
     return
-      BlocListener<CreateIncomeBloc, CreateIncomeState>(
+      BlocListener<CreateCreditDebtBloc, CreateCreditDebtState>(
         listener: (context, state) {
-          if(state is CreateIncomeSuccess) {
+          if(state is CreateCreditDebtSuccess) {
+            // setState(() {
+            //   creditDebt = CreditDebt.empty;
+            // });
 
-          }else if (state is CreateIncomeLoading) {
+          }else if (state is CreateCreditDebtLoading) {
             setState(() {
               isLoading = true;
+              creditDebt = CreditDebt.empty;
             });
           }
         },
@@ -77,7 +91,16 @@ class _PayCreditScreenState extends State<PayCreditScreen> {
             padding: const EdgeInsets.all(8.0),
             child: ElevatedButton(
               onPressed: () {
+                final parsedDate =DateFormat.yMMMMd('es_AR').parse(dateController.text);
                 setState(() {
+                  creditDebt.dateTime = parsedDate;
+                  creditDebt.amount = int.parse(amountController.text);
+                  creditDebt.description = descriptionController.text;
+                  creditDebt.client = selectedClient;
+                  context.read<CreateCreditDebtBloc>().add(CreateCreditDebt(creditDebt));
+                  Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) => SaleView()));
+                  
                 });
               },
               style: ElevatedButton.styleFrom(
@@ -132,7 +155,7 @@ class _PayCreditScreenState extends State<PayCreditScreen> {
                 SizedBox(
                   width: MediaQuery.of(context).size.width * 4,
                   child: TextFormField(
-                    controller: incomeController,
+                    controller: amountController,
                     textAlignVertical: TextAlignVertical.center,
                     textAlign: TextAlign.right,
                     keyboardType: TextInputType.number,

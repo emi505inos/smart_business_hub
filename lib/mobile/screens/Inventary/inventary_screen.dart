@@ -7,7 +7,6 @@ import 'package:smart_business_hub/mobile/screens/Inventary/bloc/inventory_blocs
 import 'package:smart_business_hub/mobile/screens/Inventary/views/categories_screen.dart';
 import 'package:smart_business_hub/mobile/screens/Inventary/views/create_product_screen.dart';
 import 'package:smart_business_hub/mobile/screens/auth/blocs/sign_in_bloc/sign_in_bloc.dart';
-import 'package:smart_business_hub/mobile/screens/balance/views/sales/models/category.dart';
 import 'package:smart_business_hub/mobile/screens/homescreen/views/new_business.dart';
 import 'package:smart_business_hub/mobile/screens/navigatorbar/custom_navigator_bar.dart';
 import 'package:smart_business_hub/mobile/screens/usermenu/user_menu.dart';
@@ -21,15 +20,8 @@ class InventaryScreen extends StatefulWidget {
 }
 
 class _InventaryScreenState extends State<InventaryScreen> {
-  // late CategorySelector categorySelector;
-  // int categorySelector = 0;
-  String? categorySelector;
 
-  @override
-  void initState() {
-    super.initState();
-    // categorySelector = CategorySelector.empty;
-  }
+  String? categorySelector;
 
   @override
   Widget build(BuildContext context) {
@@ -218,6 +210,7 @@ class _InventaryScreenState extends State<InventaryScreen> {
                 onTap: () {},
                 borderRadius: BorderRadius.circular(20),
                 child: Ink(
+
                   height: MediaQuery.of(context).size.height * 0.06,
                   width: MediaQuery.of(context).size.width,
                   decoration: BoxDecoration(
@@ -231,16 +224,19 @@ class _InventaryScreenState extends State<InventaryScreen> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(CupertinoIcons.doc_plaintext,
-                          color: Theme.of(context).colorScheme.onSurface),
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.02,
+                      Icon(
+                        CupertinoIcons.doc_plaintext,
+                        color: Theme.of(context).colorScheme.onSurface
                       ),
-                      Text('Reportes',
-                          style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              color: Theme.of(context).colorScheme.onSurface)),
+                      SizedBox(width: MediaQuery.of(context).size.width * 0.02,),
+                      Text(
+                        'Reportes',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).colorScheme.onSurface
+                          )
+                        ),
                     ],
                   ),
                 ),

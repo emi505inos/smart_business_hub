@@ -124,64 +124,99 @@ class _BalanceScreenState extends State<BalanceScreen> {
                               color: Colors.grey[700]),
                         ),
                         StreamBuilder<QuerySnapshot>(
-                          stream: FirebaseFirestore.instance.collection('income').snapshots(), 
+                          stream: FirebaseFirestore.instance.collection('income').snapshots(),
                           builder: (context, incomeSnapshot) {
-                            if (!incomeSnapshot.hasData) {
-                                return CircularProgressIndicator();
-                              }
-                              if (!incomeSnapshot.hasData || incomeSnapshot.data!.docs.isEmpty ) {
-                                return Text(
-                                  '\$ 0',
-                                  style: TextStyle(
-                                    fontSize: 17,
-                                    fontWeight: FontWeight.bold,
-                                    color: Theme.of(context).colorScheme.onSecondary,
-                                  ),
-                                );
-                              }
+                            if (!incomeSnapshot.hasData || incomeSnapshot.data!.docs.isEmpty) {
+                              final totalIncome = 0;
+                              return StreamBuilder<QuerySnapshot>(
+                                stream: FirebaseFirestore.instance.collection('expence').snapshots(),
+                                builder: (context, expenseSnapshot) {
+                                  if (!expenseSnapshot.hasData || expenseSnapshot.data!.docs.isEmpty) {
+                                    final totalExpense = 0;
+                                    int balance = totalIncome - totalExpense;
+                                    return Text(
+                                      balance >= 0
+                                          ? '\$ $balance'
+                                          : '-\$ ${balance.abs()}',
+                                      style: TextStyle(
+                                        fontSize: 17,
+                                        fontWeight: FontWeight.bold,
+                                        color: balance >= 0
+                                            ? Theme.of(context).colorScheme.onSecondary
+                                            : Theme.of(context).colorScheme.secondary,
+                                      ),
+                                    );
+                                  } else {
+                                    final totalExpense = expenseSnapshot.data!.docs.fold<int>(
+                                      0,
+                                      (previousValue, document) =>
+                                          previousValue + (document['totalExpense'] as int? ?? 0),
+                                    );
+                                    int balance = totalIncome - totalExpense;
+                                    return Text(
+                                      balance >= 0
+                                          ? '\$ $balance'
+                                          : '-\$ ${balance.abs()}',
+                                      style: TextStyle(
+                                        fontSize: 17,
+                                        fontWeight: FontWeight.bold,
+                                        color: balance >= 0
+                                            ? Theme.of(context).colorScheme.onSecondary
+                                            : Theme.of(context).colorScheme.secondary,
+                                      ),
+                                    );
+                                  }
+                                },
+                              );
+                            } else {
                               final totalIncome = incomeSnapshot.data!.docs.fold<int>(
-                                0, 
-                                (previousValue, document) => previousValue + (document['income'] as int? ?? 0)
+                                0,
+                                (previousValue, document) =>
+                                previousValue + (document['income'] as int? ?? 0),
                               );
                               return StreamBuilder<QuerySnapshot>(
-                                stream: FirebaseFirestore.instance.collection('expence').snapshots(), 
+                                stream: FirebaseFirestore.instance.collection('expence').snapshots(),
                                 builder: (context, expenseSnapshot) {
-                                  if (!expenseSnapshot.hasData) {
-                                return CircularProgressIndicator();
-                              }
-                              if (!expenseSnapshot.hasData || expenseSnapshot.data!.docs.isEmpty ) {
-                                return Text(
-                                  '\$ 0',
-                                  style: TextStyle(
-                                    fontSize: 17,
-                                    fontWeight: FontWeight.bold,
-                                    color: Theme.of(context).colorScheme.onSecondary,
-                                  ),
-                                );
-                              }
-                              final totalExpense = expenseSnapshot.data!.docs.fold<int>(
-                                0, 
-                                (previousValue, document) => previousValue + (document['totalExpense'] as int? ?? 0)
+                                  if (!expenseSnapshot.hasData || expenseSnapshot.data!.docs.isEmpty) {
+                                    final totalExpense = 0; 
+                                    int balance = totalIncome - totalExpense;
+                                    return Text(
+                                      balance >= 0
+                                          ? '\$ $balance'
+                                          : '-\$ ${balance.abs()}',
+                                      style: TextStyle(
+                                        fontSize: 17,
+                                        fontWeight: FontWeight.bold,
+                                        color: balance >= 0
+                                            ? Theme.of(context).colorScheme.onSecondary
+                                            : Theme.of(context).colorScheme.secondary,
+                                      ),
+                                    );
+                                  } else {
+                                    final totalExpense = expenseSnapshot.data!.docs.fold<int>(
+                                      0,
+                                      (previousValue, document) =>
+                                          previousValue + (document['totalExpense'] as int? ?? 0),
+                                    );
+                                    int balance = totalIncome - totalExpense;
+                                    return Text(
+                                      balance >= 0
+                                          ? '\$ $balance'
+                                          : '-\$ ${balance.abs()}',
+                                      style: TextStyle(
+                                        fontSize: 17,
+                                        fontWeight: FontWeight.bold,
+                                        color: balance >= 0
+                                            ? Theme.of(context).colorScheme.onSecondary
+                                            : Theme.of(context).colorScheme.secondary,
+                                      ),
+                                    );
+                                  }
+                                },
                               );
-                              int balance = totalIncome - totalExpense;
-                              return Text(
-                                balance >= 0
-                                ? '\$ $balance'
-                                : '-\$ ${balance.abs()}',
-                                style: TextStyle(
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.bold,
-                                  color: 
-                                  balance >= 0
-                                  ? Theme.of(context).colorScheme.onSecondary
-                                  : Theme.of(context).colorScheme.secondary
-                                   
-                                  ),
-                                ); 
-                              },
-                            );
+                            }
                           },
-                        ),
+                        ) 
                       ],
                     ),
                     SizedBox(

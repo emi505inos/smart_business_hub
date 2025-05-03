@@ -42,7 +42,7 @@ class _NewDebtFormState extends State<NewDebtForm> {
        if (state is CreateExpenseSuccess) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text('Deuda creado con éxito'),
+              content: Text('Deuda creada con éxito'),
               backgroundColor: Colors.green,
             ),
           );

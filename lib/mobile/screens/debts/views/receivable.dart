@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -74,41 +75,97 @@ class _ReceivableState extends State<Receivable> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        '\$ 79',
-                        style: TextStyle(
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold,
-                          color: Theme.of(context).colorScheme.onSurface
-                        )
-                      ),
-                      Container(
-                        height: MediaQuery.of(context).size.height * 0.07,
-                        width: MediaQuery.of(context).size.width * 0.07,
-                        decoration: BoxDecoration(
-                          color: Color.fromRGBO(92, 226, 170, 0.35),
-                          shape: BoxShape.circle
-                        ),
-                        child: Center(
-                          child: Text(
-                            '2',
+                      StreamBuilder<QuerySnapshot>(
+                        stream: FirebaseFirestore.instance.collection('creditDebt').snapshots(), 
+                        builder: (context, snapshot) {
+                          if (!snapshot.hasData) {
+                            return CircularProgressIndicator();
+                          }
+                          final totalCreditDebt = snapshot.data!.docs.fold<int>(
+                            0, 
+                            (previousValue, document) {
+                              final data = document.data() as Map<String, dynamic>?;
+                              if (data != null && data.containsKey('debts')) {
+                                List<dynamic> debtsList = data['debts'] ?? [];
+                                int sumDebts = debtsList.fold(
+                                  0,
+                                  (debtSum , debt) => debtSum + (debt['amount'] as int? ?? 0),
+                                );
+                                return previousValue + sumDebts;
+                              }
+                              return previousValue;
+                            }
+                          );
+                          return Text(
+                            '\$ $totalCreditDebt',
                             style: TextStyle(
-                              fontSize: 20,
+                              fontSize: 35,
                               fontWeight: FontWeight.bold,
-                              color: Colors.green[700]
-                            )
-                          ),
-                        ),
-                      )
+                              color: Theme.of(context).colorScheme.onSurface,
+                            ),
+                          );
+                        },
+                      ),
+                      StreamBuilder<QuerySnapshot>(
+                        stream: FirebaseFirestore.instance.collection('creditDebt').snapshots(), 
+                        builder: (context, snapshot) {
+                          if (!snapshot.hasData) {
+                            return CircularProgressIndicator();
+                          }
+                          final totalAmount = snapshot.data!.docs.fold<int>(
+                            0, 
+                            (previousValue, document) {
+                              final data = document.data() as Map<String, dynamic>?;
+                              if (data != null && data.containsKey('debts')) {
+                                List<dynamic> debtsList = data['debts'] ?? [];
+                                int amountCount = debtsList.length;
+
+                                return previousValue + amountCount;
+                              }
+                              return previousValue;
+                            }
+                          );
+                          return Container(
+                            height: MediaQuery.of(context).size.height * 0.07,
+                            width: MediaQuery.of(context).size.width * 0.07,
+                            decoration: BoxDecoration(
+                              color: Color.fromRGBO(92, 226, 170, 0.35),
+                              shape: BoxShape.circle
+                            ),
+                            child: Center(
+                              child: Text(
+                                '$totalAmount',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.green[700]
+                                )
+                              ),
+                            ),
+                          );
+                        },
+                      ),
                     ],
                   ),
-                  Text(
-                    '1 Cliente',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.grey
-                    )
+                  StreamBuilder<QuerySnapshot>(
+                    stream: FirebaseFirestore.instance.collection('creditDebt').snapshots(),
+                    builder: (context, snapshot) {
+                      if (!snapshot.hasData) {
+                        return CircularProgressIndicator();
+                      }
+                      Set<String> uniqueClients = {};
+                      for (var doc in snapshot.data!.docs) {
+                        uniqueClients.add(doc['client']);
+                      }
+                      return Text(
+                        '${uniqueClients.length} Cliente(s)',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.grey,
+                        ),
+                      );
+                    },
                   )
                 ],
               ),

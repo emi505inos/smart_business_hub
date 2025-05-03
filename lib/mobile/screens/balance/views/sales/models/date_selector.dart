@@ -26,7 +26,7 @@ class _DateSelectorState extends State<DateSelector> {
     return 
     SizedBox(
       height: MediaQuery.of(context).size.height*0.05,
-      width: MediaQuery.of(context).size.width*0.45,
+      width: MediaQuery.of(context).size.width*0.47,
       child: TextFormField(
         controller: dateController,
         readOnly: true,
