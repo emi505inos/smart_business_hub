@@ -7,7 +7,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'src/entities/entities.dart';
 
 class FirebaseBusinessRepo implements BusinessRepository{
-  final businessRepository = FirebaseFirestore.instance.collection('businesses');
+  
+  final businessRepository = FirebaseFirestore.instance.collection('business');
+
   @override
   Future<void> createBusiness(Business business) async{
     try {

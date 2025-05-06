@@ -1,9 +1,11 @@
-import 'package:business_repository/repositories.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:smart_business_hub/mobile/screens/business/bloc/bloc/set_business_bloc.dart';
 import 'package:smart_business_hub/mobile/screens/business/bloc/create_business/create_business_bloc.dart';
 import 'package:smart_business_hub/mobile/screens/homescreen/home_screen.dart';
+import 'package:user_repository/user_repository.dart';
+import 'package:uuid/uuid.dart';
 
 import 'model/type_of_business_list.dart';
 
@@ -18,23 +20,34 @@ class _BusinessScreenState extends State<BusinessScreen> {
   TextEditingController nameController = TextEditingController();
   TextEditingController ownerController = TextEditingController();
   String? selectedOption;
-  late Business business;
+  late Business1 business;
 
   @override
   void initState() {
     super.initState();
-   business = Business.empty;
+   business = Business1.empty;
   }
   @override
   Widget build(BuildContext context) {
+    // return BlocProvider(
+    //   create: (context) => CreateBusinessBloc(FirebaseBusinessRepo()),
+    //   child: BlocListener<CreateBusinessBloc, CreateBusinessState>(
+    //     listener: (context, state) {
+    //       if (state is CreateBusinessSuccess) {
+    //     }else if (state is CreateBusinessLoading) {
+    //       setState(() {
+    //         business = Business.empty;
+    //       });
+    //     }
+    //     },
     return BlocProvider(
-      create: (context) => CreateBusinessBloc(FirebaseBusinessRepo()),
-      child: BlocListener<CreateBusinessBloc, CreateBusinessState>(
+      create: (context) => SetBusinessBloc(FirebaseBusinessRepo1()),
+      child: BlocListener<SetBusinessBloc, SetBusinessState>(
         listener: (context, state) {
           if (state is CreateBusinessSuccess) {
         }else if (state is CreateBusinessLoading) {
           setState(() {
-            business = Business.empty;
+            business = Business1.empty;
           });
         }
         },
@@ -58,10 +71,23 @@ class _BusinessScreenState extends State<BusinessScreen> {
                 child: ElevatedButton(
                   onPressed: () {
                     setState(() {
-                      business.owner = ownerController.text;
-                      business.name = nameController.text;
-                      business.typeOf = selectedOption;
-                      context.read<CreateBusinessBloc>().add(CreateBusiness(business));
+                      final business = Business1(
+                        businessID: const Uuid().v1(), 
+                        owner: 'owner', 
+                        picture: 'picture', 
+                        typeOf: selectedOption, 
+                        name: nameController.text, 
+                        address: 'address', 
+                        city: 'city', 
+                        state: 'state', 
+                        email: 'email', 
+                        phoneNumber: 'phoneNumber'
+                      );
+                      // business.businessID = const Uuid().v1();
+                      // business.owner = ownerController.text;
+                      // business.name = nameController.text;
+                      // business.typeOf = selectedOption;
+                      context.read<SetBusinessBloc>().add(SetBusinessRequested(business));
                       Navigator.push(context,MaterialPageRoute(
                           builder: (context) => HomeScreen(),
                         ));

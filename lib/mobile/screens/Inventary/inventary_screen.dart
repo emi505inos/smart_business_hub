@@ -63,18 +63,32 @@ class _InventaryScreenState extends State<InventaryScreen> {
                   },
                 );
               },
-              child: Row(
-                children: [
-                  Text(
-                    'Empresa',
-                    style: TextStyle(
+              child: StreamBuilder<QuerySnapshot>(
+              stream: FirebaseFirestore.instance.collection('business').snapshots(), 
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                final business = snapshot.data!.docs.first['name'];
+                return Row(
+                  children: [
+                    Text(
+                      '$business',
+                      style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
-                        color: Theme.of(context).colorScheme.onSurface),
-                  ),
-                  Icon(Icons.arrow_drop_down,
-                      color: Theme.of(context).colorScheme.onSurface)
-                ],
+                        color: Theme.of(context).colorScheme.onSurface
+                      ),
+                    ),
+                    Icon(
+                      Icons.arrow_drop_down,
+                      color: Theme.of(context).colorScheme.onSurface
+                    )
+                  ],
+                );
+                },
               ),
             ),
             Text(
@@ -498,12 +512,14 @@ class _InventaryScreenState extends State<InventaryScreen> {
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return Center(child: CircularProgressIndicator());
-                  } if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-                    Text(
-                      'No hay productos disponibles',
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: Theme.of(context).colorScheme.onSurface
+                  } if (!snapshot.hasData ||snapshot.data!.docs.isEmpty) {
+                   return Center(
+                      child: Text(
+                        'No hay productos disponibles',
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: Theme.of(context).colorScheme.onSurface
+                        ),
                       ),
                     );
                   }

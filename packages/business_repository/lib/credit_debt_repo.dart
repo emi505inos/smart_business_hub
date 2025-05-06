@@ -36,8 +36,7 @@ class FirebaseCreditDebt implements CreditDebtRepository{
       }).toList();
     });
   }
-  
-  
+}
   // @override
   // Future<void> createCreditDebt(CreditDebt creditDebt) async{
   //   try {
@@ -48,4 +47,10 @@ class FirebaseCreditDebt implements CreditDebtRepository{
   //     log(e.toString());
   //   }
   // }
-}
+// service cloud.firestore {
+//   match /databases/{database}/documents {
+//     match /businesses/{businessId}/{document=**} {
+//       allow read, write: if request.auth != null && request.auth.uid == resource.data.ownerId;
+//     }
+//   }
+// }

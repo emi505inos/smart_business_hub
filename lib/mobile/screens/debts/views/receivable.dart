@@ -1,3 +1,4 @@
+import 'package:business_repository/repositories.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -119,7 +120,7 @@ class _ReceivableState extends State<Receivable> {
                               if (data != null && data.containsKey('debts')) {
                                 List<dynamic> debtsList = data['debts'] ?? [];
                                 int amountCount = debtsList.length;
-
+      
                                 return previousValue + amountCount;
                               }
                               return previousValue;
@@ -172,99 +173,140 @@ class _ReceivableState extends State<Receivable> {
             ),
           ),
           SizedBox(height: MediaQuery.of(context).size.height * 0.02,),
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.15,
-            width: MediaQuery.of(context).size.width,
-            child: ListView.builder(
-              itemCount: 1,
-              itemBuilder: (context, index) {
-                return InkWell(
-                  onTap: () {},
-                  borderRadius: BorderRadius.circular(20),
-                  child: Ink(
-                    height: MediaQuery.of(context).size.height * 0.15,
-                    width: MediaQuery.of(context).size.width*0.4,
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.onPrimary,
-                      borderRadius: BorderRadius.circular(20),
-                      boxShadow: [
-                        BoxShadow(
-                          blurRadius: 1,
-                          color: Colors.grey.withValues(alpha: 0.5),
-                          spreadRadius: 1,
-                        )
-                      ]
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(15),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Pedro',
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: Theme.of(context).colorScheme.onSurface
-                            )
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                '\$ 79',
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.grey
-                                )
-                              ),
-                              Row(
-                                children: [
-                                  Container(
-                                    height: MediaQuery.of(context).size.height * 0.05,
-                                    width: MediaQuery.of(context).size.width * 0.05,
-                                    decoration: BoxDecoration(
-                                      color: Color.fromRGBO(92, 226, 170, 0.35),
-                                      shape: BoxShape.circle
-                                    ),
-                                    child: Center(
-                                      child: Text(
-                                        '2',
-                                        style: TextStyle(
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.green[700]
-                                        )
-                                      ),
-                                    ),
-                                  ),
-                                  Icon(
-                                    CupertinoIcons.chevron_forward,
-                                    size: 25,
-                                    color: Theme.of(context).colorScheme.onSurface
-                                  ),
-                                ],
-                              )
-                            ],
-                          ),
-                          SizedBox(height: MediaQuery.of(context).size.height * 0.01,),
-                          Text(
-                            dateNow,
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                              color: Colors.grey[700]
-                            )
-                          ), 
-                        ],
-                      ),
+          StreamBuilder<QuerySnapshot>(
+            stream: FirebaseFirestore.instance.collection('creditDebt').snapshots(), 
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return SizedBox(height: 1,width: 1,child: CircularProgressIndicator());
+              } if (!snapshot.hasData || snapshot.data == null ||snapshot.data!.docs.isEmpty) {
+                return Center(
+                child: Text(
+                  'No hay datos disponibles',
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Theme.of(context).colorScheme.onSurface
                     ),
                   ),
                 );
-              },
-            ),
-          )
+              }
+              final creditDebts = snapshot.data!.docs;
+              return Column(
+                children: [
+                  SizedBox(
+                  height: MediaQuery.of(context).size.height*0.3,
+                  width: MediaQuery.of(context).size.width,
+                  child: ListView.builder(
+                    itemCount: creditDebts.length,
+                    itemBuilder: (context, i) {
+                      final creditDebt = creditDebts[i];
+                      final data = creditDebt.data() as Map<String, dynamic>?;
+                      int totalDebtAmount = 0;
+                      if (data != null && data.containsKey('debts')) {
+                        List<dynamic> debtsList = data['debts'] ?? [];
+                        totalDebtAmount = debtsList.fold<int>(0, (debtSum, debt) {
+                          if (debt is Map<String, dynamic> && debt.containsKey('amount')) {
+                            return debtSum + (debt['amount'] as int);
+                          }
+                          return debtSum;
+                        });
+                      }
+                      return Column(
+                        children: [
+                          InkWell(
+                            onTap: () {},
+                            borderRadius: BorderRadius.circular(20),
+                            child: Ink(
+                              height: MediaQuery.of(context).size.height * 0.15,
+                              width: MediaQuery.of(context).size.width,
+                              decoration: BoxDecoration(
+                                color: Theme.of(context).colorScheme.onPrimary,
+                                borderRadius: BorderRadius.circular(20),
+                                boxShadow: [
+                                  BoxShadow(
+                                    blurRadius: 1,
+                                    color: Colors.grey.withValues(alpha: 0.5),
+                                    spreadRadius: 1,
+                                  )
+                                ]
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(15),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      creditDebt['client'],
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                        color: Theme.of(context).colorScheme.onSurface
+                                      )
+                                    ),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          '\$ $totalDebtAmount',
+                                          style: TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.grey
+                                          )
+                                        ),
+                                        Row(
+                                          children: [
+                                            Container(
+                                              height: MediaQuery.of(context).size.height * 0.05,
+                                              width: MediaQuery.of(context).size.width * 0.05,
+                                              decoration: BoxDecoration(
+                                                color: Color.fromRGBO(92, 226, 170, 0.35),
+                                                shape: BoxShape.circle
+                                              ),
+                                              child: Center(
+                                                child: Text(
+                                                  '${creditDebt['debts'].length}',
+                                                  style: TextStyle(
+                                                    fontSize: 15,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.green[700]
+                                                  )
+                                                ),
+                                              ),
+                                            ),
+                                            Icon(
+                                              CupertinoIcons.chevron_forward,
+                                              size: 25,
+                                              color: Theme.of(context).colorScheme.onSurface
+                                            ),
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                    SizedBox(height: MediaQuery.of(context).size.height * 0.01,),
+                                    Text(
+                                      dateNow,
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.grey[700]
+                                      )
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: MediaQuery.of(context).size.height*0.02,)
+                        ],
+                      );
+                    },
+                  ),
+                )
+                ],
+              );
+            },
+          ),
+          
         ],
       ),
     );

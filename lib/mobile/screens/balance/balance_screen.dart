@@ -53,18 +53,32 @@ class _BalanceScreenState extends State<BalanceScreen> {
                   },
                 );
               },
-              child: Row(
-                children: [
-                  Text(
-                    'Empresa',
-                    style: TextStyle(
+              child: StreamBuilder<QuerySnapshot>(
+              stream: FirebaseFirestore.instance.collection('business').snapshots(), 
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                final business = snapshot.data!.docs.first['name'];
+                return Row(
+                  children: [
+                    Text(
+                      '$business',
+                      style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
-                        color: Theme.of(context).colorScheme.onSurface),
-                  ),
-                  Icon(Icons.arrow_drop_down,
-                      color: Theme.of(context).colorScheme.onSurface)
-                ],
+                        color: Theme.of(context).colorScheme.onSurface
+                      ),
+                    ),
+                    Icon(
+                      Icons.arrow_drop_down,
+                      color: Theme.of(context).colorScheme.onSurface
+                    )
+                  ],
+                );
+                },
               ),
             ),
             Text(
@@ -262,7 +276,10 @@ class _BalanceScreenState extends State<BalanceScreen> {
                               stream: FirebaseFirestore.instance.collection('income').snapshots(), 
                               builder: (context, snapshot) {
                               if (!snapshot.hasData) {
-                                return CircularProgressIndicator();
+                                return SizedBox(
+                                height:   1,
+                                width: 1,
+                                child: CircularProgressIndicator());
                               }
                               if (!snapshot.hasData || snapshot.data!.docs.isEmpty ) {
                                 return Text(
@@ -327,7 +344,10 @@ class _BalanceScreenState extends State<BalanceScreen> {
                               stream: FirebaseFirestore.instance.collection('expence').snapshots(), 
                               builder: (context, snapshot) {
                               if (!snapshot.hasData) {
-                                return CircularProgressIndicator();
+                                return SizedBox(
+                                height:   1,
+                                width: 1,
+                                child: CircularProgressIndicator());
                               }
                               if (!snapshot.hasData || snapshot.data!.docs.isEmpty ) {
                                 return Text(

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -53,18 +54,32 @@ class DebtsScreen extends StatelessWidget {
                   },
                 );
               },
-              child: Row(
-                children: [
-                  Text(
-                    'Empresa',
-                    style: TextStyle(
+              child: StreamBuilder<QuerySnapshot>(
+              stream: FirebaseFirestore.instance.collection('business').snapshots(), 
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                final business = snapshot.data!.docs.first['name'];
+                return Row(
+                  children: [
+                    Text(
+                      '$business',
+                      style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
-                        color: Theme.of(context).colorScheme.onSurface),
-                  ),
-                  Icon(Icons.arrow_drop_down,
-                      color: Theme.of(context).colorScheme.onSurface)
-                ],
+                        color: Theme.of(context).colorScheme.onSurface
+                      ),
+                    ),
+                    Icon(
+                      Icons.arrow_drop_down,
+                      color: Theme.of(context).colorScheme.onSurface
+                    )
+                  ],
+                );
+                },
               ),
             ),
             Text(

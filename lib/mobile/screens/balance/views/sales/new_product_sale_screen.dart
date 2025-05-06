@@ -349,7 +349,7 @@ Widget build(BuildContext context) {
               .snapshots(), 
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(child: CircularProgressIndicator());
+                  return SizedBox(height:1,width: 1,child:CircularProgressIndicator());
                 } if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
                   return Text(
                     'No hay productos disponibles',

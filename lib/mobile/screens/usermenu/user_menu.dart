@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -19,14 +20,26 @@ class UserMenuScreen extends StatelessWidget {
           ),
           color: Theme.of(context).colorScheme.onSurface,
         ),
-        title: Text(
-          'Empresa',
-          style: TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-            color: Theme.of(context).colorScheme.onSurface
-          ),
-        ),
+        title: StreamBuilder<QuerySnapshot>(
+              stream: FirebaseFirestore.instance.collection('business').snapshots(), 
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                final business = snapshot.data!.docs.first['name'];
+                return 
+                  Text(
+                    '$business',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Theme.of(context).colorScheme.onSurface
+                    ),
+                  );
+                },
+              ),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -69,36 +82,47 @@ class UserMenuScreen extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Empresa',
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.grey
-                                    ),
-                                  ),
-                                  Row(
-                                    children: [
-                                      Text(
-                                        '+12345678912 ',
-                                        style: TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold,
-                                          color: Theme.of(context).colorScheme.onSurface
+                              StreamBuilder<QuerySnapshot>(
+                                stream: FirebaseFirestore.instance.collection('business').snapshots(), 
+                                builder: (context, snapshot) {
+                                  if (snapshot.connectionState == ConnectionState.waiting) {
+                                    return Center(
+                                      child: CircularProgressIndicator(),
+                                    );
+                                  }
+                                  final business = snapshot.data!.docs.first;
+                                  return Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          business['name'],
+                                          style: TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.grey
+                                          ),
                                         ),
-                                      ),
-                                      Icon(
-                                        Icons.verified_sharp,
-                                        size: 18,
-                                        color: Colors.blue,
-                                      )
-                                    ],
-                                  ),
-                                ],
-                              ),
+                                        Row(
+                                          children: [
+                                            Text(
+                                              '+${business['phoneNumber']}',
+                                              style: TextStyle(
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.bold,
+                                                color: Theme.of(context).colorScheme.onSurface
+                                              ),
+                                            ),
+                                            Icon(
+                                              Icons.verified_sharp,
+                                              size: 18,
+                                              color: Colors.blue,
+                                            )
+                                          ],
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                ),
                               SizedBox(width: MediaQuery.of(context).size.width*0.02,),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.start,

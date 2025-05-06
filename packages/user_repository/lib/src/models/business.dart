@@ -1,31 +1,32 @@
-import 'package:business_repository/src/entities/business_entity.dart';
 
-class Business {
+
+import '../entities/entities.dart';
+
+class Business1 {
   String businessID;
-  String ownerId;
   String owner;
   String picture;
   String?  typeOf;
   String name;
   String address;
   String city;
+  String state;
   String email;
   String phoneNumber;
 
-  Business({
+  Business1({
     required this.businessID,
-    required this.ownerId,
     required this.owner,
     required this.picture,
     required this.typeOf,
     required this.name,
     required this.address,
     required this.city,
+    required this.state,
     required this.email,
     required this.phoneNumber,
   });
-  static final empty = Business(
-    ownerId: '',
+  static final empty = Business1(
     businessID: '',
     owner: '',
     picture: '',
@@ -33,12 +34,12 @@ class Business {
     name: '',
     address: '',
     city: '',
+    state: '',
     email: '',
     phoneNumber: '',
   );
-  BusinessEntity toEntity() {
-    return BusinessEntity(
-      ownerId: ownerId,
+  Business1Entity toEntity() {
+    return Business1Entity(
       businessID: businessID,
       owner: owner,
       picture: picture,
@@ -46,20 +47,21 @@ class Business {
       name: name,
       address: address,
       city: city,
+      state: state,
       email: email,
       phoneNumber: phoneNumber,
     );
   }
-  static Business fromEntity(BusinessEntity entity) {
-    return Business(
+  static Business1 fromEntity(Business1Entity entity) {
+    return Business1(
       businessID: entity.businessID,
-      ownerId: empty.ownerId,
       owner: empty.owner,
       picture: entity.picture,
       typeOf: entity.typeOf,
       name: entity.name,
       address: entity.address,
       city: entity.city,
+      state: entity.state,
       email: entity.email,
       phoneNumber: entity.phoneNumber,
     );

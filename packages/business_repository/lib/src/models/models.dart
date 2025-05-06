@@ -7,3 +7,4 @@ export 'package:business_repository/src/models/suplier.dart';
 export 'package:business_repository/src/models/business.dart';
 export 'package:business_repository/src/models/employee.dart';
 export 'package:business_repository/src/models/credit_debt.dart';
+export 'package:business_repository/src/models/debt.dart';

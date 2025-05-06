@@ -10,3 +10,4 @@ export 'income_repository.dart';
 export 'product_repository.dart';
 export 'supliers_repository.dart';
 export 'credit_debt_repository.dart';
+export 'debt_repository.dart';

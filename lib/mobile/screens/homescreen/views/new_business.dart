@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:smart_business_hub/mobile/screens/business/screens/new_business_screen.dart';
 
 class NewBusiness extends StatelessWidget {
   const NewBusiness({super.key});
@@ -106,7 +107,7 @@ class NewBusiness extends StatelessWidget {
             ),
             InkWell(
               onTap: () {
-                
+                Navigator.push(context, MaterialPageRoute(builder: (context) => NewBusinessScreen(),));
               },
               child: Ink(
               height: MediaQuery.of(context).size.height*0.05,

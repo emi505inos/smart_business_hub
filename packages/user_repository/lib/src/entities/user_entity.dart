@@ -1,3 +1,5 @@
+import 'package:user_repository/src/models/models.dart';
+
 class MyUserEntity{
   String userId;
   String email;
