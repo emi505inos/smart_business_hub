@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:smart_business_hub/mobile/screens/explorer/explorer_screen.dart';
+import 'package:smart_business_hub/mobile/screens/explorer/screens/statistics/screens/pie_chart_data_expense.dart';
+import 'package:smart_business_hub/mobile/screens/explorer/screens/statistics/screens/pie_chart_income.dart';
 import 'package:smart_business_hub/mobile/screens/navigatorbar/custom_navigator_bar.dart';
 
 class StatisticsScreen extends StatefulWidget {
@@ -9,7 +11,18 @@ class StatisticsScreen extends StatefulWidget {
   State<StatisticsScreen> createState() => _StatisticsScreenState();
 }
 
-class _StatisticsScreenState extends State<StatisticsScreen> {
+class _StatisticsScreenState extends State<StatisticsScreen>  with TickerProviderStateMixin{
+  late final TabController _tabController;
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 2, vsync: this);
+  }
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,6 +55,50 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
           
         ),
       bottomNavigationBar: CustomeNavigationBar(),
+      body: DefaultTabController(
+        initialIndex: 1,
+        length: 2, 
+        child: Column(
+          children: [
+            TabBar(
+              controller: _tabController,
+              labelColor: Theme.of(context).colorScheme.onSurface,
+              tabs:  <Widget>[
+                Tab(
+                  child: Text(
+                    'Ingresos',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Theme.of(context).colorScheme.onSurface,
+                    ),
+                  ),
+                ),
+                Tab(
+                  child: Text(
+                    'Egresos',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Theme.of(context).colorScheme.onSurface,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            Expanded(
+              child: TabBarView(
+                controller: _tabController,
+                children: const [
+                  Card.filled(child: PieChartIncome()), 
+                  Card.filled(child: PieChartDataExpense()),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+      
     );
   }
 }

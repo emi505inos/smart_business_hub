@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:smart_business_hub/mobile/screens/business/screens/new_business_screen.dart';
@@ -56,26 +57,37 @@ class NewBusiness extends StatelessWidget {
                           size: 30,
                         ),
                         SizedBox(width: MediaQuery.of(context).size.width*0.04,),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              'Empresa',
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold
-                              ),
-                            ),
-                            Text(
-                              'Ropa, zapatos y accesorios',
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w500
-                              ),
-                            )
-                          ],
-                        )
+                        StreamBuilder<QuerySnapshot>(
+                          stream: FirebaseFirestore.instance.collection('business').snapshots(), 
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState == ConnectionState.waiting) {
+                              return Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            }
+                            final business = snapshot.data!.docs.first;
+                            return Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  business['name'],
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold
+                                  ),
+                                ),
+                                Text(
+                                  business['typeOf'],
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w500
+                                  ),
+                                )
+                              ],
+                            );
+                          },
+                        ),
                       ],
                     ),
                     GestureDetector(

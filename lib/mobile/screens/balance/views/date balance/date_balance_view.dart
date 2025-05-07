@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:smart_business_hub/mobile/screens/balance/views/date%20balance/date_balance.dart';
+import 'package:smart_business_hub/mobile/screens/balance/views/date%20balance/date_selector_list.dart';
 
 class DateBalanceView extends StatefulWidget {
   const DateBalanceView({super.key});
@@ -10,6 +11,7 @@ class DateBalanceView extends StatefulWidget {
 
 class _DateBalanceViewState extends State<DateBalanceView> {
   late DateBalance  dateBlance;
+  String selectedDate = '';
 
    @override
   void initState() {
@@ -41,10 +43,10 @@ class _DateBalanceViewState extends State<DateBalanceView> {
                   child: Row(
                     children: [
                       SizedBox(width: 20,),
-                      InkWell(
+                      ...dateSelectorList.map((e) => InkWell(
                         onTap: () {
                           setState(() {
-                            dateBlance.date = 6;
+                            selectedDate = e['mont'] ?? '';
                           });
                         },
                         borderRadius: BorderRadius.circular(5),
@@ -53,179 +55,24 @@ class _DateBalanceViewState extends State<DateBalanceView> {
                           width: MediaQuery.of(context).size.width*0.2,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(5),
-                            color: dateBlance.date == 6
+                            color: selectedDate.isNotEmpty && selectedDate == (e['mont'] ?? '') 
                             ? Colors.white
                             : Color.fromRGBO(92, 226, 170, 1)
                           ),
                           child: Center(
                             child: Text(
-                              'Septiembre',
+                              e['mont'],
                               style: TextStyle(
                                 fontWeight: FontWeight.bold
                               ),
                             ),
                           )
                         )
-                      ),
-                      InkWell(
-                        onTap: () {
-                          setState(() {
-                            dateBlance.date = 5;
-                          });
-                        },
-                        borderRadius: BorderRadius.circular(5),
-                        child: Ink(
-                          height: MediaQuery.of(context).size.height*0.025,
-                          width: MediaQuery.of(context).size.width*0.2,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            color: dateBlance.date == 5
-                            ? Colors.white
-                            : Color.fromRGBO(92, 226, 170, 1)
-                          ),
-                          child: Center(
-                            child: Text(
-                              'Octubre',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold
-                              ),
-                            ),
-                          )
-                        )
-                      ),
-                      InkWell(
-                        onTap: () {
-                          setState(() {
-                            dateBlance.date = 4;
-                          });
-                        },
-                        borderRadius: BorderRadius.circular(5),
-                        child: Ink(
-                          height: MediaQuery.of(context).size.height*0.025,
-                          width: MediaQuery.of(context).size.width*0.2,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            color: dateBlance.date == 4
-                            ? Colors.white
-                            : Color.fromRGBO(92, 226, 170, 1)
-                          ),
-                          child: Center(
-                            child: Text(
-                              'Noviembre',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold
-                              ),
-                            ),
-                          )
-                        )
-                      ),
-                      InkWell(
-                        onTap: () {
-                          setState(() {
-                            dateBlance.date = 3;
-                          });
-                        },
-                        borderRadius: BorderRadius.circular(5),
-                        child: Ink(
-                          height: MediaQuery.of(context).size.height*0.025,
-                          width: MediaQuery.of(context).size.width*0.2,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            color: dateBlance.date == 3
-                            ? Colors.white
-                            : Color.fromRGBO(92, 226, 170, 1)
-                          ),
-                          child: Center(
-                            child: Text(
-                              'Diciembre',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold
-                              ),
-                            ),
-                          )
-                        )
-                      ),
-                      InkWell(
-                        onTap: () {
-                          setState(() {
-                            dateBlance.date = 2;
-                          });
-                        },
-                        borderRadius: BorderRadius.circular(5),
-                        child: Ink(
-                          height: MediaQuery.of(context).size.height*0.025,
-                          width: MediaQuery.of(context).size.width*0.2,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            color: dateBlance.date == 2
-                            ? Colors.white
-                            : Color.fromRGBO(92, 226, 170, 1)
-                          ),
-                          child: Center(
-                            child: Text(
-                              'Enero',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold
-                              ),
-                            ),
-                          )
-                        )
-                      ),
-                      InkWell(
-                        onTap: () {
-                          setState(() {
-                            dateBlance.date = 1;
-                          });
-                        },
-                        borderRadius: BorderRadius.circular(5),
-                        child: Ink(
-                          height: MediaQuery.of(context).size.height*0.025,
-                          width: MediaQuery.of(context).size.width*0.2,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            color: dateBlance.date == 1
-                            ? Colors.white
-                            : Color.fromRGBO(92, 226, 170, 1)
-                          ),
-                          child: Center(
-                            child: Text(
-                              'Febrero',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold
-                              ),
-                            ),
-                          )
-                        )
-                      ),
-                      InkWell(
-                        onTap: () {
-                          setState(() {
-                            dateBlance.date = 0;
-                          });
-                        },
-                        borderRadius: BorderRadius.circular(5),
-                        child: Ink(
-                          height: MediaQuery.of(context).size.height*0.025,
-                          width: MediaQuery.of(context).size.width*0.2,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            color: dateBlance.date == 0
-                            ? Colors.white
-                            : Color.fromRGBO(92, 226, 170, 1)
-                          ),
-                          child: Center(
-                            child: Text(
-                              'Marzo',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold
-                              ),
-                            ),
-                          )
-                        )
-                      ),
+                      ), 
+                      )
                       
                     ],
-                  ),
+                  )
                 ),
               ),
               Container(

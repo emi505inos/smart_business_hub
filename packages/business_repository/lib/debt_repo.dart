@@ -4,5 +4,5 @@ abstract class DebtsRepository {
 
   Future<void> createDebts(Debts debts);
 
-  Future<List<Debts>> getDebts();
+  // Future<List<Debts>> getDebts();
 }

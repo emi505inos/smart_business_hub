@@ -32,25 +32,28 @@ class Debts {
 
   DebtEntity toEntity() {
     return DebtEntity(
+      suplier: suplier,
+      debts: [{
       debtId: debtId, 
-      debtAmount: debtAmount, 
-      dateTime: dateTime, 
-      payMethod: payMethod, 
-      clients: clients, 
-      description: description, 
-      suplier: suplier
+      'debtAmount': debtAmount, 
+      'dateTime': dateTime, 
+      'payMethod': payMethod, 
+      'clients': clients, 
+      'description': description,
+      }]
     );
   }
 
-  static Debts fromEntity(DebtEntity entity) {
+  static Debts fromEntity(Map<String, dynamic>  debtData) {
     return Debts(
-      debtId: empty.debtId,
-      debtAmount: empty.debtAmount, 
-      dateTime: empty.dateTime, 
-      payMethod: empty.payMethod, 
-      clients: empty.clients, 
-      description: empty.description, 
-      suplier: empty.suplier
+      suplier: debtData['suplier'],
+      debtId: debtData['debtId'],
+      debtAmount: debtData['debtAmount'], 
+      dateTime: (debtData['amount']).toDate(), 
+      payMethod: debtData['payMethod'], 
+      clients: debtData['clients'], 
+      description: debtData['description'], 
+      
     );
   }
 }

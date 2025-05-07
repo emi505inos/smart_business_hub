@@ -1,42 +1,39 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class DebtEntity {
-  String debtId;
-  int debtAmount;
-  DateTime dateTime;
-  int payMethod;
-  String clients;
-  String description;
   String suplier;
+  List<Map<String, dynamic>> debts;
 
   DebtEntity({
-    required this.debtId,
-    required this.debtAmount,
-    required this.dateTime,
-    required this.payMethod,
-    required this.clients,
-    required this.description,
+    required this.debts,
     required this.suplier
   });
 
   Map<String, Object?> toDocument() {
     return {
-      'debtId': debtId,
-      'debtAmount': debtAmount,
-      'dateTime': dateTime,
-      'payMethod': payMethod,
-      'clients': clients,
-      'description': description,
-      'suplier': suplier
+      'suplier': suplier,
+      'debts': debts.map((debt) => {
+        'debtId': debt['debtId'],
+        'debtAmount': debt['debtAmount'],
+        'dateTime': Timestamp.fromDate(debt['dateTime']),
+        'payMethod': debt['payMethod'],
+        'clients': debt['clients'],
+        'description': debt['description'],
+      }).toList()
     };
   }
   static DebtEntity fromDocument(Map<String, dynamic> doc) {
     return DebtEntity(
-      debtId: doc['debtId'], 
-      debtAmount: doc['debtAmount'], 
-      dateTime: (doc['dateTime']).toDate(), 
-      payMethod: doc['payMethod'], 
-      clients: doc['clients'], 
-      description: doc['description'], 
-      suplier: doc['suplier']
+ 
+      suplier: doc['suplier'],
+      debts: (doc['debts'] as List<dynamic>).map((debt) => {
+        'debtId': debt['debtId'],
+        'debtAmount': debt['debtAmount'],
+        'dateTime': (debt['dateTime'] as Timestamp).toDate(),
+        'payMethod': debt['payMethod'],
+        'clients': debt['clients'],
+        'description': debt['description'],
+        }).toList(),
     );
   }
 }
