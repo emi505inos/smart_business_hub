@@ -6,7 +6,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:smart_business_hub/mobile/screens/balance/balance_screen.dart';
 import 'package:smart_business_hub/mobile/screens/balance/bloc/create_income/create_income_bloc.dart';
-import 'package:smart_business_hub/mobile/screens/balance/views/sales/models/date_selector.dart';
 import 'package:smart_business_hub/mobile/screens/balance/views/sales/models/pay_selector.dart';
 import 'package:smart_business_hub/mobile/screens/balance/views/sales/models/sale_view.dart';
 import 'package:smart_business_hub/mobile/screens/explorer/screens/clients/bloc/clients_blocs.dart';
@@ -127,7 +126,48 @@ class _FreeSalesScreenState extends State<FreeSalesScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      DateSelector(),
+                      // DateSelector(),
+                      SizedBox(
+                      height: MediaQuery.of(context).size.height*0.05,
+                      width: MediaQuery.of(context).size.width*0.47,
+                      child: TextFormField(
+                        controller: dateController,
+                        readOnly: true,
+                        onTap: () async {
+                          DateTime? newDate = await showDatePicker(
+                            context: context, 
+                            initialDate: income.dateTime, 
+                            firstDate: DateTime(2000), 
+                            lastDate: DateTime.now()
+                          );
+
+                          if (newDate != null) {
+                            setState(() {
+                              selectedDate = newDate.toLocal();
+                              dateController.text = DateFormat.yMMMMd('es_AR').format(selectedDate);
+                              income.dateTime = selectedDate;
+                            });
+                          }
+                        },
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).colorScheme.onSurface,
+                        ),
+                        decoration: InputDecoration(
+                          filled: true,
+                          fillColor: Colors.white,
+                          prefixIcon: Icon(
+                            Icons.calendar_month,
+                            color: Theme.of(context).colorScheme.onSurface,
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12), 
+                            borderSide: BorderSide.none
+                          ),
+                        ),
+                      ),
+                    ),
                       PaySelector(),
                     ],
                   ),

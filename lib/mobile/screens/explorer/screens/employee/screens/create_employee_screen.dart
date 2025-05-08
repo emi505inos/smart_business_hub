@@ -17,6 +17,7 @@ class _CreateEmployeeScreenState extends State<CreateEmployeeScreen> {
   TextEditingController nameController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
   TextEditingController dateController = TextEditingController();
+  DateTime selectedDate = DateTime.now();
 
   late Employee employee;
 
@@ -227,8 +228,9 @@ class _CreateEmployeeScreenState extends State<CreateEmployeeScreen> {
 
                     if (newDate != null) {
                       setState(() {
-                        dateController.text = DateFormat.yMMMMd('es_AR').format(newDate);
-                        employee.dateOfAdmission = newDate;
+                        selectedDate = newDate.toLocal();
+                        dateController.text = DateFormat.yMMMMd('es_AR').format(selectedDate);
+                        employee.dateOfAdmission = selectedDate;
                       });
                     }
                   },

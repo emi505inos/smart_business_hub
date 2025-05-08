@@ -165,9 +165,9 @@ class _NewExpenceState extends State<NewExpence> {
                               lastDate: DateTime.now());
                           if (newDate != null) {
                             setState(() {
-                              dateController.text =
-                                  DateFormat.yMMMMd('es_AR').format(newDate);
-                              expense.dateTime = newDate;
+                              selectedDate = newDate.toLocal();
+                              dateController.text = DateFormat.yMMMMd('es_AR').format(selectedDate);
+                              expense.dateTime = selectedDate;
                             });
                           }
                         },

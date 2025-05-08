@@ -165,9 +165,10 @@ class _NewDebtFormState extends State<NewDebtForm> {
                               lastDate: DateTime.now());
                           if (newDate != null) {
                             setState(() {
+                              selectedDate = newDate.toLocal();
                               dateController.text =
-                                  DateFormat.yMMMMd('es_AR').format(newDate);
-                              debt.dateTime = newDate;
+                                  DateFormat.yMMMMd('es_AR').format(selectedDate);
+                              debt.dateTime = selectedDate;
                             });
                           }
                         },

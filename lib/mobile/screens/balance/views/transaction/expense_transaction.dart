@@ -76,7 +76,7 @@ class ExpenseTransaction extends StatelessWidget {
                                   Row(
                                     children: [
                                       Text(
-                                        expense[i].description,
+                                        expense[i].category,
                                         style: TextStyle(
                                           fontSize: 16,
                                           fontWeight: FontWeight.w500,
