@@ -36,14 +36,19 @@ class _PieChartIncomeState extends State<PieChartIncome> {
       stream: FirebaseFirestore.instance.collection('income').snapshots(),
       builder: (context, snapshot) {
         if (!snapshot.hasData) return Center(child: CircularProgressIndicator());
-    
-        incomeData.clear();
+
+        Map<String, double> incomeData = {};
+
         for (var doc in snapshot.data!.docs) {
-          String description = doc['description'];
+          String category = doc['category'] as String? ?? 'Unknown';
           double income = (doc['income'] as num).toDouble();
-          incomeData[description] = income;
+          
+          if (incomeData.containsKey(category)) {
+            incomeData[category] = incomeData[category]! + income;
+          } else {
+            incomeData[category] = income;
+          }
         }
-    
         List<PieChartSectionData> sections = incomeData.entries.map((entry) {
           final index = incomeData.keys.toList().indexOf(entry.key);
           final isTouched = _touchedIndex == index;
@@ -87,7 +92,9 @@ class _PieChartIncomeState extends State<PieChartIncome> {
                   ),
                   Center(
                     child: StreamBuilder<QuerySnapshot>(
-                      stream: FirebaseFirestore.instance.collection('income').snapshots(), 
+                      stream: FirebaseFirestore.instance
+                      .collection('income')
+                      .snapshots(), 
                       builder: (context, snapshot) {
                         if (!snapshot.hasData) {
                           return SizedBox(
@@ -109,6 +116,7 @@ class _PieChartIncomeState extends State<PieChartIncome> {
                           0, 
                           (previousValue, document) => previousValue + (document['income'] as int? ?? 0)
                         );
+                        
                         return Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -200,7 +208,7 @@ class _PieChartIncomeState extends State<PieChartIncome> {
                                             ),
                                             SizedBox(width: MediaQuery.of(context).size.width *0.02,),
                                             Text(
-                                            income['description'],
+                                            income['category'],
                                             style: TextStyle(
                                               fontSize: 16,
                                               fontWeight: FontWeight.w500,

@@ -85,7 +85,7 @@ class IncomeTransaction extends StatelessWidget {
                                     ),
                                     SizedBox(width: MediaQuery.of(context).size.width *0.02,),
                                     Text(
-                                    income[i].description,
+                                    income[i].category,
                                     style: TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.w500,

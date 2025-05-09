@@ -9,6 +9,7 @@ class Income {
   String description;
   String clients;
   int payMethod;
+  String category;
 
 Income({
   required this.quantity,
@@ -17,7 +18,8 @@ Income({
   required this.income,
   required this.description,
   required this.clients,
-  required this.payMethod
+  required this.payMethod,
+  required this.category,
 });
 
 static final empty = Income(
@@ -27,7 +29,8 @@ static final empty = Income(
   description: '', 
   clients: '', 
   payMethod: 0, 
-  quantity: 1
+  quantity: 1,
+  category: ''
 );
 
 IncomeEntity toEntity() {
@@ -38,7 +41,8 @@ IncomeEntity toEntity() {
     description: description, 
     clients: clients, 
     payMethod: payMethod,
-    quantity: quantity
+    quantity: quantity,
+    category: category,
   );
 }
 
@@ -50,7 +54,8 @@ static Income fromEntity(IncomeEntity entity) {
     description: entity.description, 
     clients: entity.clients, 
     payMethod: entity.payMethod,
-    quantity: entity.quantity
+    quantity: entity.quantity,
+    category: entity.category,
   );
 }
 }

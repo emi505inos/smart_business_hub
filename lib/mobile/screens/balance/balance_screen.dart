@@ -472,53 +472,53 @@ class _BalanceScreenState extends State<BalanceScreen> {
                               height: MediaQuery.of(context).size.height * 0.02,
                             ),
                             StreamBuilder<QuerySnapshot>(
-                              stream: selectedDate == ''
-                          ? FirebaseFirestore.instance.collection('income').snapshots()
-                          : FirebaseFirestore.instance
-                          .collection('income')
-                          .where('dateTime', isGreaterThanOrEqualTo: DateTime(
-                            DateTime.now().year,
-                            mesSeleccionado,
-                            1,
-                          )).where('dateTime', isLessThan: DateTime(
-                            DateTime.now().year,
-                            mesSeleccionado + 1,
-                            1,
-                          ))
-                          .snapshots(),
-                              builder: (context, snapshot) {
-                              if (!snapshot.hasData) {
-                                return SizedBox(
-                                height:   1,
-                                width: 1,
-                                child: CircularProgressIndicator());
-                              }
-                              if (!snapshot.hasData || snapshot.data!.docs.isEmpty ) {
+                            stream: selectedDate == ''
+                            ? FirebaseFirestore.instance.collection('income').snapshots()
+                            : FirebaseFirestore.instance
+                            .collection('income')
+                            .where('dateTime', isGreaterThanOrEqualTo: DateTime(
+                              DateTime.now().year,
+                              mesSeleccionado,
+                              1,
+                            )).where('dateTime', isLessThan: DateTime(
+                              DateTime.now().year,
+                              mesSeleccionado + 1,
+                              1,
+                            ))
+                            .snapshots(),
+                                builder: (context, snapshot) {
+                                if (!snapshot.hasData) {
+                                  return SizedBox(
+                                  height:   1,
+                                  width: 1,
+                                  child: CircularProgressIndicator());
+                                }
+                                if (!snapshot.hasData || snapshot.data!.docs.isEmpty ) {
+                                  return Text(
+                                    '\$ 0',
+                                    style: TextStyle(
+                                      fontSize: 17,
+                                      fontWeight: FontWeight.bold,
+                                      color: Theme.of(context).colorScheme.onSurface,
+                                    ),
+                                  );
+                                }
+                                final totalIncome = snapshot.data!.docs.fold<int>(
+                                  0, 
+                                  (previousValue, document) => previousValue + (document['income'] as int? ?? 0)
+                                );
                                 return Text(
-                                  '\$ 0',
+                                  '\$ $totalIncome',
                                   style: TextStyle(
                                     fontSize: 17,
                                     fontWeight: FontWeight.bold,
                                     color: Theme.of(context).colorScheme.onSurface,
-                                  ),
-                                );
-                              }
-                              final totalIncome = snapshot.data!.docs.fold<int>(
-                                0, 
-                                (previousValue, document) => previousValue + (document['income'] as int? ?? 0)
-                              );
-                              return Text(
-                                '\$ $totalIncome',
-                                style: TextStyle(
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.bold,
-                                  color: Theme.of(context).colorScheme.onSurface,
-                                  ),
-                                );
-                              },
-                            ),
-                          ],
-                        ),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ],
+                          ),
                         SizedBox(
                           width: MediaQuery.of(context).size.width * 0.03,
                         ),

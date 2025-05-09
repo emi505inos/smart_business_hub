@@ -7,6 +7,7 @@ class IncomeEntity {
   String description;
   String clients;
   int payMethod;
+  String category;
 
   IncomeEntity({
   required this.saleId,
@@ -15,7 +16,8 @@ class IncomeEntity {
   required this.description,
   required this.clients,
   required this.payMethod, 
-  required this.quantity
+  required this.quantity,
+  required this.category,
 });
 Map<String, Object?> toDocument() {
   return {
@@ -25,7 +27,8 @@ Map<String, Object?> toDocument() {
     'description': description,
     'clients': clients,
     'payMethod': payMethod,
-    'quantity': quantity
+    'quantity': quantity,
+    'category': category,
   };
 }
 static IncomeEntity fromDocument(Map<String, dynamic> doc) {
@@ -36,7 +39,8 @@ static IncomeEntity fromDocument(Map<String, dynamic> doc) {
     description: doc['description'], 
     clients: doc['clients'], 
     payMethod: doc['payMethod'],
-    quantity: doc['quantity']
+    quantity: doc['quantity'],
+    category: doc['category'],
   );
 }
 }

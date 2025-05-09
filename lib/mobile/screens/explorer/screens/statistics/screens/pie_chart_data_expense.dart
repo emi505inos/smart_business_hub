@@ -35,11 +35,17 @@ class _PieChartDataExpenseState extends State<PieChartDataExpense> {
       builder: (context, snapshot) {
         if (!snapshot.hasData) return Center(child: CircularProgressIndicator());
     
-        expenseData.clear();
+         Map<String, double> expenseData = {};
+
         for (var doc in snapshot.data!.docs) {
-          String category = doc['category'] ?? 'Sin categoria';
+          String category = doc['category'] as String? ?? 'Unknown';
           double totalExpense = (doc['totalExpense'] as num).toDouble();
-          expenseData[category] = totalExpense;
+          
+          if (expenseData.containsKey(category)) {
+            expenseData[category] = expenseData[category]! + totalExpense;
+          } else {
+            expenseData[category] = totalExpense;
+          }
         }
     
         List<PieChartSectionData> sections = expenseData.entries.map((entry) {
