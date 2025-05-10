@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:business_repository/repositories.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';

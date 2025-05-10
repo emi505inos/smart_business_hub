@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:smart_business_hub/mobile/screens/explorer/explorer_screen.dart';
 import 'package:smart_business_hub/mobile/screens/explorer/screens/statistics/screens/pie_chart_data_expense.dart';
 import 'package:smart_business_hub/mobile/screens/explorer/screens/statistics/screens/pie_chart_income.dart';
@@ -23,6 +24,7 @@ class _StatisticsScreenState extends State<StatisticsScreen>  with TickerProvide
     _tabController.dispose();
     super.dispose();
   }
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,51 +54,56 @@ class _StatisticsScreenState extends State<StatisticsScreen>  with TickerProvide
               color: Theme.of(context).colorScheme.onSurface,
             ),
           ),
-          
         ),
       bottomNavigationBar: CustomeNavigationBar(),
-      body: DefaultTabController(
-        initialIndex: 1,
-        length: 2, 
-        child: Column(
-          children: [
-            TabBar(
-              controller: _tabController,
-              labelColor: Theme.of(context).colorScheme.onSurface,
-              tabs:  <Widget>[
-                Tab(
-                  child: Text(
-                    'Ingresos',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Theme.of(context).colorScheme.onSurface,
+      body: Column(
+        children: [
+          Expanded(
+            child: DefaultTabController(
+              initialIndex: 1,
+              length: 2, 
+              child: Column(
+                children: [
+                  TabBar(
+                    controller: _tabController,
+                    labelColor: Theme.of(context).colorScheme.onSurface,
+                    tabs:  <Widget>[
+                      Tab(
+                        child: Text(
+                          'Ingresos',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Theme.of(context).colorScheme.onSurface,
+                          ),
+                        ),
+                      ),
+                      Tab(
+                        child: Text(
+                          'Egresos',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Theme.of(context).colorScheme.onSurface,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Expanded(
+                    child: TabBarView(
+                      controller: _tabController,
+                      children: const [
+                        Card.filled(child: PieChartIncome()), 
+                        Card.filled(child: PieChartDataExpense()),
+                      ],
                     ),
                   ),
-                ),
-                Tab(
-                  child: Text(
-                    'Egresos',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Theme.of(context).colorScheme.onSurface,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            Expanded(
-              child: TabBarView(
-                controller: _tabController,
-                children: const [
-                  Card.filled(child: PieChartIncome()), 
-                  Card.filled(child: PieChartDataExpense()),
                 ],
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
       
     );

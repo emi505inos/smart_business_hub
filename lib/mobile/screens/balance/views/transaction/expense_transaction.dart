@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:smart_business_hub/mobile/screens/balance/bloc/get_expense/get_expense_bloc.dart';
+import 'package:smart_business_hub/mobile/screens/balance/views/transaction/screen/expense_detail.dart';
 
 class ExpenseTransaction extends StatelessWidget {
   const ExpenseTransaction({super.key});
@@ -41,7 +42,9 @@ class ExpenseTransaction extends StatelessWidget {
                 return Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 3),
                   child: InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => ExpenseDetail(expenseId: expense[i].expenseId),));
+                    },
                     child: Ink(
                       height: MediaQuery.of(context).size.height * 0.06,
                       width: MediaQuery.of(context).size.width * 41,

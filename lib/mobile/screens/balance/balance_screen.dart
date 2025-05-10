@@ -37,26 +37,26 @@ class _BalanceScreenState extends State<BalanceScreen> {
     int previousYear = currentYear - 1;
     int currentMonthNumber = DateTime.now().month;
 
-    // 🔹 Filtrar solo Octubre-Diciembre del año anterior + Enero hasta el mes actual
+
     filteredMonths = dateSelectorList.where((e) =>
-      (e['select'] >= 10 && e['year'] == previousYear) ||  // Octubre - Diciembre del año anterior
-      (e['select'] <= currentMonthNumber && e['year'] == currentYear) // Enero - mes actual (excluye meses futuros)
+      (e['select'] >= 10 && e['year'] == previousYear) ||  
+      (e['select'] <= currentMonthNumber && e['year'] == currentYear)
     ).toList();
 
-    // 🔹 Obtener el mes actual en formato correcto
+
     String currentMonth = DateFormat('MMMM', 'es').format(DateTime.now());
 
-    // 🔹 Seleccionar automáticamente el mes actual
+
     selectedDate = filteredMonths.firstWhere(
       (e) => e['mont'].toLowerCase() == currentMonth.toLowerCase(),
       orElse: () => {'mont': filteredMonths.last['mont']}
     )['mont'];
 
-    // 🔹 Posicionar el scroll en el mes actual
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
       int index = filteredMonths.indexWhere((e) => e['mont'] == selectedDate);
       if (index != -1) {
-        double scrollPosition = index * 100.0; // Ajuste proporcional a la posición
+        double scrollPosition = index * 100.0;
         _scrollController.animateTo(
           scrollPosition,
           duration: Duration(milliseconds: 500),
@@ -64,16 +64,7 @@ class _BalanceScreenState extends State<BalanceScreen> {
         );
       }
     });
-
-    // 🔹 Verificar los valores en consola
-    print("Mes actual: ${DateTime.now().month}");
-    print("Meses filtrados: $filteredMonths");
   }
-
-
-
-
-
 
   @override
   Widget build(BuildContext context) {
