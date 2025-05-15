@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:smart_business_hub/mobile/screens/debts/views/receivable.dart';
-import 'package:smart_business_hub/mobile/screens/debts/views/to_pay.dart';
+import 'package:smart_business_hub/mobile/screens/debts/views/receivable/receivable.dart';
+import 'package:smart_business_hub/mobile/screens/debts/views/topay/to_pay.dart';
 
 class DebtsSelector extends StatefulWidget {
   const DebtsSelector({super.key});

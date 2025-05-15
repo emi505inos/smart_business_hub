@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:smart_business_hub/mobile/screens/debts/views/receivable/detail_receivable.dart';
 
 class Receivable extends StatefulWidget {
   const Receivable({super.key});
@@ -212,7 +213,9 @@ class _ReceivableState extends State<Receivable> {
                       return Column(
                         children: [
                           InkWell(
-                            onTap: () {},
+                            onTap: () {
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => DetailReceivable(clientId: creditDebt['client'],),));
+                            },
                             borderRadius: BorderRadius.circular(20),
                             child: Ink(
                               height: MediaQuery.of(context).size.height * 0.15,

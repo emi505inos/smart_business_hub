@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:smart_business_hub/mobile/screens/debts/views/topay/detail_to_pay.dart';
 
 class ToPay extends StatefulWidget {
   const ToPay({super.key});
@@ -213,7 +214,9 @@ class _ToPayState extends State<ToPay> {
                       return Column(
                         children: [
                           InkWell(
-                            onTap: () {},
+                            onTap: () {
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => DetailToPay(),));
+                            },
                             borderRadius: BorderRadius.circular(20),
                             child: Ink(
                               height: MediaQuery.of(context).size.height * 0.15,
