@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:smart_business_hub/mobile/screens/auth/blocs/sign_in_bloc/sign_in_bloc.dart';
+import 'package:smart_business_hub/mobile/screens/business/screens/new_business_screen.dart';
 
 class UserMenuScreen extends StatelessWidget {
   const UserMenuScreen({super.key});
@@ -149,7 +150,12 @@ class UserMenuScreen extends StatelessWidget {
               SizedBox(height: MediaQuery.of(context).size.height*0.03,),
               InkWell(
                 onTap: () {
-                  
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const NewBusinessScreen(),
+                    ),
+                  );
                 },
                 borderRadius: BorderRadius.circular(20),
                 child: Ink(

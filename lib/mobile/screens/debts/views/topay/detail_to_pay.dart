@@ -1,18 +1,29 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:smart_business_hub/mobile/screens/debts/views/topay/screens/pay_debts.dart';
+import 'package:smart_business_hub/mobile/screens/debts/views/topay/screens/to_pay_debts.dart';
 
 class DetailToPay extends StatefulWidget {
-  const DetailToPay({super.key});
+  final String debtId;
+  const DetailToPay({super.key, required this.debtId});
 
   @override
   State<DetailToPay> createState() => _DetailToPayState();
 }
 
 class _DetailToPayState extends State<DetailToPay>  with TickerProviderStateMixin{
+  late String  debtId2;
+  late Stream<QuerySnapshot>  debtIdStream;
  late final TabController _tabController;
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
+    debtId2 = widget.debtId;
+    debtIdStream = FirebaseFirestore.instance
+      .collection('debts')
+      .where('suplier', isEqualTo: widget.debtId)
+      .snapshots();
   }
   @override
   void dispose() {
@@ -39,13 +50,37 @@ class _DetailToPayState extends State<DetailToPay>  with TickerProviderStateMixi
           ),
         ),
         titleSpacing: 100,
-        title: Text(
-          'Deudas',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            color: Theme.of(context).colorScheme.onSurface,
+        title: StreamBuilder(
+            stream: debtIdStream, 
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+              }if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+                return Center(
+                  child: Text(
+                    'No se encontraron deudas',
+                    style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Theme.of(context).colorScheme.onPrimary,
+                      ),
+                  ),
+                );
+              }
+              final debts = snapshot.data!.docs.first;
+             return 
+             Text(
+                '${debts['suplier']}',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Theme.of(context).colorScheme.onSurface,
+                ),
+              );  
+            },
           ),
-        ),
       ),
       body: DefaultTabController(
         length: 2,
@@ -83,8 +118,8 @@ class _DetailToPayState extends State<DetailToPay>  with TickerProviderStateMixi
               child:TabBarView(
                 controller: _tabController, 
                 children: <Widget>[
-                  Card.filled(child:Placeholder()),
-                  Card.filled(child: Placeholder()),
+                  Card.filled(child:ToPayDebts(debtId: debtId2,)),
+                  Card.filled(child: PayDebts(debtId: debtId2,)),
                 ]
               ),
             ),

@@ -13,7 +13,7 @@ class ToPay extends StatefulWidget {
 
 class _ToPayState extends State<ToPay> {
   var dateNow = DateFormat.yMMMMd('es_AR').format(DateTime.now());
-  
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -190,17 +190,17 @@ class _ToPayState extends State<ToPay> {
                   ),
                 );
               }
-              final creditDebts = snapshot.data!.docs;
+              final debts = snapshot.data!.docs;
               return Column(
                 children: [
                   SizedBox(
                   height: MediaQuery.of(context).size.height*0.3,
                   width: MediaQuery.of(context).size.width,
                   child: ListView.builder(
-                    itemCount: creditDebts.length,
+                    itemCount: debts.length,
                     itemBuilder: (context, i) {
-                      final creditDebt = creditDebts[i];
-                      final data = creditDebt.data() as Map<String, dynamic>?;
+                      final debt = debts[i];
+                      final data = debt.data() as Map<String, dynamic>?;
                       int totalDebtAmount = 0;
                       if (data != null && data.containsKey('debts')) {
                         List<dynamic> debtsList = data['debts'] ?? [];
@@ -215,7 +215,7 @@ class _ToPayState extends State<ToPay> {
                         children: [
                           InkWell(
                             onTap: () {
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => DetailToPay(),));
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => DetailToPay(debtId: debt['suplier'],),));
                             },
                             borderRadius: BorderRadius.circular(20),
                             child: Ink(
@@ -238,7 +238,7 @@ class _ToPayState extends State<ToPay> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      creditDebt['suplier'],
+                                      debt['suplier'],
                                       style: TextStyle(
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold,
@@ -267,7 +267,7 @@ class _ToPayState extends State<ToPay> {
                                               ),
                                               child: Center(
                                                 child: Text(
-                                                  '${creditDebt['debts'].length}',
+                                                  '${debt['debts'].length}',
                                                   style: TextStyle(
                                                     fontSize: 15,
                                                     fontWeight: FontWeight.bold,
