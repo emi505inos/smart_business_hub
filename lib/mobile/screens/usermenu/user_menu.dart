@@ -1,10 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:smart_business_hub/mobile/screens/auth/blocs/sign_in_bloc/sign_in_bloc.dart';
 import 'package:smart_business_hub/mobile/screens/business/screens/new_business_screen.dart';
+import 'package:smart_business_hub/mobile/screens/onboarding/onboarding_screen.dart';
 
 class UserMenuScreen extends StatelessWidget {
   const UserMenuScreen({super.key});
@@ -22,7 +24,9 @@ class UserMenuScreen extends StatelessWidget {
           color: Theme.of(context).colorScheme.onSurface,
         ),
         title: StreamBuilder<QuerySnapshot>(
-              stream: FirebaseFirestore.instance.collection('business').snapshots(), 
+              stream: FirebaseAuth.instance.currentUser != null
+              ? FirebaseFirestore.instance.collection('business').snapshots()
+              : null,
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return Center(
@@ -347,6 +351,12 @@ class UserMenuScreen extends StatelessWidget {
               GestureDetector(
                 onTap: () {
                   context.read<SignInBloc>().add(SignOutRequired());
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const OnboardingScreen(),
+                    ),
+                  );
                 },
                 child: Text(
                   'CERRAR SESIÓN',

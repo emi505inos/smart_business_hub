@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_business_hub/bloc/auth%20bloc/authentication_bloc.dart';
 import 'package:smart_business_hub/mobile/screens/balance/views/expence/bloc/create_debt/create_debt_bloc.dart';
-import 'package:smart_business_hub/mobile/screens/business/bloc/bloc/set_business_bloc.dart';
 import 'package:smart_business_hub/mobile/screens/business/bloc/create_business/create_business_bloc.dart';
 import 'package:smart_business_hub/mobile/screens/homescreen/home_screen.dart';
 import 'package:smart_business_hub/mobile/screens/Inventary/bloc/inventory_blocs.dart';
@@ -11,7 +10,6 @@ import 'package:smart_business_hub/mobile/screens/auth/blocs/sign_in_bloc/sign_i
 import 'package:smart_business_hub/mobile/screens/balance/bloc/balance_blocs.dart';
 import 'package:smart_business_hub/mobile/screens/explorer/explorer_blocs.dart';
 import 'package:smart_business_hub/mobile/screens/onboarding/onboarding_screen.dart';
-import 'package:user_repository/user_repository.dart';
 
 
 class MyAppView extends StatelessWidget {
@@ -32,7 +30,16 @@ class MyAppView extends StatelessWidget {
           onSecondary: Color.fromRGBO(16, 147, 93, 1),
         )
       ),
-      home: BlocBuilder<AuthenticationBloc, AuthenticationState>(
+      home:BlocListener<AuthenticationBloc, AuthenticationState>(
+        listener: (context, state) {
+          if (state.status == AuthenticationStatus.unauthenticated) {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => OnboardingScreen()),
+            );
+          }
+        },
+        child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
           builder: ((context, state) {
             if (state.status == AuthenticationStatus.authenticated) {
               return MultiBlocProvider(
@@ -53,7 +60,7 @@ class MyAppView extends StatelessWidget {
                   BlocProvider(create: (context) => CreateSuplierBloc(FirebaseSupliersRepo())..add(CreateSuplier(Suplier.empty)),),
                   BlocProvider(create: (context) => GetSuplierBloc(FirebaseSupliersRepo())..add(GetSuplier()),),
                   BlocProvider(create: (context) => CreateBusinessBloc(FirebaseBusinessRepo())..add(CreateBusiness(Business.empty)),),
-                  BlocProvider(create: (context) => SetBusinessBloc(FirebaseBusinessRepo1())..add(SetBusinessRequested(Business1.empty)),),
+                  // BlocProvider(create: (context) => SetBusinessBloc(FirebaseBusinessRepo1())..add(SetBusinessRequested(Business1.empty)),),
                   BlocProvider(create: (context) => CreateDebtBloc(FirebaseDebtRepo())..add(CreateDebt(Debts.empty)),)
                 ],
                 child: HomeScreen()
@@ -64,39 +71,7 @@ class MyAppView extends StatelessWidget {
           }
         )
       ),
+    ),
     );
   }
 }
-// final user = state.user;
-//             return FutureBuilder<bool>(
-//               future: _userHasCompany(user!.userId), 
-//               builder: (context, snapshot) {
-//                 if (snapshot.connectionState == ConnectionState.waiting) {
-//                   return Center(child: CircularProgressIndicator(),);
-//                 }
-//                 final hasCompany = snapshot.data ?? false;
-//                 return hasCompany ?  BusinessScreen() :HomeScreen();
-//                 // if (snapshot.hasData && snapshot.data == true) {
-//                 //   return HomePage();
-//                 // }
-//                 // else {
-//                 //   return BusinessScreen();
-//                 // }
-//               },
-//             );
-// Future<bool> _userHasCompany(String userId) async {
-//   final userDoc = await FirebaseFirestore.instance.
-//   collection('users').doc(userId).get();
-//   final userName = userDoc.data()?['name'];
-//   if (userName == null) {
-//     print('Error: El usuario no tiene nombre registrado');
-//     return false;
-//   }
-//   final businessQuery = await FirebaseFirestore.instance
-//   .collection('business')
-//   .where('owner', isEqualTo: userName)
-//   .get();
-//   print("Negocios encontrados para $userName: ${businessQuery.docs.length}");
-//   return businessQuery.docs.isNotEmpty;
-   
-// }

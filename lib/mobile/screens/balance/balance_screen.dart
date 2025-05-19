@@ -31,7 +31,7 @@ class _BalanceScreenState extends State<BalanceScreen> {
   void initState() {
     super.initState();
     initializeDateFormatting('es', null);
-    _scrollController = ScrollController();
+    _scrollController = ScrollController(initialScrollOffset: 1000);
 
     int currentYear = DateTime.now().year;
     int previousYear = currentYear - 1;
