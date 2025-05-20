@@ -23,6 +23,7 @@ class _InventaryScreenState extends State<InventaryScreen> {
 
   String? categorySelector;
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -369,7 +370,12 @@ class _InventaryScreenState extends State<InventaryScreen> {
                     
                   }
                   if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-                    
+                    return Center(
+                      child: Text(
+                        'No hay categorías disponibles',
+                        style: TextStyle(fontSize: 18, color: Theme.of(context).colorScheme.onSurface),
+                      ),
+                    );
                   }
                   final categories = snapshot.data!.docs;
                   return SizedBox(
@@ -512,7 +518,7 @@ class _InventaryScreenState extends State<InventaryScreen> {
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return Center(child: CircularProgressIndicator());
-                  } if (!snapshot.hasData ||snapshot.data!.docs.isEmpty) {
+                  } if (!snapshot.hasData|| snapshot.data == null ||snapshot.data!.docs.isEmpty) {
                    return Center(
                       child: Text(
                         'No hay productos disponibles',
@@ -526,94 +532,104 @@ class _InventaryScreenState extends State<InventaryScreen> {
                   final products = snapshot.data!.docs;
                   return Column(
                     children: [
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.5,
-                        width: MediaQuery.of(context).size.width * 1,
-                        child: ListView.builder(
-                          itemCount: products.length,
-                          itemBuilder: (context, i) {
-                            final product = products[i];
-                            return Column(
-                              children: [
-                                InkWell(
-                                onTap: () {},
-                                borderRadius: BorderRadius.circular(20),
-                                child: Ink(
-                                  height:MediaQuery.of(context).size.height*0.15,
-                                  width:MediaQuery.of(context).size.width *1,
-                                  decoration: BoxDecoration(
-                                    borderRadius:BorderRadius.circular(20),
-                                    color: Theme.of(context).colorScheme.onPrimary,
-                                    border: Border.all(
-                                      color: Colors.grey.shade400,
-                                      width: 2
-                                    )
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(10),
-                                    child: Row(
-                                      children: [
-                                        Container(
-                                          height: MediaQuery.of(context).size.height,
-                                          width: MediaQuery.of(context).size.width*0.3,
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(20),
-                                            image: DecorationImage(
-                                              image: AssetImage(
-                                                'assets/shirt.jpg'
-                                              ),
-                                              fit: BoxFit.cover,
-                                            ),
+                      Card.filled(
+                        child: SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.5,
+                          width: MediaQuery.of(context).size.width * 1,
+                          child: ListView.builder(
+                            itemCount: products.length,
+                            itemBuilder: (context, i) {
+                              final product = products[i];
+                              return Column(
+                                children: [
+                                  InkWell(
+                                  onTap: () {},
+                                  borderRadius: BorderRadius.circular(20),
+                                  child: Ink(
+                                    height:MediaQuery.of(context).size.height*0.15,
+                                    width:MediaQuery.of(context).size.width *1,
+                                    decoration: BoxDecoration(
+                                      borderRadius:BorderRadius.circular(20),
+                                      color: Theme.of(context).colorScheme.onPrimary,
+                                      border: Border.all(
+                                        color: Colors.grey.shade400,
+                                        width: 2
+                                      )
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(10),
+                                      child: Row(
+                                        children: [
+                                          FutureBuilder(
+                                          future: precacheImage(AssetImage(product['imageUrl']), context),
+                                          builder: (context, snapshot) {
+                                            if (snapshot.connectionState == ConnectionState.done) {
+                                              return 
+                                                Container(
+                                                  height: MediaQuery.of(context).size.height,
+                                                  width: MediaQuery.of(context).size.width * 0.3,
+                                                  decoration: BoxDecoration(
+                                                    borderRadius: BorderRadius.circular(20),
+                                                    image: DecorationImage(
+                                                      image: AssetImage(product['imageUrl'].isNotEmpty ? product['imageUrl'] : 'assets/default.webp'),
+                                                      fit: BoxFit.cover,
+                                                    ),
+                                                  ),
+                                                );
+                                              } else {
+                                                return Center(child: CircularProgressIndicator());
+                                              }
+                                            },
                                           ),
-                                        ),
-                                        SizedBox(
-                                          width: MediaQuery.of(context).size.width*0.02,),
-                                        Column(
-                                          crossAxisAlignment:CrossAxisAlignment.start,
-                                          mainAxisAlignment:MainAxisAlignment.center,
-                                          children: [
-                                            Text(
-                                              product['name'],
-                                              style: TextStyle(
-                                                fontSize: 20,
-                                                fontWeight:
-                                                    FontWeight.w500,
-                                                color:
-                                                    Colors.grey.shade600,
-                                              ),
-                                            ),
-                                            Text(
-                                              '\$ ${product['price']}',
-                                              style: TextStyle(
-                                                fontSize: 18,
-                                                fontWeight:
-                                                    FontWeight.w500,
-                                                color:
-                                                    Colors.grey.shade600,
-                                              ),
-                                            ),
-                                            SizedBox(height:MediaQuery.of(context).size.height *0.01,),
-                                            Text(
-                                              '${product['quantity']} disponibles',
-                                              style: TextStyle(
-                                                  fontSize: 17,
+                                          SizedBox(
+                                            width: MediaQuery.of(context).size.width*0.02,),
+                                          Column(
+                                            crossAxisAlignment:CrossAxisAlignment.start,
+                                            mainAxisAlignment:MainAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                product['name']?? 'Sin nombre',
+                                                style: TextStyle(
+                                                  fontSize: 20,
                                                   fontWeight:
-                                                      FontWeight.bold,
-                                                  color: Theme.of(context)
-                                                      .colorScheme
-                                                      .onSurface),
-                                            ),
-                                            
-                                          ],
-                                        )
-                                      ],
+                                                      FontWeight.w500,
+                                                  color:
+                                                      Colors.grey.shade600,
+                                                ),
+                                              ),
+                                              Text(
+                                                '\$ ${product['price']?? '0'}',
+                                                style: TextStyle(
+                                                  fontSize: 18,
+                                                  fontWeight:
+                                                      FontWeight.w500,
+                                                  color:
+                                                      Colors.grey.shade600,
+                                                ),
+                                              ),
+                                              SizedBox(height:MediaQuery.of(context).size.height *0.01,),
+                                              Text(
+                                                '${product['quantity']?? '0'} disponibles',
+                                                style: TextStyle(
+                                                    fontSize: 17,
+                                                    fontWeight:
+                                                        FontWeight.bold,
+                                                    color: Theme.of(context)
+                                                        .colorScheme
+                                                        .onSurface),
+                                              ),
+                                              
+                                            ],
+                                          )
+                                        ],
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ),SizedBox( height:MediaQuery.of(context).size.height*0.02,),
-                              ],
-                            );
-                          },
+                                ),SizedBox( height:MediaQuery.of(context).size.height*0.02,),
+                                ],
+                              );
+                            },
+                          ),
                         ),
                       ),
                     ],

@@ -15,9 +15,9 @@ class CustomeNavigationBar extends StatefulWidget {
 @override State<CustomeNavigationBar> createState() => _CustomeNavigationBarState(); } 
 
 class _CustomeNavigationBarState extends State<CustomeNavigationBar> { 
- 
   
-@override Widget build(BuildContext context) { 
+@override Widget build(BuildContext context) {
+
   return BottomAppBar(
     color: Theme.of(context).colorScheme.onSurface, 
     child: Consumer <NavigationBarProvider>(
@@ -49,7 +49,7 @@ class _CustomeNavigationBarState extends State<CustomeNavigationBar> {
               ), 
                 onTap: () { 
                   controller.updataCurrentPage(0); 
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => HomeScreen()));  
+                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen()));  
               }, 
             ), 
             GestureDetector( 
@@ -74,7 +74,7 @@ class _CustomeNavigationBarState extends State<CustomeNavigationBar> {
               ), 
               onTap: () { 
                 controller.updataCurrentPage( 1 );
-                Navigator.of(context).push(MaterialPageRoute(builder: (context) => BalanceScreen())); 
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => BalanceScreen())); 
               }, 
             ), 
             GestureDetector( 
@@ -99,7 +99,7 @@ class _CustomeNavigationBarState extends State<CustomeNavigationBar> {
               ), 
               onTap: () { 
                controller.updataCurrentPage( 2 );
-              Navigator.of(context).push(MaterialPageRoute(builder: (context) => DebtsScreen())); 
+              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => DebtsScreen())); 
               }, 
             ), 
             GestureDetector( 
@@ -124,7 +124,7 @@ class _CustomeNavigationBarState extends State<CustomeNavigationBar> {
               ), 
               onTap: () { 
                 controller.updataCurrentPage( 3 ); 
-                Navigator.of(context).push(MaterialPageRoute(builder: (context) => InventaryScreen())); 
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => InventaryScreen())); 
               }, 
             ), 
             GestureDetector( 
@@ -149,7 +149,7 @@ class _CustomeNavigationBarState extends State<CustomeNavigationBar> {
               ), 
               onTap: () { 
                 controller.updataCurrentPage( 4 ); 
-                Navigator.of(context).push(MaterialPageRoute(builder: (context) => ExplorerScreen())); 
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => ExplorerScreen())); 
               }, 
               ), 
             ], 

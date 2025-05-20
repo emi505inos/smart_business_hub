@@ -1,16 +1,27 @@
-# smart_business_hub
 
-A new Flutter project.
+# 🏆 Smart Business Hub  
+🚀 Desarrollo de una plataforma de gestión empresarial diseñada para administrar ingresos, egresos, clientes, proveedores, empleados y deudas. La aplicación incorpora autenticación de usuarios, almacenamiento seguro en Firebase y una arquitectura escalable basada en colecciones y subcolecciones para estructurar la información de cada empresa. 
 
-## Getting Started
+## 📌 Características principales  
+- **Autenticación segura** con BloC y validaciones avanzadas  
+- **Onboarding interactivo** con transiciones suaves usando ConcentricPageView  
+- **Navegación modular** con Provider y BottomAppBar personalizada  
+- **Validación en tiempo real** de formularios para datos más confiables  
 
-This project is a starting point for a Flutter application.
+## 🎥 Demostraciones  
 
-A few resources to get you started if this is your first Flutter project:
+### 1️⃣ Onboarding intuitivo  
+📌 *Transiciones dinámicas para mejorar la experiencia del usuario*  
+![Onboarding GIF](assets/gifs/Animated%20Onboarding.gif)  
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+### 2️⃣ Autenticación segura  
+📌 *Gestión de estados con BloC y validaciones avanzadas*  
+![Sign-In Sign-Up GIF](assets/gifs/SignIn-SignUp.gif)
+![Sign-In GIF](assets/gifs/SignIn.gif)
+![Sign-Up GIF](assets/gifs/SignUp.gif)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
+### 3️⃣ Barra de navegación eficiente  
+📌 *Gestión de estados con Provider y transiciones fluidas*  
+![Navigation GIF](assets/gifs/BotomNavigatorBar.gif)  
+

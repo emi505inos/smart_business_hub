@@ -137,24 +137,33 @@ class ExplorerScreen extends StatelessWidget {
                       child: Ink(
                         height: MediaQuery.of(context).size.height * 0.15,
                         width: MediaQuery.of(context).size.width * 0.23,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Image.asset(
-                              'assets/pie-chart.png',
-                              fit: BoxFit.contain,
-                            ),
-                            SizedBox(height: MediaQuery.of(context).size.height * 0.01,),
-                            Text(
-                              'Estadísticas',
-                              style: TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold,
-                                color: Theme.of(context).colorScheme.onSurface
-                              ),
-                            )
-                          ],
+                        child: FutureBuilder(
+                          future: precacheImage(AssetImage('assets/pie-chart.png'), context),
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState == ConnectionState.done) {
+                              return  Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Image.asset(
+                                    'assets/pie-chart.png',
+                                    fit: BoxFit.contain,
+                                  ),
+                                  SizedBox(height: MediaQuery.of(context).size.height * 0.01,),
+                                  Text(
+                                    'Estadísticas',
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold,
+                                      color: Theme.of(context).colorScheme.onSurface
+                                    ),
+                                  )
+                                ],
+                              );
+                            } else {
+                              return Center(child: CircularProgressIndicator());
+                            }
+                          },
                         ),
                       ),
                     ),
@@ -166,24 +175,33 @@ class ExplorerScreen extends StatelessWidget {
                       child: Ink(
                         height: MediaQuery.of(context).size.height * 0.15,
                         width: MediaQuery.of(context).size.width * 0.23,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Image.asset(
-                              'assets/clients.png',
-                              fit: BoxFit.contain,
-                            ),
-                            SizedBox(height:MediaQuery.of(context).size.height*0.01,),
-                            Text(
-                              'Clientes',
-                              style: TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold,
-                                color: Theme.of(context).colorScheme.onSurface
-                              ),
-                            )
-                          ],
+                        child: FutureBuilder(
+                          future: precacheImage(AssetImage('assets/clients.png'), context),
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState == ConnectionState.done) {
+                              return Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Image.asset(
+                                    'assets/clients.png',
+                                    fit: BoxFit.contain,
+                                  ),
+                                  SizedBox(height:MediaQuery.of(context).size.height*0.01,),
+                                  Text(
+                                    'Clientes',
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold,
+                                      color: Theme.of(context).colorScheme.onSurface
+                                    ),
+                                  )
+                                ],
+                              );
+                            } else {
+                              return Center(child: CircularProgressIndicator());
+                            }
+                          },
                         ),
                       ),
                     ),
@@ -195,24 +213,33 @@ class ExplorerScreen extends StatelessWidget {
                       child: Ink(
                         height: MediaQuery.of(context).size.height * 0.15,
                         width: MediaQuery.of(context).size.width * 0.23,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Image.asset(
-                              'assets/empleados.png',
-                              fit: BoxFit.contain,
-                            ),
-                            SizedBox(height:MediaQuery.of(context).size.height*0.01,),
-                            Text(
-                              'Empleados',
-                              style: TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold,
-                                color: Theme.of(context).colorScheme.onSurface
-                              ),
-                            )
-                          ],
+                        child: FutureBuilder(
+                          future: precacheImage(AssetImage('assets/empleados.png'), context),
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState == ConnectionState.done) {
+                              return Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Image.asset(
+                                    'assets/empleados.png',
+                                    fit: BoxFit.contain,
+                                  ),
+                                  SizedBox(height:MediaQuery.of(context).size.height*0.01,),
+                                  Text(
+                                    'Empleados',
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold,
+                                      color: Theme.of(context).colorScheme.onSurface
+                                    ),
+                                  )
+                                ],
+                              );
+                            } else {
+                            return Center(child: CircularProgressIndicator());
+                            }
+                          },
                         ),
                       ),
                     ),
@@ -231,24 +258,33 @@ class ExplorerScreen extends StatelessWidget {
                       child: Ink(
                         height: MediaQuery.of(context).size.height * 0.15,
                         width: MediaQuery.of(context).size.width * 0.2,
-                        child: Column(
-                          children: [
-                            Image.asset(
-                              'assets/inventory.png',
-                            ),
-                            SizedBox(
-                              height: MediaQuery.of(context).size.height *
-                                  0.01,
-                            ),
-                            Text(
-                              'Proveedores',
-                              style: TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
-                              color: Theme.of(context).colorScheme.onSurface
-                              ),
-                            )
-                          ],
+                        child: FutureBuilder(
+                          future: precacheImage(AssetImage('assets/inventory.png'), context),
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState == ConnectionState.done) {
+                              return Column(
+                                children: [
+                                  Image.asset(
+                                    'assets/inventory.png',
+                                  ),
+                                  SizedBox(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.01,
+                                  ),
+                                  Text(
+                                    'Proveedores',
+                                    style: TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold,
+                                    color: Theme.of(context).colorScheme.onSurface
+                                    ),
+                                  )
+                                ],
+                              );
+                            } else {
+                              return Center(child: CircularProgressIndicator());
+                            }
+                          },
                         ),
                       ),
                     ),
